@@ -1,5 +1,5 @@
 import React from "react";
-import { TextStyle, TextInput } from "react-native";
+import { TextInput } from "react-native";
 
 interface TextInputProps {
   placeHolder: string;
