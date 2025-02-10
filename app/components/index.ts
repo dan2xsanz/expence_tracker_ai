@@ -1,3 +1,4 @@
-export * from "./label/label";
-export * from "./text-input/text-input";
-export * from "./button/button";
+export * from "./label";
+export * from "./text-input";
+export * from "./button";
+export * from "./icons";

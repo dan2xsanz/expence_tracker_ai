@@ -44,7 +44,7 @@ export const ButtonField = ({
       }}
       onPress={onPress}
     >
-      =<Text style={{ fontSize: fontSize }}>{label}</Text>
+      <Text style={{ fontSize: fontSize }}>{label}</Text>
     </TouchableOpacity>
   );
 };
