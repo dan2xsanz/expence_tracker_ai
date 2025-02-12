@@ -1,6 +1,8 @@
-import { View, StyleSheet, Button } from "react-native";
+import TextInputField from "./components/text-input/text-input";
+import { View, StyleSheet, Image } from "react-native";
+import ButtonField from "./components/button/button";
+import Label from "./components/label/label";
 import { useRouter } from "expo-router";
-import { ButtonField, Label, TextInputField } from "./components";
 import React from "react";
 
 export default function LoginScreen() {
@@ -15,28 +17,31 @@ export default function LoginScreen() {
           gap: 10,
         }}
       >
-        <Label
-          label={"BEEMO"}
-          size={"header1"}
-          style={{ fontWeight: "bold" }}
-        />
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Label label={"B"} size={"header1"} style={{ fontWeight: "bold" }} />
+          <Image
+            source={require("../assets/BMO.png")}
+            style={{ width: 80, height: 80, marginLeft: -5 }}
+          />
+          <Label label={"MO"} size={"header1"} style={{ fontWeight: "bold" }} />
+        </View>
         <TextInputField
           placeHolder={"Username"}
-          size={"small"}
+          size={"medium"}
           style={undefined}
         />
         <TextInputField
           isSecureInput
           placeHolder={"Password"}
-          size={"small"}
+          size={"medium"}
           style={undefined}
         />
-
         <ButtonField
-          label={"Login"}
-          size={"small"}
-          onPress={() => router.push("/home")}
+          label="Login"
+          size="medium"
+          onPress={() => router.push("/(tabs)/home")}
         />
+
         <View
           style={{
             width: "100%",

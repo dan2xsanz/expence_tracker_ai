@@ -1,6 +1,6 @@
-import { Stack } from "expo-router";
-import { StatusBar } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { StatusBar } from "react-native";
+import { Stack } from "expo-router";
 
 export default function RootLayout() {
   return (
@@ -12,8 +12,7 @@ export default function RootLayout() {
         }}
       >
         <Stack.Screen name="index" />
-        <Stack.Screen name="home" />
-        <Stack.Screen name="report" />
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       </Stack>
     </SafeAreaProvider>
   );
