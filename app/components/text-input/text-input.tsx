@@ -1,5 +1,5 @@
-import React from "react";
 import { TextInput } from "react-native";
+import React from "react";
 
 interface TextInputProps {
   placeHolder: string;
@@ -8,7 +8,7 @@ interface TextInputProps {
   isSecureInput?: boolean;
 }
 
-export const TextInputField = ({
+const TextInputField = ({
   isSecureInput,
   placeHolder,
   style,
@@ -21,10 +21,10 @@ export const TextInputField = ({
       fontSize = 60;
       break;
     case "large":
-      fontSize = 35;
+      fontSize = 23;
       break;
     case "medium":
-      fontSize = 25;
+      fontSize = 18;
       break;
     case "small":
       fontSize = 15;
@@ -48,3 +48,5 @@ export const TextInputField = ({
     />
   );
 };
+
+export default TextInputField;

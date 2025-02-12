@@ -1,4 +1,4 @@
-import { Text,  StyleProp, TextStyle } from "react-native";
+import { Text, StyleProp, TextStyle } from "react-native";
 import React from "react";
 
 interface TextProps {
@@ -8,7 +8,7 @@ interface TextProps {
   onPress?: () => void;
 }
 
-export const Label = ({ label, size, style, onPress }: TextProps) => {
+const Label = ({ label, size, style, onPress }: TextProps) => {
   let fontSize = 12;
 
   switch (size) {
@@ -36,3 +36,5 @@ export const Label = ({ label, size, style, onPress }: TextProps) => {
     </Text>
   );
 };
+
+export default Label;

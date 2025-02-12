@@ -8,7 +8,7 @@ interface TextInputProps {
   onPress?: () => void;
 }
 
-export const ButtonField = ({
+ const ButtonField = ({
   size,
   label,
   style,
@@ -24,7 +24,7 @@ export const ButtonField = ({
       fontSize = 35;
       break;
     case "medium":
-      fontSize = 25;
+      fontSize = 18;
       break;
     case "small":
       fontSize = 15;
@@ -48,3 +48,6 @@ export const ButtonField = ({
     </TouchableOpacity>
   );
 };
+
+
+export default ButtonField
