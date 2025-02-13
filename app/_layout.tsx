@@ -5,7 +5,6 @@ import { Stack } from "expo-router";
 export default function RootLayout() {
   return (
     <SafeAreaProvider>
-      <StatusBar animated={true} hidden={true} />
       <Stack
         screenOptions={{
           headerShown: false,

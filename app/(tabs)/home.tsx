@@ -46,7 +46,7 @@ export const home_style = StyleSheet.create({
   main_container: {
     height: "100%",
     paddingTop: 5,
-    justifyContent: "space-between",
+    justifyContent: "space-between"
   },
   container: {
     paddingTop: 5,

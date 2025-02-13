@@ -1,12 +1,24 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Tabs } from "expo-router";
+import { View } from "react-native";
 
 export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: "blue",
         headerShown: false,
+        tabBarActiveTintColor: "black",
+        tabBarStyle: {
+          paddingTop: 10,
+          height:80,
+          paddingBottom: 10,// Height of the tab bar
+          justifyContent: "center", // Centers content vertically
+          alignItems: "center", // Centers content horizontally
+        },
+        tabBarItemStyle: {
+          justifyContent: "center", // Ensures icon is centered vertically
+          alignItems: "center", // Ensures icon is centered horizontally
+        },
       }}
     >
       <Tabs.Screen
@@ -15,6 +27,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => (
             <FontAwesome size={28} name="home" color={color} />
           ),
+          tabBarLabel: "Home",
         }}
       />
       <Tabs.Screen
@@ -23,6 +36,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => (
             <FontAwesome size={28} name="exchange" color={color} />
           ),
+          tabBarLabel: "History",
         }}
       />
       <Tabs.Screen
@@ -31,6 +45,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => (
             <FontAwesome size={28} name="plus" color={color} />
           ),
+          tabBarLabel: "Transaction",
         }}
       />
       <Tabs.Screen
@@ -39,6 +54,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => (
             <FontAwesome size={28} name="bar-chart" color={color} />
           ),
+          tabBarLabel: "Report",
         }}
       />
       <Tabs.Screen
@@ -47,6 +63,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => (
             <FontAwesome size={28} name="cog" color={color} />
           ),
+          tabBarLabel: "Settings",
         }}
       />
     </Tabs>
