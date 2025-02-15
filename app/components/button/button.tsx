@@ -26,7 +26,7 @@ const ButtonField = ({
       fontSize = 35;
       break;
     case "medium":
-      fontSize = 18;
+      fontSize = 20;
       break;
     case "small":
       fontSize = 15;

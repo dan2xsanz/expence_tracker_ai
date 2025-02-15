@@ -12,6 +12,7 @@ import React, { useCallback, useState } from "react";
 import Label from "../components/label/label";
 import { useFocusEffect } from "expo-router";
 import { TransactionType } from "../config";
+import ButtonField from "../components/button/button";
 
 export default function TransactionScreen() {
   // Transaction type enums
@@ -147,6 +148,15 @@ export default function TransactionScreen() {
                 </TouchableOpacity>
               )}
             </View>
+            <ButtonField
+              label={
+                transactionType === TransactionType.MONEY_IN
+                  ? `Add Income`
+                  : `Add Expence`
+              }
+              size="medium"
+              onPress={() => {}}
+            />
           </View>
         )}
         <BottomSheetDrawer
