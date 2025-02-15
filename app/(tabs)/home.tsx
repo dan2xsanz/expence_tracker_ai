@@ -32,7 +32,7 @@ export default function HomeScreen() {
             <View>
               <Image
                 source={require("../../assets/bmoskate.png")}
-                style={{ width: 100, height: 100 }}
+                style={{ width: 150, height: 150, marginLeft: -5 }}
               />
             </View>
           </View>
@@ -46,7 +46,8 @@ export const home_style = StyleSheet.create({
   main_container: {
     height: "100%",
     paddingTop: 5,
-    justifyContent: "space-between"
+    backgroundColor: "white",
+    justifyContent: "space-between",
   },
   container: {
     paddingTop: 5,
@@ -69,5 +70,9 @@ export const home_style = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     paddingRight: 20,
+    elevation: 100,
+    backgroundColor: "#36c4a571",
+    shadowColor: "black",
+    shadowOpacity: 0.5,
   },
 });

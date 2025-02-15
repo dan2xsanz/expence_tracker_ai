@@ -1,16 +1,29 @@
-import { TextInput } from "react-native";
+import {
+  KeyboardTypeOptions,
+  StyleProp,
+  TextInput,
+  TextStyle,
+} from "react-native";
 import React from "react";
 
 interface TextInputProps {
+  required?: boolean;
   placeHolder: string;
-  size: "large" | "medium" | "small" | "header1";
-  style?: React.JSX.Element;
+  multiline?: boolean;
+  readOnly?: boolean;
   isSecureInput?: boolean;
+  style?: StyleProp<TextStyle>;
+  size?: "large" | "medium" | "small" | "header1";
+  keyboardType?: KeyboardTypeOptions | undefined;
 }
 
 const TextInputField = ({
+  keyboardType,
   isSecureInput,
   placeHolder,
+  multiline,
+  required,
+  readOnly,
   style,
   size,
 }: TextInputProps) => {
@@ -33,18 +46,23 @@ const TextInputField = ({
 
   return (
     <TextInput
-      style={{
-        padding: 5,
-        width: "100%",
-        borderWidth: 1,
-        borderRadius: 5,
-        fontSize: fontSize,
-        borderColor: "black",
-        ...style,
-      }}
-      secureTextEntry={isSecureInput}
-      placeholder={placeHolder}
+      style={[
+        {
+          padding: 10,
+          width: "100%",
+          borderWidth: 1,
+          borderRadius: 5,
+          fontSize: fontSize,
+          borderColor: "black",
+        },
+        style,
+      ]}
+      editable={!readOnly}
+      multiline={multiline}
       onChangeText={() => {}}
+      secureTextEntry={isSecureInput}
+      placeholder={`${placeHolder} ${required ? "*" : ""}`}
+      keyboardType={isSecureInput ? "default" : keyboardType ?? "default"}
     />
   );
 };

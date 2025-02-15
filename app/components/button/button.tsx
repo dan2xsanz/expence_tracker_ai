@@ -1,18 +1,20 @@
-import { Text, TouchableOpacity } from "react-native";
+import { StyleProp, Text, TouchableOpacity, ViewStyle } from "react-native";
 import React from "react";
 
 interface TextInputProps {
   label: string;
   size: "large" | "medium" | "small" | "header1";
-  style?: React.JSX.Element;
+  style?: StyleProp<ViewStyle>;
   onPress?: () => void;
+  textFontSize?: number;
 }
 
- const ButtonField = ({
+const ButtonField = ({
   size,
   label,
   style,
   onPress,
+  textFontSize,
 }: TextInputProps) => {
   let fontSize = 12;
 
@@ -33,21 +35,24 @@ interface TextInputProps {
 
   return (
     <TouchableOpacity
-      style={{
-        padding: 5,
-        width: "100%",
-        borderWidth: 1,
-        borderRadius: 5,
-        borderColor: "black",
-        alignItems: "center",
-        ...style,
-      }}
+      style={[
+        {
+          padding: 5,
+          width: "100%",
+          borderWidth: 1,
+          borderRadius: 5,
+          borderColor: "black",
+          alignItems: "center",
+        },
+        style,
+      ]}
       onPress={onPress}
     >
-      <Text style={{ fontSize: fontSize }}>{label}</Text>
+      <Text style={{ fontSize: textFontSize ? textFontSize : fontSize }}>
+        {label}
+      </Text>
     </TouchableOpacity>
   );
 };
 
-
-export default ButtonField
+export default ButtonField;

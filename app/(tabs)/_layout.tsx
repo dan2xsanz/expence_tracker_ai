@@ -10,8 +10,7 @@ export default function TabLayout() {
         tabBarActiveTintColor: "black",
         tabBarStyle: {
           paddingTop: 10,
-          height:80,
-          paddingBottom: 10,// Height of the tab bar
+          height: 60,
           justifyContent: "center", // Centers content vertically
           alignItems: "center", // Centers content horizontally
         },
@@ -27,7 +26,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => (
             <FontAwesome size={28} name="home" color={color} />
           ),
-          tabBarLabel: "Home",
+          tabBarLabel: () => null,
         }}
       />
       <Tabs.Screen
@@ -36,7 +35,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => (
             <FontAwesome size={28} name="exchange" color={color} />
           ),
-          tabBarLabel: "History",
+          tabBarLabel: () => null,
         }}
       />
       <Tabs.Screen
@@ -45,7 +44,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => (
             <FontAwesome size={28} name="plus" color={color} />
           ),
-          tabBarLabel: "Transaction",
+          tabBarLabel: () => null,
         }}
       />
       <Tabs.Screen
@@ -54,7 +53,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => (
             <FontAwesome size={28} name="bar-chart" color={color} />
           ),
-          tabBarLabel: "Report",
+          tabBarLabel: () => null,
         }}
       />
       <Tabs.Screen
@@ -63,7 +62,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => (
             <FontAwesome size={28} name="cog" color={color} />
           ),
-          tabBarLabel: "Settings",
+          tabBarLabel: () => null,
         }}
       />
     </Tabs>
