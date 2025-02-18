@@ -1,4 +1,4 @@
 export enum TransactionType {
-  MONEY_IN,
-  MONEY_OUT,
+  MONEY_IN = 0,
+  MONEY_OUT = 1,
 }

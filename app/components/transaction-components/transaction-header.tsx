@@ -1,16 +1,16 @@
 import { TouchableOpacity, View, Image, StyleSheet } from "react-native";
+import { TransactionInterface, TransactionType } from "@/app/config";
 import Label from "@/app/components/label/label";
-import { TransactionType } from "@/app/config";
 import React, { Fragment } from "react";
 
 interface TransactionHeaderProps {
-  transactionType: TransactionType | undefined;
-  setTransactionType: (data: TransactionType) => void;
+  transactionDetails: TransactionInterface;
+  setTransactionDetails: (data: TransactionInterface) => void;
 }
 
 const TransactionHeader = ({
-  transactionType,
-  setTransactionType,
+  transactionDetails,
+  setTransactionDetails,
 }: TransactionHeaderProps) => {
   return (
     <Fragment>
@@ -35,11 +35,19 @@ const TransactionHeader = ({
         </View>
         <View style={transaction_style.transaction_option_container}>
           <TouchableOpacity
-            onPress={() => setTransactionType(TransactionType.MONEY_IN)}
-            disabled={transactionType === TransactionType.MONEY_IN}
+            onPress={() =>
+              setTransactionDetails({
+                ...transactionDetails,
+                transactionType: TransactionType.MONEY_IN,
+              })
+            }
+            disabled={
+              transactionDetails.transactionType === TransactionType.MONEY_IN
+            }
             style={{
               ...transaction_style.transaction_type_container,
-              ...(transactionType === TransactionType.MONEY_IN &&
+              ...(transactionDetails.transactionType ===
+                TransactionType.MONEY_IN &&
                 transaction_style.transaction_selected),
             }}
           >
@@ -54,11 +62,19 @@ const TransactionHeader = ({
             />
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => setTransactionType(TransactionType.MONEY_OUT)}
-            disabled={transactionType === TransactionType.MONEY_OUT}
+            onPress={() =>
+              setTransactionDetails({
+                ...transactionDetails,
+                transactionType: TransactionType.MONEY_OUT,
+              })
+            }
+            disabled={
+              transactionDetails.transactionType === TransactionType.MONEY_OUT
+            }
             style={{
               ...transaction_style.transaction_type_container,
-              ...(transactionType === TransactionType.MONEY_OUT &&
+              ...(transactionDetails.transactionType ===
+                TransactionType.MONEY_OUT &&
                 transaction_style.transaction_selected),
             }}
           >

@@ -8,26 +8,34 @@ import TimePicker from "../components/time-picker/time-picker";
 import { useBottomSheet } from "../hooks/bottom-sheet-hooks";
 
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import ButtonField from "../components/button/button";
 import React, { useCallback, useState } from "react";
 import Label from "../components/label/label";
 import { useFocusEffect } from "expo-router";
-import { TransactionType } from "../config";
-import ButtonField from "../components/button/button";
+import {
+  transactionDefault,
+  TransactionInterface,
+  TransactionType,
+} from "../config";
 
 export default function TransactionScreen() {
-  // Transaction type enums
-  const [transactionType, setTransactionType] = useState<
-    TransactionType | undefined
-  >();
+  const [transactionDetails, setTransactionDetails] =
+    useState<TransactionInterface>(transactionDefault);
 
+  // Category List
   const Categories = useBottomSheet();
 
+  // Payment Method LLst
   const PaymentMethod = useBottomSheet();
+
+  const onChangeFields = (data: TransactionInterface) => {
+    setTransactionDetails({ ...transactionDetails, ...data });
+  };
 
   // Reset transactionType every time the screen is focused
   useFocusEffect(
     useCallback(() => {
-      setTransactionType(undefined);
+      setTransactionDetails(transactionDefault);
     }, [])
   );
 
@@ -35,42 +43,20 @@ export default function TransactionScreen() {
     <View style={transaction_style.main_container}>
       <View style={transaction_style.container}>
         <TransactionHeader
-          transactionType={transactionType}
-          setTransactionType={setTransactionType}
+          transactionDetails={transactionDetails}
+          setTransactionDetails={setTransactionDetails}
         />
-        {transactionType !== undefined && (
-          <View
-            style={{
-              marginTop: 20,
-              gap: 5,
-            }}
-          >
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between",
-                marginBottom: 10,
-              }}
-            >
+        {transactionDetails.transactionType !== undefined && (
+          <View style={transaction_style.fields_container}>
+            <View style={transaction_style.instruction_divider}>
               <Label
-                label={"Transaction Details"}
                 size={"small"}
                 style={{ fontSize: 12 }}
+                label={"Transaction Details"}
               />
-              <View
-                style={{ height: 1, width: "70%", backgroundColor: "black" }}
-              />
+              <View style={transaction_style.intruction_line} />
             </View>
-            <View
-              style={{
-                gap: 5,
-                display: "flex",
-                alignItems: "center",
-                flexDirection: "row",
-                justifyContent: "space-between",
-              }}
-            >
+            <View style={transaction_style.amount_container}>
               <Label
                 label={"PHP"} // TODO: DYNAMIC
                 size={"medium"}
@@ -78,23 +64,22 @@ export default function TransactionScreen() {
               />
               <TextInputField
                 required
-                keyboardType={"numeric"}
                 placeHolder={"Amount"}
+                keyboardType={"numeric"}
                 style={{ width: "85%", fontSize: 18 }}
+                value={transactionDetails.amount.toString()}
+                onChange={(data) =>
+                  onChangeFields({ ...transactionDetails, amount: data })
+                }
               />
             </View>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
+            <View style={transaction_style.category_container}>
               <TextInputField
                 required
                 readOnly
                 placeHolder={`${
-                  transactionType === TransactionType.MONEY_IN
+                  transactionDetails.transactionType ===
+                  TransactionType.MONEY_IN
                     ? `Income Category`
                     : `Expence Category`
                 }`}
@@ -121,13 +106,7 @@ export default function TransactionScreen() {
             />
             <DatePicker />
             <TimePicker />
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
+            <View style={transaction_style.payment_container}>
               <TextInputField
                 required
                 readOnly
@@ -150,7 +129,7 @@ export default function TransactionScreen() {
             </View>
             <ButtonField
               label={
-                transactionType === TransactionType.MONEY_IN
+                transactionDetails.transactionType === TransactionType.MONEY_IN
                   ? `Add Income`
                   : `Add Expence`
               }
@@ -183,6 +162,34 @@ const transaction_style = StyleSheet.create({
     paddingTop: 5,
     paddingLeft: 20,
     paddingRight: 20,
+  },
+  fields_container: {
+    marginTop: 20,
+    gap: 5,
+  },
+  instruction_divider: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 10,
+  },
+  intruction_line: { height: 1, width: "70%", backgroundColor: "black" },
+  amount_container: {
+    gap: 5,
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  category_container: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  payment_container: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   bottomSheetContainer: {
     backgroundColor: "white",

@@ -13,8 +13,10 @@ interface TextInputProps {
   readOnly?: boolean;
   isSecureInput?: boolean;
   style?: StyleProp<TextStyle>;
+  value?: string | undefined;
   size?: "large" | "medium" | "small" | "header1";
   keyboardType?: KeyboardTypeOptions | undefined;
+  onChange?: (data: any) => void;
 }
 
 const TextInputField = ({
@@ -22,9 +24,11 @@ const TextInputField = ({
   isSecureInput,
   placeHolder,
   multiline,
+  onChange,
   required,
   readOnly,
   style,
+  value,
   size,
 }: TextInputProps) => {
   let fontSize = 12;
@@ -57,9 +61,10 @@ const TextInputField = ({
         },
         style,
       ]}
+      value={value}
       editable={!readOnly}
       multiline={multiline}
-      onChangeText={() => {}}
+      onChangeText={onChange}
       secureTextEntry={isSecureInput}
       placeholder={`${placeHolder} ${required ? "*" : ""}`}
       keyboardType={isSecureInput ? "default" : keyboardType ?? "default"}
