@@ -52,7 +52,7 @@ export default function LoginScreen() {
           <Label
             label={"Create account"}
             size={"small"}
-            onPress={() => console.log("I want to create an accont")}
+            onPress={() => router.push("/(auth)/create")}
             style={{ fontWeight: "500" }}
           />
           <Label
