@@ -21,3 +21,18 @@ export const transactionDefault: TransactionInterface = {
   time: new Date(),
   paymentType: undefined,
 };
+
+export interface IncomeCategoryInterface {
+  categoryName: string;
+  categoryId: number;
+}
+
+export interface PaymentMethodInterface {
+  paymentName: string;
+  paymentId: number;
+}
+
+export interface ExpenceCategoryInterface {
+  expenceName: string;
+  expenceId: number;
+}

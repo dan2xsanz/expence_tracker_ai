@@ -1,5 +1,5 @@
 import { TouchableOpacity, View, Image, StyleSheet } from "react-native";
-import { TransactionInterface, TransactionType } from "@/app/config";
+import { transactionDefault, TransactionInterface, TransactionType } from "@/app/config";
 import Label from "@/app/components/label/label";
 import React, { Fragment } from "react";
 
@@ -37,7 +37,7 @@ const TransactionHeader = ({
           <TouchableOpacity
             onPress={() =>
               setTransactionDetails({
-                ...transactionDetails,
+                ...transactionDefault,
                 transactionType: TransactionType.MONEY_IN,
               })
             }
@@ -64,7 +64,7 @@ const TransactionHeader = ({
           <TouchableOpacity
             onPress={() =>
               setTransactionDetails({
-                ...transactionDetails,
+                ...transactionDefault,
                 transactionType: TransactionType.MONEY_OUT,
               })
             }

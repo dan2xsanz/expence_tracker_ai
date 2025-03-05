@@ -1,6 +1,5 @@
-import React from "react";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
-import { SackMoneyIcon } from "../icons/icons";
+import React from "react";
 
 interface TagButtonInterface {
   icon?: React.JSX.Element;
@@ -9,12 +8,15 @@ interface TagButtonInterface {
   onPress?: VoidFunction;
 }
 
-const TagButton = ({ icon, tagText, disabled }: TagButtonInterface) => {
+const TagButton = ({ icon, tagText, disabled ,onPress}: TagButtonInterface) => {
   return (
-    <TouchableOpacity disabled={disabled} onPress={() => {}}>
+    <TouchableOpacity disabled={disabled} onPress={onPress}>
       <View style={tagButoon_style.container}>
-        {icon}
-        <Text style={{ fontSize: 12, fontWeight: "bold", textAlign: "center" }}>
+        <View pointerEvents="none">{icon}</View>
+        <Text
+          disabled
+          style={{ fontSize: 12, fontWeight: "bold", textAlign: "center" }}
+        >
           {tagText}
         </Text>
       </View>
@@ -30,6 +32,6 @@ const tagButoon_style = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 2,
     borderRadius: 5,
-    alignItems: "center"
-  }
+    alignItems: "center",
+  },
 });

@@ -1,35 +1,25 @@
-import TransactionHeader from "../components/transaction-components/transaction-header";
+import { PaymentCategories } from "../components/payment-categories/payment-categories";
+import { IncomeCategories } from "../components/income-categories/income-categories";
+import TransactionHeader from "../components/transaction-header/transaction-header";
 import BottomSheetDrawer from "../components/botton-sheet/bottom-sheet";
-
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import TextInputField from "../components/text-input/text-input";
 import DatePicker from "../components/date-picker/date-picker";
 import TimePicker from "../components/time-picker/time-picker";
 import { useBottomSheet } from "../hooks/bottom-sheet-hooks";
-
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import ButtonField from "../components/button/button";
-import React, { Fragment, useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import Label from "../components/label/label";
 import { useFocusEffect } from "expo-router";
 import {
-  transactionDefault,
   TransactionInterface,
-  TransactionType
+  transactionDefault,
+  PAYMENT_CATEGORY,
+  INCOME_CATEGORY,
+  TransactionType,
 } from "../config";
-import TagButton from "../components/tag-button/tag-button";
-import {
-  CreditCardIcon,
-  ElypsisIcon,
-  GovernmentIcon,
-  InsuranceIcon,
-  MoneyCheckIcon,
-  PensionIcon,
-  RemittanceIcon,
-  SackMoneyIcon,
-  SavingIcon,
-  StocksIcon
-} from "../components/icons/icons";
+import { ExpenceCategories } from "../components/expence-categories/expence-categories";
 
 export default function TransactionScreen() {
   const [transactionDetails, setTransactionDetails] =
@@ -38,9 +28,10 @@ export default function TransactionScreen() {
   // Category List
   const Categories = useBottomSheet();
 
-  // Payment Method LLst
+  // Payment Method List
   const PaymentMethod = useBottomSheet();
 
+  // On Change Fields
   const onChangeFields = (data: TransactionInterface) => {
     setTransactionDetails({ ...transactionDetails, ...data });
   };
@@ -94,6 +85,12 @@ export default function TransactionScreen() {
               <TextInputField
                 required
                 readOnly
+                value={
+                  transactionDetails.categoryType
+                    ? INCOME_CATEGORY[transactionDetails.categoryType]
+                        .categoryName
+                    : ""
+                }
                 placeHolder={`${
                   transactionDetails.transactionType ===
                   TransactionType.MONEY_IN
@@ -140,10 +137,17 @@ export default function TransactionScreen() {
                 onChangeFields({ ...transactionDetails, time: data })
               }
             />
+            {/* PAYMNET METHOD FIELD */}
             <View style={transaction_style.payment_container}>
               <TextInputField
                 required
                 readOnly
+                value={
+                  transactionDetails.paymentType
+                    ? PAYMENT_CATEGORY[transactionDetails.paymentType]
+                        .paymentName
+                    : ""
+                }
                 placeHolder={`Pament Method`}
                 style={{ fontSize: 18, width: "90%" }}
               />
@@ -181,51 +185,27 @@ export default function TransactionScreen() {
               : `Select Expence Category`
           }
           children={
-            <Fragment>
-              <View style={transaction_style.categoriesContainer}>
-                <TagButton tagText={"Allowance"} icon={<SackMoneyIcon />} />
-                <TagButton tagText={"Cash Savings"} icon={<SavingIcon />} />
-                <TagButton tagText={"Extra Income"} icon={<SackMoneyIcon />} />
-                <TagButton tagText={"Fund Transfer"} icon={<SackMoneyIcon />} />
-              </View>
-              <View style={transaction_style.categoriesContainer}>
-                <TagButton
-                  tagText={"Government Aid"}
-                  icon={<GovernmentIcon />}
-                />
-                <TagButton tagText={"Insurance"} icon={<InsuranceIcon />} />
-                <TagButton tagText={"Pension"} icon={<PensionIcon />} />
-                <TagButton tagText={"Remittance"} icon={<RemittanceIcon />} />
-              </View>
-              <View style={transaction_style.categoriesContainer}>
-                <TagButton tagText={"Salary"} icon={<SackMoneyIcon />} />
-                <TagButton tagText={"Stocks/Crypto"} icon={<StocksIcon />} />
-                <TagButton tagText={"Others"} icon={<ElypsisIcon />} />
-                <TagButton tagText={""} icon={<></>} disabled />
-              </View>
-            </Fragment>
+            transactionDetails.transactionType === TransactionType.MONEY_IN ? (
+              <IncomeCategories
+                Categories={Categories}
+                onChangeFields={onChangeFields}
+                transactionDetails={transactionDetails}
+              />
+            ) : (
+              <ExpenceCategories />
+            )
           }
         />
         <BottomSheetDrawer
+          sheetTitle={"Select Payment Method"}
           openSheet={PaymentMethod.openBottomSheet}
           setOpenDrawer={PaymentMethod.setOpenBottomSheet}
-          sheetTitle={"Select Payment Method"}
           children={
-            <Fragment>
-              <View style={transaction_style.categoriesContainer}>
-                <TagButton
-                  tagText={"Bank Transfer"}
-                  icon={<RemittanceIcon />}
-                />
-                <TagButton tagText={"Cash"} icon={<SackMoneyIcon />} />
-                <TagButton tagText={"Check"} icon={<MoneyCheckIcon />} />
-                <TagButton tagText={"Credit Card"} icon={<CreditCardIcon />} />
-              </View>
-              <View style={transaction_style.categoriesContainer}>
-                <TagButton tagText={"Crypto"} icon={<StocksIcon />} />
-                <TagButton tagText={"Debit Card"} icon={<CreditCardIcon />} />
-              </View>
-            </Fragment>
+            <PaymentCategories
+              PaymentMethod={PaymentMethod}
+              onChangeFields={onChangeFields}
+              transactionDetails={transactionDetails}
+            />
           }
         />
       </View>
@@ -238,22 +218,22 @@ const transaction_style = StyleSheet.create({
     height: "100%",
     paddingTop: 5,
     justifyContent: "space-between",
-    backgroundColor: "white"
+    backgroundColor: "white",
   },
   container: {
     paddingTop: 5,
     paddingLeft: 20,
-    paddingRight: 20
+    paddingRight: 20,
   },
   fields_container: {
     marginTop: 20,
-    gap: 5
+    gap: 5,
   },
   instruction_divider: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 10
+    marginBottom: 10,
   },
   intruction_line: { height: 1, width: "70%", backgroundColor: "black" },
   amount_container: {
@@ -261,30 +241,30 @@ const transaction_style = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     flexDirection: "row",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
   category_container: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
   payment_container: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
   bottomSheetContainer: {
     backgroundColor: "white",
     padding: 20,
     height: 400,
     borderTopLeftRadius: 15,
-    borderTopRightRadius: 15
+    borderTopRightRadius: 15,
   },
   categoriesContainer: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    padding: 2
-  }
+    padding: 2,
+  },
 });
