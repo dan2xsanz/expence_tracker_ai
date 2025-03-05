@@ -20,21 +20,21 @@ export default function LoginScreen() {
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Label label={"B"} size={"header1"} style={{ fontWeight: "bold" }} />
           <Image
-            source={require("../assets/BMO.png")}
+            source={require("../assets/bimo.png")}
             style={{ width: 80, height: 80, marginLeft: -5 }}
           />
           <Label label={"MO"} size={"header1"} style={{ fontWeight: "bold" }} />
         </View>
         <TextInputField
-          placeHolder={"Username"}
           size={"medium"}
-          style={undefined}
+          placeHolder={"Username"}
+          style={{ fontSize: 20 }}
         />
         <TextInputField
           isSecureInput
-          placeHolder={"Password"}
           size={"medium"}
-          style={undefined}
+          placeHolder={"Password"}
+          style={{ fontSize: 20 }}
         />
         <ButtonField
           label="Login"
@@ -81,6 +81,7 @@ export default function LoginScreen() {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "white",
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
