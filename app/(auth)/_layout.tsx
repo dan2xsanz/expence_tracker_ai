@@ -1,6 +1,7 @@
 import { Stack } from "expo-router";
 import React from "react";
 
+
 export default function CreateAccountLayout() {
   return (
     <Stack
@@ -9,6 +10,7 @@ export default function CreateAccountLayout() {
       }}
     >
       <Stack.Screen name="create" options={{ title: "Create Account" }} />
+
     </Stack>
   );
 }
