@@ -1,5 +1,6 @@
 import axios from "axios";
 
+
 // REQUEST INTERCEPTOR
 axios.interceptors.request.use(
   function (request) {
@@ -17,7 +18,7 @@ axios.interceptors.response.use(
     return response;
   },
   function (error) {
-    console.error("❌ Response Error:", error.response?.data);
+    console.error("❌ Response Error:", error);
     return Promise.reject(error);
   }
 );

@@ -4,7 +4,7 @@ import moment, { Moment } from "moment";
 export interface TransactionInterface {
   id: number | undefined;
   transactionType: TransactionType | undefined;
-  amountValue: number;
+  amountValue: number | undefined;
   categoryType: number | undefined;
   note: string;
   date: Moment | undefined;
@@ -16,7 +16,7 @@ export interface TransactionInterface {
 export const transactionDefault: TransactionInterface = {
   id: undefined,
   transactionType: undefined,
-  amountValue: 0,
+  amountValue: undefined,
   categoryType: undefined,
   note: "",
   date: moment(),

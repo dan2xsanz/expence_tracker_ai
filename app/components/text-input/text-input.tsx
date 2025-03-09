@@ -62,6 +62,9 @@ const TextInputField = ({
         style,
       ]}
       value={value}
+      autoComplete="off"
+      spellCheck={false}
+      autoCorrect={false}
       editable={!readOnly}
       multiline={multiline}
       onChangeText={onChange}

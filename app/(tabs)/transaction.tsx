@@ -50,8 +50,14 @@ export default function TransactionScreen() {
       <View style={transaction_style.container}>
         {/* TRANSACTION HEADER SELECTION */}
         <TransactionHeader
-          transactionDetails={transactionDetails}
-          setTransactionDetails={setTransactionDetails}
+          headerText="Transaction"
+          transactionDetails={transactionDetails.transactionType}
+          setTransactionDetails={(data) =>
+            setTransactionDetails({
+              ...transactionDetails,
+              transactionType: data,
+            })
+          }
         />
         {/* TRANSACTION DETAILS */}
         {transactionDetails.transactionType !== undefined && (
@@ -76,9 +82,12 @@ export default function TransactionScreen() {
                 placeHolder={"Amount"}
                 keyboardType={"numeric"}
                 style={{ width: "85%", fontSize: 18 }}
-                value={transactionDetails.amountValue.toString()}
+                value={transactionDetails.amountValue?.toString()}
                 onChange={(data) =>
-                  onChangeFields({ ...transactionDetails, amountValue: data })
+                  onChangeFields({
+                    ...transactionDetails,
+                    amountValue: data.replace(/[^0-9]/g, ""),
+                  })
                 }
               />
             </View>

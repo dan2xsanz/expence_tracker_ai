@@ -5,7 +5,6 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 export const CreateTransaction = (
   data: TransactionInterface
 ): Promise<ResponseInterface> => {
-  console.log(data);
   return new Promise((resolve, reject) => {
     axios
       .post<ResponseInterface>(

@@ -1,25 +1,23 @@
 import { TouchableOpacity, View, Image, StyleSheet } from "react-native";
-import {
-  transactionDefault,
-  TransactionInterface,
-  TransactionType,
-} from "@/app/config";
+import { TransactionType } from "@/app/config";
 import Label from "@/app/components/label/label";
 import React, { Fragment } from "react";
 
 interface TransactionHeaderProps {
-  transactionDetails: TransactionInterface;
-  setTransactionDetails: (data: TransactionInterface) => void;
+  headerText: string;
+  transactionDetails: TransactionType | undefined;
+  setTransactionDetails: (data: TransactionType | undefined) => void;
 }
 
 const TransactionHeader = ({
+  headerText,
   transactionDetails,
   setTransactionDetails,
 }: TransactionHeaderProps) => {
   return (
     <Fragment>
       <View style={transaction_style.header_container}>
-        <Label label={"Transaction"} size={"medium"} style={{ fontSize: 20 }} />
+        <Label label={headerText} size={"medium"} style={{ fontSize: 20 }} />
       </View>
       <View style={{ marginTop: 20 }}>
         <View
@@ -39,19 +37,11 @@ const TransactionHeader = ({
         </View>
         <View style={transaction_style.transaction_option_container}>
           <TouchableOpacity
-            onPress={() =>
-              setTransactionDetails({
-                ...transactionDefault,
-                transactionType: TransactionType.MONEY_IN,
-              })
-            }
-            disabled={
-              transactionDetails.transactionType === TransactionType.MONEY_IN
-            }
+            onPress={() => setTransactionDetails(TransactionType.MONEY_IN)}
+            disabled={transactionDetails === TransactionType.MONEY_IN}
             style={{
               ...transaction_style.transaction_type_container,
-              ...(transactionDetails.transactionType ===
-                TransactionType.MONEY_IN &&
+              ...(transactionDetails === TransactionType.MONEY_IN &&
                 transaction_style.transaction_selected),
             }}
           >
@@ -66,19 +56,11 @@ const TransactionHeader = ({
             />
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() =>
-              setTransactionDetails({
-                ...transactionDefault,
-                transactionType: TransactionType.MONEY_OUT,
-              })
-            }
-            disabled={
-              transactionDetails.transactionType === TransactionType.MONEY_OUT
-            }
+            onPress={() => setTransactionDetails(TransactionType.MONEY_OUT)}
+            disabled={transactionDetails === TransactionType.MONEY_OUT}
             style={{
               ...transaction_style.transaction_type_container,
-              ...(transactionDetails.transactionType ===
-                TransactionType.MONEY_OUT &&
+              ...(transactionDetails === TransactionType.MONEY_OUT &&
                 transaction_style.transaction_selected),
             }}
           >
