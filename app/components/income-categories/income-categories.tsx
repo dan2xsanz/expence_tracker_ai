@@ -20,7 +20,7 @@ interface IncomeCategoriesInterface {
   Categories: any;
 }
 
-export const IncomeCategories = ({
+const IncomeCategories = ({
   Categories,
   onChangeFields,
   transactionDetails,
@@ -108,3 +108,5 @@ const income_categories_style = StyleSheet.create({
     padding: 2,
   },
 });
+
+export default IncomeCategories;

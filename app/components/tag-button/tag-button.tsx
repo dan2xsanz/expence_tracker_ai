@@ -8,7 +8,12 @@ interface TagButtonInterface {
   onPress?: VoidFunction;
 }
 
-const TagButton = ({ icon, tagText, disabled ,onPress}: TagButtonInterface) => {
+const TagButton = ({
+  icon,
+  tagText,
+  disabled,
+  onPress,
+}: TagButtonInterface) => {
   return (
     <TouchableOpacity disabled={disabled} onPress={onPress}>
       <View style={tagButoon_style.container}>
@@ -24,8 +29,6 @@ const TagButton = ({ icon, tagText, disabled ,onPress}: TagButtonInterface) => {
   );
 };
 
-export default TagButton;
-
 const tagButoon_style = StyleSheet.create({
   container: {
     width: 80,
@@ -35,3 +38,5 @@ const tagButoon_style = StyleSheet.create({
     alignItems: "center",
   },
 });
+
+export default TagButton;
