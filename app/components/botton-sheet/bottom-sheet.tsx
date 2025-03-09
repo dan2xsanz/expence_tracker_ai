@@ -11,7 +11,7 @@ import {
   RemittanceIcon,
   SackMoneyIcon,
   SavingIcon,
-  StocksIcon
+  StocksIcon,
 } from "../icons/icons";
 import TagButton from "../tag-button/tag-button";
 import Label from "../label/label";
@@ -27,7 +27,7 @@ const BottomSheetDrawer = ({
   children,
   openSheet,
   sheetTitle,
-  setOpenDrawer
+  setOpenDrawer,
 }: BottomSheetDrawerProps) => {
   return (
     <BottomSheet
@@ -47,21 +47,21 @@ const BottomSheetDrawer = ({
   );
 };
 
-export default BottomSheetDrawer;
-
 const bottomSheet_style = StyleSheet.create({
   bottomSheetContainer: {
     backgroundColor: "white",
     padding: 20,
     height: 400,
     borderTopLeftRadius: 15,
-    borderTopRightRadius: 15
+    borderTopRightRadius: 15,
   },
   closeButtonContainer: {
     marginBottom: 20,
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between"
-  }
+    justifyContent: "space-between",
+  },
 });
+
+export default BottomSheetDrawer;

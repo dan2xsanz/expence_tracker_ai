@@ -1,5 +1,9 @@
 import { TouchableOpacity, View, Image, StyleSheet } from "react-native";
-import { transactionDefault, TransactionInterface, TransactionType } from "@/app/config";
+import {
+  transactionDefault,
+  TransactionInterface,
+  TransactionType,
+} from "@/app/config";
 import Label from "@/app/components/label/label";
 import React, { Fragment } from "react";
 
@@ -94,8 +98,6 @@ const TransactionHeader = ({
   );
 };
 
-export default TransactionHeader;
-
 const transaction_style = StyleSheet.create({
   header_container: {
     flexDirection: "row",
@@ -128,3 +130,5 @@ const transaction_style = StyleSheet.create({
     backgroundColor: "#36c4a571",
   },
 });
+
+export default TransactionHeader;
