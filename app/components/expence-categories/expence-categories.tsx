@@ -3,8 +3,7 @@ import React, { Fragment } from "react";
 import { View, StyleSheet } from "react-native";
 import TagButton from "../tag-button/tag-button";
 import { EXPENCE_CATEGORY } from "@/app/config";
-
-export const ExpenceCategories = () => {
+const ExpenceCategories = () => {
   return (
     <Fragment>
       <View style={expence_categories_style.categoriesContainer}>
@@ -108,3 +107,5 @@ const expence_categories_style = StyleSheet.create({
     justifyContent: "space-between",
   },
 });
+
+export default ExpenceCategories;

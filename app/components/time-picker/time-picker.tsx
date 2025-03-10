@@ -3,10 +3,11 @@ import { Platform, TouchableOpacity, View } from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import TextInputField from "../text-input/text-input";
 import React, { useState } from "react";
+import moment, { Moment } from "moment";
 
 interface TimePickerInterface {
-  timeValue: Date;
-  setTimeValue: (data: Date) => void;
+  timeValue: Moment;
+  setTimeValue: (data: Moment) => void;
 }
 
 const TimePicker = ({ timeValue, setTimeValue }: TimePickerInterface) => {
@@ -14,7 +15,7 @@ const TimePicker = ({ timeValue, setTimeValue }: TimePickerInterface) => {
 
   const onChange = (event: any, selectedTime?: Date) => {
     if (selectedTime) {
-      setTimeValue(selectedTime);
+      setTimeValue(moment(selectedTime)); // Convert Date to Moment
     }
     setOpenClock(false); // Hide the picker after selection
   };
@@ -30,11 +31,7 @@ const TimePicker = ({ timeValue, setTimeValue }: TimePickerInterface) => {
       <TextInputField
         readOnly
         style={{ marginTop: 2, width: "90%", fontSize: 18, color: "#333" }}
-        placeHolder={timeValue.toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-          hour12: true
-        })}
+        placeHolder={timeValue.format("hh:mm A")} // Format time in AM/PM format
       />
       <TouchableOpacity onPress={() => setOpenClock(true)}>
         <FontAwesome size={35} name="clock-o" color={"#216363"} />
@@ -43,7 +40,7 @@ const TimePicker = ({ timeValue, setTimeValue }: TimePickerInterface) => {
         <DateTimePicker
           mode="time"
           onChange={onChange}
-          value={timeValue}
+          value={timeValue.toDate()} // Convert Moment to Date for picker
           display={Platform.OS === "ios" ? "spinner" : "default"}
         />
       )}

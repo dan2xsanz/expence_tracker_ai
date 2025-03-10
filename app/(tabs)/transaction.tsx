@@ -1,6 +1,7 @@
-import { PaymentCategories } from "../components/payment-categories/payment-categories";
-import { IncomeCategories } from "../components/income-categories/income-categories";
+import ExpenceCategories from "../components/expence-categories/expence-categories";
+import PaymentCategories from "../components/payment-categories/payment-categories";
 import TransactionHeader from "../components/transaction-header/transaction-header";
+import IncomeCategories from "../components/income-categories/income-categories";
 import BottomSheetDrawer from "../components/botton-sheet/bottom-sheet";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import TextInputField from "../components/text-input/text-input";
@@ -19,7 +20,8 @@ import {
   INCOME_CATEGORY,
   TransactionType,
 } from "../config";
-import { ExpenceCategories } from "../components/expence-categories/expence-categories";
+import { createTransaction } from "../operations";
+import { Moment } from "moment";
 
 export default function TransactionScreen() {
   const [transactionDetails, setTransactionDetails] =
@@ -74,9 +76,9 @@ export default function TransactionScreen() {
                 placeHolder={"Amount"}
                 keyboardType={"numeric"}
                 style={{ width: "85%", fontSize: 18 }}
-                value={transactionDetails.amount.toString()}
+                value={transactionDetails.amountValue.toString()}
                 onChange={(data) =>
-                  onChangeFields({ ...transactionDetails, amount: data })
+                  onChangeFields({ ...transactionDetails, amountValue: data })
                 }
               />
             </View>
@@ -125,15 +127,15 @@ export default function TransactionScreen() {
             />
             {/* DATE PICKER FIELD */}
             <DatePicker
-              dateValue={transactionDetails.date}
-              setDateValue={(data: Date) =>
+              dateValue={transactionDetails.date!}
+              setDateValue={(data: Moment) =>
                 onChangeFields({ ...transactionDetails, date: data })
               }
             />
             {/* TIME PICKER FIELD */}
             <TimePicker
-              timeValue={transactionDetails.time}
-              setTimeValue={(data: Date) =>
+              timeValue={transactionDetails.time!}
+              setTimeValue={(data: Moment) =>
                 onChangeFields({ ...transactionDetails, time: data })
               }
             />
@@ -172,7 +174,7 @@ export default function TransactionScreen() {
                   : `Add Expence`
               }
               size="medium"
-              onPress={() => console.log(transactionDetails)}
+              onPress={() => createTransaction(transactionDetails)}
             />
           </View>
         )}

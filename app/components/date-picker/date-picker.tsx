@@ -3,10 +3,11 @@ import { Platform, TouchableOpacity, View } from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import TextInputField from "../text-input/text-input";
 import React, { useState } from "react";
+import moment, { Moment } from "moment";
 
 interface DatePickerInterface {
-  dateValue: Date;
-  setDateValue: (data: Date) => void;
+  dateValue: Moment;
+  setDateValue: (data: Moment) => void;
 }
 
 const DatePicker = ({ dateValue, setDateValue }: DatePickerInterface) => {
@@ -14,7 +15,7 @@ const DatePicker = ({ dateValue, setDateValue }: DatePickerInterface) => {
 
   const onChange = (event: any, selectedDate?: Date) => {
     if (selectedDate) {
-      setDateValue(selectedDate);
+      setDateValue(moment(selectedDate)); // Convert Date to Moment
     }
     setOpenCalendar(false); // Hide the picker after selection
   };
@@ -24,13 +25,13 @@ const DatePicker = ({ dateValue, setDateValue }: DatePickerInterface) => {
       style={{
         alignItems: "center",
         flexDirection: "row",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
       }}
     >
       <TextInputField
         readOnly
         style={{ marginTop: 2, width: "90%", fontSize: 18, color: "#333" }}
-        placeHolder={dateValue.toDateString()}
+        placeHolder={dateValue.format("YYYY-MM-DD")} // Format Moment.js value
       />
       <TouchableOpacity onPress={() => setOpenCalendar(true)}>
         <FontAwesome size={32} name="calendar" color={"#216363"} />
@@ -39,7 +40,7 @@ const DatePicker = ({ dateValue, setDateValue }: DatePickerInterface) => {
         <DateTimePicker
           mode="date"
           onChange={onChange}
-          value={dateValue}
+          value={dateValue.toDate()} // Convert Moment to Date for picker
           display={Platform.OS === "ios" ? "spinner" : "default"}
         />
       )}

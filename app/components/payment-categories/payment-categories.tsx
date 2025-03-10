@@ -19,7 +19,7 @@ interface PaymentCategoriesInterface {
   PaymentMethod: any;
 }
 
-export const PaymentCategories = ({
+const PaymentCategories = ({
   transactionDetails,
   onChangeFields,
   PaymentMethod,
@@ -103,3 +103,5 @@ const payment_categories_style = StyleSheet.create({
     padding: 2,
   },
 });
+
+export default PaymentCategories;
