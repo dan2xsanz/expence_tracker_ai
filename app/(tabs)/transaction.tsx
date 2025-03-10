@@ -3,7 +3,7 @@ import PaymentCategories from "../components/payment-categories/payment-categori
 import TransactionHeader from "../components/transaction-header/transaction-header";
 import IncomeCategories from "../components/income-categories/income-categories";
 import BottomSheetDrawer from "../components/botton-sheet/bottom-sheet";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import TextInputField from "../components/text-input/text-input";
 import DatePicker from "../components/date-picker/date-picker";
 import TimePicker from "../components/time-picker/time-picker";
@@ -36,6 +36,15 @@ export default function TransactionScreen() {
   // On Change Fields
   const onChangeFields = (data: TransactionInterface) => {
     setTransactionDetails({ ...transactionDetails, ...data });
+  };
+
+  const onClickAddTransaction = (data: TransactionInterface) => {
+    console.log(data);
+    if (!data.amountValue || !data.categoryType || !data.paymentType) {
+      return Alert.alert("Error", "Please input value for required fields!");
+    } else {
+      createTransaction({ data, setTransactionDetails });
+    }
   };
 
   // Reset transactionType every time the screen is focused
@@ -93,23 +102,28 @@ export default function TransactionScreen() {
             </View>
             <View style={transaction_style.category_container}>
               {/* INCOME CATEGORY FIELD */}
-              <TextInputField
-                required
-                readOnly
-                value={
-                  transactionDetails.categoryType
-                    ? INCOME_CATEGORY[transactionDetails.categoryType]
-                        .categoryName
-                    : ""
-                }
-                placeHolder={`${
-                  transactionDetails.transactionType ===
-                  TransactionType.MONEY_IN
-                    ? `Income Category`
-                    : `Expence Category`
-                }`}
-                style={{ fontSize: 18, width: "90%" }}
-              />
+              <TouchableOpacity
+                onPress={() => Categories.setOpenBottomSheet(true)}
+                style={{ width: "90%" }}
+              >
+                <TextInputField
+                  required
+                  readOnly
+                  style={{ fontSize: 18 }}
+                  value={
+                    transactionDetails.categoryType
+                      ? INCOME_CATEGORY[transactionDetails.categoryType]
+                          .categoryName
+                      : ""
+                  }
+                  placeHolder={`${
+                    transactionDetails.transactionType ===
+                    TransactionType.MONEY_IN
+                      ? `Income Category`
+                      : `Expence Category`
+                  }`}
+                />
+              </TouchableOpacity>
               {!Categories.openBottomSheet ? (
                 <TouchableOpacity
                   onPress={() => Categories.setOpenBottomSheet(true)}
@@ -150,18 +164,23 @@ export default function TransactionScreen() {
             />
             {/* PAYMNET METHOD FIELD */}
             <View style={transaction_style.payment_container}>
-              <TextInputField
-                required
-                readOnly
-                value={
-                  transactionDetails.paymentType
-                    ? PAYMENT_CATEGORY[transactionDetails.paymentType]
-                        .paymentName
-                    : ""
-                }
-                placeHolder={`Pament Method`}
-                style={{ fontSize: 18, width: "90%" }}
-              />
+              <TouchableOpacity
+                onPress={() => PaymentMethod.setOpenBottomSheet(true)}
+                style={{ width: "90%" }}
+              >
+                <TextInputField
+                  required
+                  readOnly
+                  value={
+                    transactionDetails.paymentType
+                      ? PAYMENT_CATEGORY[transactionDetails.paymentType]
+                          .paymentName
+                      : ""
+                  }
+                  placeHolder={`Pament Method`}
+                  style={{ fontSize: 18 }}
+                />
+              </TouchableOpacity>
               {!PaymentMethod.openBottomSheet ? (
                 <TouchableOpacity
                   onPress={() => PaymentMethod.setOpenBottomSheet(true)}
@@ -183,7 +202,7 @@ export default function TransactionScreen() {
                   : `Add Expence`
               }
               size="medium"
-              onPress={() => createTransaction(transactionDetails)}
+              onPress={() => onClickAddTransaction(transactionDetails)}
             />
           </View>
         )}

@@ -27,13 +27,11 @@ export default function CreateAccountScreen() {
     const { name, email, password, confirmPassword } = createAccount;
 
     if (!name || !email || !password || !confirmPassword) {
-      Alert.alert("Error", "All fields are required!");
-      return;
+      return Alert.alert("Error", "Please input value for required fields!");
     }
 
     if (password !== confirmPassword) {
-      Alert.alert("Error", "Passwords do not match!");
-      return;
+      return Alert.alert("Error", "Passwords do not match!");
     }
 
     Alert.alert("Success", "Account Created Successfully!");
@@ -58,10 +56,17 @@ export default function CreateAccountScreen() {
             padding: "5%",
           }}
         >
-          <Image
-            source={require("../../assets/bmoskatehi.png")}
-            style={{ width: 120, height: 120, marginBottom: -10 }}
-          />
+          <View style={{ alignItems: "center", flexDirection: "row" }}>
+            <Image
+              source={require("../../assets/bmoneyin.png")}
+              style={{ width: 100, height: 100 }}
+            />
+            <Label
+              label={"Yey! Let's start."}
+              size={"small"}
+              style={{ fontWeight: "600", marginBottom:20 }}
+            />
+          </View>
           <TextInputField
             required
             size={"medium"}
