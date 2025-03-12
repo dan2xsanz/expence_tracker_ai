@@ -58,7 +58,7 @@ export default function LoginScreen() {
           <Label
             label={"Forgot Password"}
             size={"small"}
-            onPress={() => console.log("I forgot my password")}
+            onPress={() => router.push("/(forgotpassword)/forgot")}
             style={{ fontWeight: "500" }}
           />
         </View>
