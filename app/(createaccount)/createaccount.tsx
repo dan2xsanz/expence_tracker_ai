@@ -56,15 +56,32 @@ export default function CreateAccountScreen() {
             padding: "5%",
           }}
         >
-          <View style={{ alignItems: "center", flexDirection: "row" }}>
+          <View
+            style={{
+              alignItems: "center",
+              flexDirection: "row",
+            }}
+          >
+            <View
+              style={{
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <Label
+                size={"small"}
+                label={"Yey! Thank you for choosing me BMO,"}
+                style={{ fontWeight: "600" }}
+              />
+              <Label
+                size={"small"}
+                label={"Let's start creating your account."}
+                style={{ fontWeight: "600" }}
+              />
+            </View>
             <Image
-              source={require("../../assets/bmoneyin.png")}
-              style={{ width: 100, height: 100 }}
-            />
-            <Label
-              label={"Yey! Let's start."}
-              size={"small"}
-              style={{ fontWeight: "600", marginBottom:20 }}
+              source={require("../../assets/bmohi.png")}
+              style={{ width: 100, height: 100, marginBottom: -5 }}
             />
           </View>
           <TextInputField

@@ -9,20 +9,8 @@ export interface TransactionInterface {
   note: string;
   date: Moment | undefined;
   time: Moment | undefined;
-
   paymentType: number | undefined;
 }
-
-export const transactionDefault: TransactionInterface = {
-  id: undefined,
-  transactionType: undefined,
-  amountValue: undefined,
-  categoryType: undefined,
-  note: "",
-  date: moment(),
-  time: moment().startOf("second"),
-  paymentType: undefined,
-};
 
 export interface IncomeCategoryInterface {
   categoryName: string;
@@ -47,4 +35,13 @@ export interface ResponseInterface {
   errorMessages: string[];
   errorCodes: any;
   exceptionType: string;
+}
+
+export interface TransactionListFilter {
+  transactionType: TransactionType | undefined;
+  categoryType: number | undefined;
+  note: string;
+  date: Moment;
+  time: Moment;
+  paymentType: number | undefined;
 }

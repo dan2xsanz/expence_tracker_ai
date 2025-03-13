@@ -1,8 +1,31 @@
+import moment from "moment";
 import {
   ExpenceCategoryInterface,
   IncomeCategoryInterface,
   PaymentMethodInterface,
+  TransactionInterface,
+  TransactionListFilter,
 } from "./expence_tracker_interface";
+
+export const transactionDefault: TransactionInterface = {
+  id: undefined,
+  transactionType: undefined,
+  amountValue: undefined,
+  categoryType: undefined,
+  note: "",
+  date: moment(),
+  time: moment().startOf("second"),
+  paymentType: undefined,
+};
+
+export const transactioFilternDefault: TransactionListFilter = {
+  transactionType: undefined,
+  categoryType: undefined,
+  note: "",
+  date: moment(),
+  time: moment().startOf("second"),
+  paymentType: undefined,
+};
 
 export const INCOME_CATEGORY: IncomeCategoryInterface[] = [
   {

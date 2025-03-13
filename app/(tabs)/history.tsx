@@ -1,55 +1,141 @@
-import { View, Text, StyleSheet, ScrollView } from "react-native";
 import TransactionHeader from "../components/transaction-header/transaction-header";
-import Label from "../components/label/label";
+import { transactioFilternDefault, TransactionListFilter } from "../config";
+import TextInputField from "../components/text-input/text-input";
+import DatePicker from "../components/date-picker/date-picker";
+import TimePicker from "../components/time-picker/time-picker";
+import { View, StyleSheet, ScrollView } from "react-native";
 import ListItem from "../components/list-item/list-item";
+import {
+  FilterActiveIcon,
+  FilterNotActiveIcon,
+} from "../components/icons/icons";
+import Label from "../components/label/label";
+import { Fragment, useCallback, useState } from "react";
+import { Moment } from "moment";
+import { useFocusEffect } from "expo-router";
 
 export default function HistoryScreen() {
+  // DISPLAY FILTER
+  const [displayFilter, setDisplayFilter] = useState<boolean>(false);
+
+  // TRASNSACTION FILTER STATE
+  const [transactionDetails, setTransactionDetails] =
+    useState<TransactionListFilter>(transactioFilternDefault);
+
+  // Reset transactionType every time the screen is focused
+  useFocusEffect(
+    useCallback(() => {
+      setDisplayFilter(false);
+      setTransactionDetails(transactioFilternDefault);
+    }, [])
+  );
+
   return (
     <View style={history_style.main_container}>
       <View style={history_style.container}>
-        {/* TRANSACTION HEADER SELECTION */}
-        <TransactionHeader
-          headerText="Transaction History"
-          transactionDetails={undefined}
-          setTransactionDetails={(data) => {}}
-        />
-        <View style={history_style.instruction_divider}>
+        <View style={history_style.header_container}>
           <Label
-            size={"small"}
-            style={{ fontSize: 12 }}
-            label={"Transaction List"}
+            label={"Transaction History"}
+            size={"medium"}
+            style={{ fontSize: 20 }}
           />
-          <View style={history_style.intruction_line} />
+          {displayFilter ? (
+            <FilterActiveIcon
+              onPress={() => setDisplayFilter(!displayFilter)}
+            />
+          ) : (
+            <FilterNotActiveIcon
+              onPress={() => setDisplayFilter(!displayFilter)}
+            />
+          )}
         </View>
-        <ScrollView style={{ height: "73%" }}>
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
-          <ListItem />
-        </ScrollView>
+
+        {/* TRANSACTION FILTER SELECTION  */}
+        {displayFilter && (
+          <View>
+            <TransactionHeader
+              titleDisplay="Please specify filter for transaction history. "
+              transactionDetails={transactionDetails.transactionType}
+              setTransactionDetails={(data) =>
+                setTransactionDetails({
+                  ...transactionDetails,
+                  transactionType: data,
+                })
+              }
+            />
+            <View style={{ marginTop: 10, gap: 5 }}>
+              <DatePicker
+                dateValue={transactionDetails.date}
+                setDateValue={(data) =>
+                  setTransactionDetails({
+                    ...transactionDetails,
+                    date: data,
+                  })
+                }
+              />
+              {/* TIME PICKER FIELD */}
+              <TimePicker
+                timeValue={transactionDetails.time!}
+                setTimeValue={(data: Moment) =>
+                  setTransactionDetails({
+                    ...transactionDetails,
+                    time: data,
+                  })
+                }
+              />
+              <TextInputField
+                size="medium"
+                placeHolder={"Search by note"}
+                keyboardType={"numeric"}
+                style={{ marginTop: 2 }}
+                value={undefined}
+                onChange={() => {}}
+              />
+            </View>
+          </View>
+        )}
+
+        {!displayFilter && (
+          <Fragment>
+            <View style={history_style.instruction_divider}>
+              <Label
+                size={"small"}
+                style={{ fontSize: 12 }}
+                label={"Transaction List"}
+              />
+              <View style={history_style.intruction_line} />
+            </View>
+            <ScrollView style={{ height: "90%" }}>
+              <ListItem />
+              <ListItem />
+              <ListItem />
+              <ListItem />
+              <ListItem />
+              <ListItem />
+              <ListItem />
+              <ListItem />
+              <ListItem />
+              <ListItem />
+              <ListItem />
+              <ListItem />
+              <ListItem />
+              <ListItem />
+              <ListItem />
+              <ListItem />
+              <ListItem />
+              <ListItem />
+              <ListItem />
+              <ListItem />
+              <ListItem />
+              <ListItem />
+              <ListItem />
+              <ListItem />
+              <ListItem />
+              <ListItem />
+              <ListItem />
+            </ScrollView>
+          </Fragment>
+        )}
       </View>
     </View>
   );
@@ -66,6 +152,11 @@ const history_style = StyleSheet.create({
     paddingTop: 5,
     paddingLeft: 20,
     paddingRight: 20,
+  },
+  header_container: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   instruction_divider: {
     flexDirection: "row",

@@ -4,21 +4,18 @@ import Label from "@/app/components/label/label";
 import React, { Fragment } from "react";
 
 interface TransactionHeaderProps {
-  headerText: string;
   transactionDetails: TransactionType | undefined;
   setTransactionDetails: (data: TransactionType | undefined) => void;
+  titleDisplay?: string;
 }
 
 const TransactionHeader = ({
-  headerText,
+  titleDisplay,
   transactionDetails,
   setTransactionDetails,
 }: TransactionHeaderProps) => {
   return (
     <Fragment>
-      <View style={transaction_style.header_container}>
-        <Label label={headerText} size={"medium"} style={{ fontSize: 20 }} />
-      </View>
       <View style={{ marginTop: 20 }}>
         <View
           style={{
@@ -29,7 +26,11 @@ const TransactionHeader = ({
           }}
         >
           <Label
-            label={"Please select transaction type first"}
+            label={
+              titleDisplay
+                ? titleDisplay
+                : "Please select transaction type first"
+            }
             size={"small"}
             style={{ fontSize: 12 }}
           />

@@ -49,14 +49,18 @@ export default function LoginScreen() {
             flexDirection: "row",
           }}
         >
-          <TouchableOpacity onPress={() => router.push("/(auth)/create")}>
+          <TouchableOpacity
+            onPress={() => router.push("/(createaccount)/createaccount")}
+          >
             <Label
               label={"Create account"}
               size={"small"}
               style={{ fontWeight: "500" }}
             />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => console.log("I forgot my password")}>
+          <TouchableOpacity
+            onPress={() => router.push("/(forgotpassword)/forgotpassword")}
+          >
             <Label
               label={"Forgot Password"}
               size={"small"}

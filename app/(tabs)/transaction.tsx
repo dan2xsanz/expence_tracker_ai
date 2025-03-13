@@ -39,7 +39,6 @@ export default function TransactionScreen() {
   };
 
   const onClickAddTransaction = (data: TransactionInterface) => {
-    console.log(data);
     if (!data.amountValue || !data.categoryType || !data.paymentType) {
       return Alert.alert("Error", "Please input value for required fields!");
     } else {
@@ -57,9 +56,15 @@ export default function TransactionScreen() {
   return (
     <View style={transaction_style.main_container}>
       <View style={transaction_style.container}>
+        <View style={transaction_style.header_container}>
+          <Label
+            label={"Transaction"}
+            size={"medium"}
+            style={{ fontSize: 20 }}
+          />
+        </View>
         {/* TRANSACTION HEADER SELECTION */}
         <TransactionHeader
-          headerText="Transaction"
           transactionDetails={transactionDetails.transactionType}
           setTransactionDetails={(data) =>
             setTransactionDetails({
@@ -254,6 +259,11 @@ const transaction_style = StyleSheet.create({
     paddingTop: 5,
     paddingLeft: 20,
     paddingRight: 20,
+  },
+  header_container: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   fields_container: {
     marginTop: 20,

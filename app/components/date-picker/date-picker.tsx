@@ -35,7 +35,7 @@ const DatePicker = ({ dateValue, setDateValue }: DatePickerInterface) => {
         <TextInputField
           readOnly
           style={{ marginTop: 2, fontSize: 18, color: "#333" }}
-          placeHolder={dateValue.format("YYYY-MM-DD")} // Format Moment.js value
+          placeHolder={dateValue ? dateValue.format("YYYY-MM-DD") : ""} // Format Moment.js value
         />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => setOpenCalendar(true)}>
