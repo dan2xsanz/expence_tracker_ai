@@ -27,9 +27,7 @@ const TransactionHeader = ({
         >
           <Label
             label={
-              titleDisplay
-                ? titleDisplay
-                : "Please select transaction type first"
+              titleDisplay ? titleDisplay : "Please select transaction type"
             }
             size={"small"}
             style={{ fontSize: 12 }}

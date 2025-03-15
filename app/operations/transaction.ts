@@ -3,8 +3,12 @@ import {
   ResponseInterface,
   transactionDefault,
   TransactionInterface,
+  TransactionListFilter,
 } from "../config";
-import { CreateTransaction } from "../service/transactions/transactions";
+import {
+  CreateTransaction,
+  GetAllTransaction,
+} from "../service/transactions/transactions";
 
 interface CreateTransactionParam {
   data: TransactionInterface;
@@ -24,5 +28,27 @@ export const createTransaction = async ({
   } finally {
     setTransactionDetails(transactionDefault);
     Alert.alert("Success", "Transaction successfully added.");
+  }
+};
+
+interface GetAllTransactionParam {
+  data: TransactionListFilter;
+  // setTransactionDetails?: (data: TransactionInterface) => void;
+}
+
+export const getAllTransaction = async ({
+  data,
+}: // setTransactionDetails,
+GetAllTransactionParam) => {
+  try {
+    const response: ResponseInterface = await GetAllTransaction(data);
+    // RETURN SUCCESS MESSAGE
+    if (response.isSuccess && response.resultData) {
+      return response.resultData;
+    }
+  } catch (error: any) {
+    Alert.alert("Error", "Oops, something went wrong.");
+  } finally {
+    // setTransactionDetails(transactionDefault);
   }
 };

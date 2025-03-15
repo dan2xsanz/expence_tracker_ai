@@ -25,6 +25,7 @@ export const transactioFilternDefault: TransactionListFilter = {
   date: moment(),
   time: moment().startOf("second"),
   paymentType: undefined,
+  accountId: undefined
 };
 
 export const INCOME_CATEGORY: IncomeCategoryInterface[] = [

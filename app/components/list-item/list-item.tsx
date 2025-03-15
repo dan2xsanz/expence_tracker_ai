@@ -1,16 +1,50 @@
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import Label from "../label/label";
 import React from "react";
+import {
+  INCOME_CATEGORY,
+  TransactionInterface,
+  TransactionType,
+} from "@/app/config";
 
-const ListItem = () => {
+interface ListItemParam {
+  onPressItem: () => void;
+  data: TransactionInterface;
+}
+
+export const ListItem = ({ data, onPressItem }: ListItemParam) => {
+  // TRANSACTION TYPE DISPLAY
+  const transactionTypeDisplay = (
+    transactionType: TransactionType | undefined,
+    itemAmmount: number | undefined
+  ) => {
+    if (transactionType === TransactionType.MONEY_OUT) {
+      return `- PHP ${Number(itemAmmount).toLocaleString()}`;
+    }
+    return `PHP ${Number(itemAmmount).toLocaleString()}`;
+  };
+
   return (
-    <TouchableOpacity onPress={() => {}}>
+    <TouchableOpacity onPress={onPressItem}>
       <View style={list_item_style.main_container}>
         <View>
-          <Label label={"Category Type"} size={"small"} />
-          <Label label={"Transaction Note"} size={"note"} />
+          <Label
+            style={{ fontWeight: 500, fontSize: 18 }}
+            label={INCOME_CATEGORY[data.categoryType!].categoryName}
+            size={"small"}
+          />
+          <Label label={data.note} size={"note"} />
         </View>
-        <Label label={"+100,000.00"} size={"small"} />
+        <Label
+          style={{
+            color:
+              data.transactionType === TransactionType.MONEY_OUT
+                ? "red"
+                : "black",
+          }}
+          label={transactionTypeDisplay(data.transactionType, data.amountValue)}
+          size="small"
+        />
       </View>
     </TouchableOpacity>
   );
@@ -29,5 +63,3 @@ const list_item_style = StyleSheet.create({
     justifyContent: "space-between",
   },
 });
-
-export default ListItem;

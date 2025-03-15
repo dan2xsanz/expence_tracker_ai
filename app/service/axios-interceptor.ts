@@ -1,6 +1,5 @@
 import axios from "axios";
 
-
 // REQUEST INTERCEPTOR
 axios.interceptors.request.use(
   function (request) {
@@ -14,7 +13,7 @@ axios.interceptors.request.use(
 // RESPONSE INTERCEPTOR
 axios.interceptors.response.use(
   function (response) {
-    console.log("✅ Request Success:");
+    console.log("✅ Request Success: ", response.config.url);
     return response;
   },
   function (error) {

@@ -1,18 +1,23 @@
 import TransactionHeader from "../components/transaction-header/transaction-header";
-import { transactioFilternDefault, TransactionListFilter } from "../config";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import TextInputField from "../components/text-input/text-input";
 import DatePicker from "../components/date-picker/date-picker";
 import TimePicker from "../components/time-picker/time-picker";
 import { View, StyleSheet, ScrollView } from "react-native";
-import ListItem from "../components/list-item/list-item";
-import {
-  FilterActiveIcon,
-  FilterNotActiveIcon,
-} from "../components/icons/icons";
+import { ListItem } from "../components/list-item/list-item";
+import { getAllTransaction } from "../operations";
 import Label from "../components/label/label";
-import { Fragment, useCallback, useState } from "react";
-import { Moment } from "moment";
 import { useFocusEffect } from "expo-router";
+import { Moment } from "moment";
+import {
+  transactioFilternDefault,
+  TransactionInterface,
+  TransactionListFilter,
+} from "../config";
+import {
+  FilterNotActiveIcon,
+  FilterActiveIcon,
+} from "../components/icons/icons";
 
 export default function HistoryScreen() {
   // DISPLAY FILTER
@@ -22,13 +27,31 @@ export default function HistoryScreen() {
   const [transactionDetails, setTransactionDetails] =
     useState<TransactionListFilter>(transactioFilternDefault);
 
-  // Reset transactionType every time the screen is focused
+  const [transactionList, setTransactionList] = useState<
+    Array<TransactionInterface>
+  >([]);
+
+  // RESET TRANSACTION TYPE EVERYTME THE SCREEN IS FOCUSED
   useFocusEffect(
     useCallback(() => {
       setDisplayFilter(false);
+      transactionLisFetch();
       setTransactionDetails(transactioFilternDefault);
+      4;
     }, [])
   );
+
+  // FETCH TRANSACTION LIST
+  const transactionLisFetch = useCallback(async () => {
+    return setTransactionList(
+      await getAllTransaction({ data: transactionDetails })
+    );
+  }, [transactionDetails]);
+
+  // TRIGGER FETCHING OF TRANSACTION LIST ONCE FILETR CHANGED
+  useEffect(() => {
+    transactionLisFetch();
+  }, [transactionDetails]);
 
   return (
     <View style={history_style.main_container}>
@@ -39,7 +62,7 @@ export default function HistoryScreen() {
             size={"medium"}
             style={{ fontSize: 20 }}
           />
-          {displayFilter ? (
+          {!displayFilter ? (
             <FilterActiveIcon
               onPress={() => setDisplayFilter(!displayFilter)}
             />
@@ -106,33 +129,11 @@ export default function HistoryScreen() {
               <View style={history_style.intruction_line} />
             </View>
             <ScrollView style={{ height: "90%" }}>
-              <ListItem />
-              <ListItem />
-              <ListItem />
-              <ListItem />
-              <ListItem />
-              <ListItem />
-              <ListItem />
-              <ListItem />
-              <ListItem />
-              <ListItem />
-              <ListItem />
-              <ListItem />
-              <ListItem />
-              <ListItem />
-              <ListItem />
-              <ListItem />
-              <ListItem />
-              <ListItem />
-              <ListItem />
-              <ListItem />
-              <ListItem />
-              <ListItem />
-              <ListItem />
-              <ListItem />
-              <ListItem />
-              <ListItem />
-              <ListItem />
+              {transactionList.map((data, index) => {
+                return (
+                  <ListItem key={index} onPressItem={() => {}} data={data} />
+                );
+              })}
             </ScrollView>
           </Fragment>
         )}

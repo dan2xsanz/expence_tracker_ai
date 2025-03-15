@@ -35,11 +35,16 @@ export default function TransactionScreen() {
 
   // On Change Fields
   const onChangeFields = (data: TransactionInterface) => {
+    console.log(data.categoryType);
     setTransactionDetails({ ...transactionDetails, ...data });
   };
 
   const onClickAddTransaction = (data: TransactionInterface) => {
-    if (!data.amountValue || !data.categoryType || !data.paymentType) {
+    if (
+      !data.amountValue ||
+      !data.paymentType ||
+      data.categoryType === undefined
+    ) {
       return Alert.alert("Error", "Please input value for required fields!");
     } else {
       createTransaction({ data, setTransactionDetails });
@@ -100,7 +105,7 @@ export default function TransactionScreen() {
                 onChange={(data) =>
                   onChangeFields({
                     ...transactionDetails,
-                    amountValue: data.replace(/[^0-9]/g, ""),
+                    amountValue: data,
                   })
                 }
               />
@@ -116,7 +121,7 @@ export default function TransactionScreen() {
                   readOnly
                   style={{ fontSize: 18 }}
                   value={
-                    transactionDetails.categoryType
+                    transactionDetails.categoryType !== undefined
                       ? INCOME_CATEGORY[transactionDetails.categoryType]
                           .categoryName
                       : ""
@@ -177,7 +182,7 @@ export default function TransactionScreen() {
                   required
                   readOnly
                   value={
-                    transactionDetails.paymentType
+                    transactionDetails.paymentType !== undefined
                       ? PAYMENT_CATEGORY[transactionDetails.paymentType]
                           .paymentName
                       : ""

@@ -38,9 +38,9 @@ export default function CreateAccountScreen() {
   };
 
   return (
-    <View style={create_accounrt_styles.main_container}>
-      <View style={create_accounrt_styles.container}>
-        <View style={create_accounrt_styles.header_container}>
+    <View style={create_account_styles.main_container}>
+      <View style={create_account_styles.container}>
+        <View style={create_account_styles.header_container}>
           <Label
             label={"Create Account"}
             size={"medium"}
@@ -48,26 +48,9 @@ export default function CreateAccountScreen() {
           />
         </View>
 
-        <View
-          style={{
-            alignItems: "center",
-            gap: 10,
-            marginTop: 100,
-            padding: "5%",
-          }}
-        >
-          <View
-            style={{
-              alignItems: "center",
-              flexDirection: "row",
-            }}
-          >
-            <View
-              style={{
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
+        <View style={create_account_styles.fields_container}>
+          <View style={create_account_styles.greetings_bmo_container}>
+            <View style={create_account_styles.greetings_container}>
               <Label
                 size={"small"}
                 label={"Yey! Thank you for choosing me BMO,"}
@@ -125,7 +108,7 @@ export default function CreateAccountScreen() {
   );
 }
 
-const create_accounrt_styles = StyleSheet.create({
+const create_account_styles = StyleSheet.create({
   main_container: {
     height: "100%",
     paddingTop: 5,
@@ -141,5 +124,19 @@ const create_accounrt_styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+  },
+  fields_container: {
+    alignItems: "center",
+    gap: 10,
+    marginTop: 130,
+    padding: "5%",
+  },
+  greetings_bmo_container: {
+    alignItems: "center",
+    flexDirection: "row",
+  },
+  greetings_container: {
+    flexDirection: "column",
+    alignItems: "center",
   },
 });
