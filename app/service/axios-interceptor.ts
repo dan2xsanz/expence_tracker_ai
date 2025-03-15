@@ -13,11 +13,11 @@ axios.interceptors.request.use(
 // RESPONSE INTERCEPTOR
 axios.interceptors.response.use(
   function (response) {
-    console.log("✅ Request Success:");
+    console.log("✅ Request Success: ", response.config.url);
     return response;
   },
   function (error) {
-    console.error("❌ Response Error:", error.response?.data);
+    console.error("❌ Response Error:", error);
     return Promise.reject(error);
   }
 );

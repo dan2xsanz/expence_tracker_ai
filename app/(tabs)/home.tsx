@@ -71,7 +71,7 @@ export const home_style = StyleSheet.create({
     justifyContent: "space-between",
     paddingRight: 20,
     elevation: 100,
-    backgroundColor: "#36c4a571",
+    backgroundColor: "#36c4a550",
     shadowColor: "black",
     shadowOpacity: 0.5,
   },

@@ -25,14 +25,19 @@ const TimePicker = ({ timeValue, setTimeValue }: TimePickerInterface) => {
       style={{
         alignItems: "center",
         flexDirection: "row",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
       }}
     >
-      <TextInputField
-        readOnly
-        style={{ marginTop: 2, width: "90%", fontSize: 18, color: "#333" }}
-        placeHolder={timeValue.format("hh:mm A")} // Format time in AM/PM format
-      />
+      <TouchableOpacity
+        onPress={() => setOpenClock(true)}
+        style={{ width: "90%" }}
+      >
+        <TextInputField
+          readOnly
+          style={{ marginTop: 2, fontSize: 18, color: "#333" }}
+          placeHolder={timeValue.format("hh:mm A")} // Format time in AM/PM format
+        />
+      </TouchableOpacity>
       <TouchableOpacity onPress={() => setOpenClock(true)}>
         <FontAwesome size={35} name="clock-o" color={"#216363"} />
       </TouchableOpacity>

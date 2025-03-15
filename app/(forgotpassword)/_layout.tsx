@@ -1,15 +1,17 @@
 import { Stack } from "expo-router";
 import React from "react";
 
-export default function forgotPasswordLayout() {
+export default function ForgotPasswordLayout() {
   return (
     <Stack
       screenOptions={{
         headerShown: false,
       }}
     >
-      <Stack.Screen name="forgot" options={{ title: "Forgot Password" }} />
-
+      <Stack.Screen
+        name="forgotpassword"
+        options={{ title: "Forgot Password" }}
+      />
     </Stack>
   );
 }

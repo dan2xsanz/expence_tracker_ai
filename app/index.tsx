@@ -1,5 +1,5 @@
 import TextInputField from "./components/text-input/text-input";
-import { View, StyleSheet, Image } from "react-native";
+import { View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import ButtonField from "./components/button/button";
 import Label from "./components/label/label";
 import { useRouter } from "expo-router";
@@ -49,18 +49,24 @@ export default function LoginScreen() {
             flexDirection: "row",
           }}
         >
-          <Label
-            label={"Create account"}
-            size={"small"}
-            onPress={() => router.push("/(auth)/create")}
-            style={{ fontWeight: "500" }}
-          />
-          <Label
-            label={"Forgot Password"}
-            size={"small"}
-            onPress={() => router.push("/(forgotpassword)/forgot")}
-            style={{ fontWeight: "500" }}
-          />
+          <TouchableOpacity
+            onPress={() => router.push("/(createaccount)/createaccount")}
+          >
+            <Label
+              label={"Create account"}
+              size={"small"}
+              style={{ fontWeight: "500" }}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => router.push("/(forgotpassword)/forgotpassword")}
+          >
+            <Label
+              label={"Forgot Password"}
+              size={"small"}
+              style={{ fontWeight: "500" }}
+            />
+          </TouchableOpacity>
         </View>
       </View>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
