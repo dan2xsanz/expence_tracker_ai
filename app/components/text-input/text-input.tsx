@@ -30,6 +30,8 @@ const TextInputField = ({
   style,
   value,
   size,
+
+
 }: TextInputProps) => {
   let fontSize = 12;
 
