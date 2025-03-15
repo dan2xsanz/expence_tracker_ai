@@ -9,8 +9,7 @@ export default function CreateAccountLayout() {
         headerShown: false,
       }}
     >
-      <Stack.Screen name="create" options={{ title: "Create Account" }} />
-
+      <Stack.Screen name="createaccount" options={{ title: "Create Account" }} />
     </Stack>
   );
 }

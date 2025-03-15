@@ -28,11 +28,16 @@ const DatePicker = ({ dateValue, setDateValue }: DatePickerInterface) => {
         justifyContent: "space-between",
       }}
     >
-      <TextInputField
-        readOnly
-        style={{ marginTop: 2, width: "90%", fontSize: 18, color: "#333" }}
-        placeHolder={dateValue.format("YYYY-MM-DD")} // Format Moment.js value
-      />
+      <TouchableOpacity
+        onPress={() => setOpenCalendar(true)}
+        style={{ width: "90%" }}
+      >
+        <TextInputField
+          readOnly
+          style={{ marginTop: 2, fontSize: 18, color: "#333" }}
+          placeHolder={dateValue ? dateValue.format("YYYY-MM-DD") : ""} // Format Moment.js value
+        />
+      </TouchableOpacity>
       <TouchableOpacity onPress={() => setOpenCalendar(true)}>
         <FontAwesome size={32} name="calendar" color={"#216363"} />
       </TouchableOpacity>
