@@ -6,7 +6,7 @@ import React, { Fragment } from "react";
 interface TransactionHeaderProps {
   transactionDetails: TransactionType | undefined;
   setTransactionDetails: (data: TransactionType | undefined) => void;
-  titleDisplay?: string;
+  titleDisplay?: boolean;
 }
 
 const TransactionHeader = ({
@@ -17,23 +17,26 @@ const TransactionHeader = ({
   return (
     <Fragment>
       <View style={{ marginTop: 20 }}>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-            marginBottom: 10,
-          }}
-        >
-          <Label
-            label={
-              titleDisplay ? titleDisplay : "Please select transaction type"
-            }
-            size={"small"}
-            style={{ fontSize: 12 }}
-          />
-          <View style={{ height: 1, width: "48%", backgroundColor: "black" }} />
-        </View>
+        {titleDisplay && (
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+              marginBottom: 10,
+            }}
+          >
+            <Label
+              label={"Please select transaction type"}
+              size={"small"}
+              style={{ fontSize: 12 }}
+            />
+            <View
+              style={{ height: 1, width: "50%", backgroundColor: "black" }}
+            />
+          </View>
+        )}
+
         <View style={transaction_style.transaction_option_container}>
           <TouchableOpacity
             onPress={() => setTransactionDetails(TransactionType.MONEY_IN)}

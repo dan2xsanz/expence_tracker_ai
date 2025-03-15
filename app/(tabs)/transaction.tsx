@@ -24,6 +24,7 @@ import { createTransaction } from "../operations";
 import { Moment } from "moment";
 
 export default function TransactionScreen() {
+  // Transaction Details State Container
   const [transactionDetails, setTransactionDetails] =
     useState<TransactionInterface>(transactionDefault);
 
@@ -35,7 +36,6 @@ export default function TransactionScreen() {
 
   // On Change Fields
   const onChangeFields = (data: TransactionInterface) => {
-    console.log(data.categoryType);
     setTransactionDetails({ ...transactionDetails, ...data });
   };
 
@@ -70,6 +70,7 @@ export default function TransactionScreen() {
         </View>
         {/* TRANSACTION HEADER SELECTION */}
         <TransactionHeader
+          titleDisplay
           transactionDetails={transactionDetails.transactionType}
           setTransactionDetails={(data) =>
             setTransactionDetails({
@@ -130,7 +131,7 @@ export default function TransactionScreen() {
                     transactionDetails.transactionType ===
                     TransactionType.MONEY_IN
                       ? `Income Category`
-                      : `Expence Category`
+                      : `Expense Category`
                   }`}
                 />
               </TouchableOpacity>
@@ -205,15 +206,6 @@ export default function TransactionScreen() {
                 </TouchableOpacity>
               )}
             </View>
-            <ButtonField
-              label={
-                transactionDetails.transactionType === TransactionType.MONEY_IN
-                  ? `Add Income`
-                  : `Add Expence`
-              }
-              size="medium"
-              onPress={() => onClickAddTransaction(transactionDetails)}
-            />
           </View>
         )}
         <BottomSheetDrawer
@@ -249,6 +241,24 @@ export default function TransactionScreen() {
           }
         />
       </View>
+      {transactionDetails.transactionType !== undefined && (
+        <View style={transaction_style.buttonsContainer}>
+          <ButtonField
+            label={
+              transactionDetails.transactionType === TransactionType.MONEY_IN
+                ? `Add Income`
+                : `Add Expense`
+            }
+            size="medium"
+            onPress={() => onClickAddTransaction(transactionDetails)}
+          />
+          <ButtonField
+            label={"Reset Fields"}
+            size="medium"
+            onPress={() => setTransactionDetails(transactionDefault)}
+          />
+        </View>
+      )}
     </View>
   );
 }
@@ -312,4 +322,5 @@ const transaction_style = StyleSheet.create({
     justifyContent: "space-between",
     padding: 2,
   },
+  buttonsContainer: { gap: 5, marginBottom: 5, padding: 20 },
 });

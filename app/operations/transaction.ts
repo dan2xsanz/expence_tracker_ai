@@ -33,13 +33,13 @@ export const createTransaction = async ({
 
 interface GetAllTransactionParam {
   data: TransactionListFilter;
-  // setTransactionDetails?: (data: TransactionInterface) => void;
+  setSearchClick: (data: boolean) => void;
 }
 
 export const getAllTransaction = async ({
   data,
-}: // setTransactionDetails,
-GetAllTransactionParam) => {
+  setSearchClick,
+}: GetAllTransactionParam) => {
   try {
     const response: ResponseInterface = await GetAllTransaction(data);
     // RETURN SUCCESS MESSAGE
@@ -49,6 +49,6 @@ GetAllTransactionParam) => {
   } catch (error: any) {
     Alert.alert("Error", "Oops, something went wrong.");
   } finally {
-    // setTransactionDetails(transactionDefault);
+    setSearchClick(false);
   }
 };

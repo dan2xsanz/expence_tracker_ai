@@ -22,8 +22,8 @@ export const transactioFilternDefault: TransactionListFilter = {
   transactionType: undefined,
   categoryType: undefined,
   note: "",
-  date: moment(),
-  time: moment().startOf("second"),
+  dateFrom: moment(),
+  dateTo: moment(),
   paymentType: undefined,
   accountId: undefined
 };

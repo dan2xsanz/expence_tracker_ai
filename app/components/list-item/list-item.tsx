@@ -61,5 +61,8 @@ const list_item_style = StyleSheet.create({
     flexDirection: "row",
     backgroundColor: "#36c4a50c",
     justifyContent: "space-between",
+    borderStyle: "solid",
+    borderBottomWidth: 0.3,
+    borderBottomColor: "#0b2b24fd",
   },
 });

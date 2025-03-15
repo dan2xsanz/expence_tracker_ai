@@ -8,6 +8,7 @@ export default function TabLayout() {
         headerShown: false,
         tabBarActiveTintColor: "black",
         tabBarStyle: {
+          // display: "none",
           paddingTop: 10,
           height: 60,
           justifyContent: "center", // Centers content vertically

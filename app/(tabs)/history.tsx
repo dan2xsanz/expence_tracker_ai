@@ -5,6 +5,7 @@ import DatePicker from "../components/date-picker/date-picker";
 import TimePicker from "../components/time-picker/time-picker";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { ListItem } from "../components/list-item/list-item";
+import ButtonField from "../components/button/button";
 import { getAllTransaction } from "../operations";
 import Label from "../components/label/label";
 import { useFocusEffect } from "expo-router";
@@ -20,38 +21,42 @@ import {
 } from "../components/icons/icons";
 
 export default function HistoryScreen() {
-  // DISPLAY FILTER
-  const [displayFilter, setDisplayFilter] = useState<boolean>(false);
-
-  // TRASNSACTION FILTER STATE
-  const [transactionDetails, setTransactionDetails] =
+  // Transaction Filter State
+  const [transactionFilter, setTransactionFilter] =
     useState<TransactionListFilter>(transactioFilternDefault);
 
+  // Display Filter State
+  const [displayFilter, setDisplayFilter] = useState<boolean>(false);
+
+  // Search Button Click State
+  const [searchClick, setSearchClick] = useState<boolean>(false);
+
+  // Transaction List State
   const [transactionList, setTransactionList] = useState<
     Array<TransactionInterface>
   >([]);
 
-  // RESET TRANSACTION TYPE EVERYTME THE SCREEN IS FOCUSED
+  // Reste Trasaction type everytime the screen is focused
   useFocusEffect(
     useCallback(() => {
       setDisplayFilter(false);
       transactionLisFetch();
-      setTransactionDetails(transactioFilternDefault);
+      setTransactionFilter(transactioFilternDefault);
       4;
     }, [])
   );
 
-  // FETCH TRANSACTION LIST
+  // Fetch Transaction List
   const transactionLisFetch = useCallback(async () => {
     return setTransactionList(
-      await getAllTransaction({ data: transactionDetails })
+      await getAllTransaction({ data: transactionFilter, setSearchClick })
     );
-  }, [transactionDetails]);
+  }, [searchClick]);
 
-  // TRIGGER FETCHING OF TRANSACTION LIST ONCE FILETR CHANGED
+  // Trigger fetching of transaction list once filter changed
   useEffect(() => {
     transactionLisFetch();
-  }, [transactionDetails]);
+  }, [searchClick]);
 
   return (
     <View style={history_style.main_container}>
@@ -72,47 +77,59 @@ export default function HistoryScreen() {
             />
           )}
         </View>
+        <View style={history_style.instruction_divider}>
+          <Label
+            size={"small"}
+            style={{ fontSize: 12 }}
+            label={
+              displayFilter ? "Please specify filter." : "Transaction List"
+            }
+          />
+          <View style={history_style.intruction_line} />
+        </View>
 
         {/* TRANSACTION FILTER SELECTION  */}
         {displayFilter && (
-          <View>
+          <View style={{ width: "100%", marginTop: -20 }}>
             <TransactionHeader
-              titleDisplay="Please specify filter for transaction history. "
-              transactionDetails={transactionDetails.transactionType}
+              transactionDetails={transactionFilter.transactionType}
               setTransactionDetails={(data) =>
-                setTransactionDetails({
-                  ...transactionDetails,
+                setTransactionFilter({
+                  ...transactionFilter,
                   transactionType: data,
                 })
               }
             />
             <View style={{ marginTop: 10, gap: 5 }}>
               <DatePicker
-                dateValue={transactionDetails.date}
+                label="From: "
+                dateValue={transactionFilter.dateFrom}
                 setDateValue={(data) =>
-                  setTransactionDetails({
-                    ...transactionDetails,
-                    date: data,
+                  setTransactionFilter({
+                    ...transactionFilter,
+                    dateFrom: data,
                   })
                 }
               />
-              {/* TIME PICKER FIELD */}
-              <TimePicker
-                timeValue={transactionDetails.time!}
-                setTimeValue={(data: Moment) =>
-                  setTransactionDetails({
-                    ...transactionDetails,
-                    time: data,
+              <DatePicker
+                  label="To: "
+                dateValue={transactionFilter.dateTo}
+                setDateValue={(data) =>
+                  setTransactionFilter({
+                    ...transactionFilter,
+                    dateTo: data,
                   })
                 }
               />
               <TextInputField
                 size="medium"
-                placeHolder={"Search by note"}
+                placeHolder={"Note"}
                 keyboardType={"numeric"}
                 style={{ marginTop: 2 }}
-                value={undefined}
-                onChange={() => {}}
+                value={transactionFilter.note}
+                onChange={(data) =>
+                  setTransactionFilter({ ...transactionFilter, note: data })
+                }
               />
             </View>
           </View>
@@ -120,14 +137,6 @@ export default function HistoryScreen() {
 
         {!displayFilter && (
           <Fragment>
-            <View style={history_style.instruction_divider}>
-              <Label
-                size={"small"}
-                style={{ fontSize: 12 }}
-                label={"Transaction List"}
-              />
-              <View style={history_style.intruction_line} />
-            </View>
             <ScrollView style={{ height: "90%" }}>
               {transactionList.map((data, index) => {
                 return (
@@ -138,6 +147,26 @@ export default function HistoryScreen() {
           </Fragment>
         )}
       </View>
+      {displayFilter && (
+        <View style={history_style.buttonsContainer}>
+          <ButtonField
+            label={"Search"}
+            size="medium"
+            onPress={() => {
+              setDisplayFilter(false);
+              setSearchClick(true);
+            }}
+          />
+          <ButtonField
+            label={"Reset"}
+            size="medium"
+            onPress={() => {
+              setDisplayFilter(false);
+              setTransactionFilter(transactioFilternDefault);
+            }}
+          />
+        </View>
+      )}
     </View>
   );
 }
@@ -170,4 +199,5 @@ const history_style = StyleSheet.create({
   scrollContainer: {
     maxHeight: 70,
   },
+  buttonsContainer: { gap: 5, marginBottom: 5, padding: 20 },
 });

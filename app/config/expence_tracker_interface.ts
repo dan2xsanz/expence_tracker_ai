@@ -32,8 +32,8 @@ export interface TransactionListFilter {
   transactionType: TransactionType | undefined;
   categoryType: number | undefined;
   note: string;
-  date: Moment;
-  time: Moment;
+  dateFrom: Moment;
+  dateTo: Moment;
   paymentType: number | undefined;
   accountId: number | undefined;
 }

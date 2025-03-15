@@ -8,9 +8,14 @@ import moment, { Moment } from "moment";
 interface DatePickerInterface {
   dateValue: Moment;
   setDateValue: (data: Moment) => void;
+  label?: string;
 }
 
-const DatePicker = ({ dateValue, setDateValue }: DatePickerInterface) => {
+const DatePicker = ({
+  dateValue,
+  setDateValue,
+  label,
+}: DatePickerInterface) => {
   const [openCalendar, setOpenCalendar] = useState(false);
 
   const onChange = (event: any, selectedDate?: Date) => {
@@ -18,6 +23,12 @@ const DatePicker = ({ dateValue, setDateValue }: DatePickerInterface) => {
       setDateValue(moment(selectedDate)); // Convert Date to Moment
     }
     setOpenCalendar(false); // Hide the picker after selection
+  };
+
+  const placeHolderDisplay = () => {
+    let placeHolder = "Date";
+    placeHolder = dateValue ? dateValue.format("YYYY-MM-DD") : "";
+    return `${label ? label : "Date: "}${placeHolder}`;
   };
 
   return (
@@ -35,7 +46,7 @@ const DatePicker = ({ dateValue, setDateValue }: DatePickerInterface) => {
         <TextInputField
           readOnly
           style={{ marginTop: 2, fontSize: 18, color: "#333" }}
-          placeHolder={dateValue ? dateValue.format("YYYY-MM-DD") : ""} // Format Moment.js value
+          placeHolder={placeHolderDisplay()}
         />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => setOpenCalendar(true)}>
