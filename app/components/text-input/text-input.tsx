@@ -14,6 +14,7 @@ interface TextInputProps {
   isSecureInput?: boolean;
   style?: StyleProp<TextStyle>;
   value?: string | undefined;
+  isFocused?: boolean;
   size?: "large" | "medium" | "small" | "header1";
   keyboardType?: KeyboardTypeOptions | undefined;
   onChange?: (data: any) => void;
@@ -25,13 +26,12 @@ const TextInputField = ({
   placeHolder,
   multiline,
   onChange,
+  isFocused,
   required,
   readOnly,
   style,
   value,
   size,
-
-
 }: TextInputProps) => {
   let fontSize = 12;
 
@@ -50,6 +50,13 @@ const TextInputField = ({
       break;
   }
 
+  let isFocusedStyle: StyleProp<TextStyle> = {
+    borderStyle: "solid",
+    borderBottomWidth: 3.5,
+    borderColor: "#338f79ff",
+    borderBottomColor: "#338f79ff",
+  };
+
   return (
     <TextInput
       style={[
@@ -60,6 +67,7 @@ const TextInputField = ({
           borderRadius: 5,
           fontSize: fontSize,
           borderColor: "black",
+          ...(isFocused && isFocusedStyle),
         },
         style,
       ]}

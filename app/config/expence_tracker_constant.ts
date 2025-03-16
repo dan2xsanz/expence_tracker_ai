@@ -22,10 +22,10 @@ export const transactioFilternDefault: TransactionListFilter = {
   transactionType: undefined,
   categoryType: undefined,
   note: "",
-  dateFrom: moment(),
+  dateFrom: moment().subtract(1, "month"),
   dateTo: moment(),
   paymentType: undefined,
-  accountId: undefined
+  accountId: undefined,
 };
 
 export const INCOME_CATEGORY: IncomeCategoryInterface[] = [
@@ -128,7 +128,7 @@ export const EXPENCE_CATEGORY: ExpenceCategoryInterface[] = [
     expenceId: 1,
   },
   {
-    expenceName: "Business Expense",
+    expenceName: "Business",
     expenceId: 2,
   },
   {
@@ -140,11 +140,11 @@ export const EXPENCE_CATEGORY: ExpenceCategoryInterface[] = [
     expenceId: 4,
   },
   {
-    expenceName: "Delivery Services",
+    expenceName: "Delivery",
     expenceId: 5,
   },
   {
-    expenceName: "Credit Card Payment",
+    expenceName: "Credit",
     expenceId: 6,
   },
   {
@@ -164,15 +164,15 @@ export const EXPENCE_CATEGORY: ExpenceCategoryInterface[] = [
     expenceId: 10,
   },
   {
-    expenceName: "Foreign Exchange",
+    expenceName: "Foreign ",
     expenceId: 11,
   },
   {
-    expenceName: "Fund Trasfer",
+    expenceName: "Fund ",
     expenceId: 12,
   },
   {
-    expenceName: "Games and Gaming",
+    expenceName: "Gaming",
     expenceId: 13,
   },
   {
@@ -180,7 +180,7 @@ export const EXPENCE_CATEGORY: ExpenceCategoryInterface[] = [
     expenceId: 14,
   },
   {
-    expenceName: "Grab",
+    expenceName: "Other",
     expenceId: 15,
   },
 ];

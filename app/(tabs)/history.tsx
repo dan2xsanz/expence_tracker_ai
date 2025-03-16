@@ -103,6 +103,11 @@ export default function HistoryScreen() {
             <View style={{ marginTop: 10, gap: 5 }}>
               <DatePicker
                 label="From: "
+                isFocused={
+                  !transactionFilter.dateFrom?.isSame(
+                    transactioFilternDefault.dateFrom
+                  )
+                }
                 dateValue={transactionFilter.dateFrom}
                 setDateValue={(data) =>
                   setTransactionFilter({
@@ -112,7 +117,12 @@ export default function HistoryScreen() {
                 }
               />
               <DatePicker
-                  label="To: "
+                label="To: "
+                isFocused={
+                  !transactionFilter.dateTo?.isSame(
+                    transactioFilternDefault.dateTo
+                  )
+                }
                 dateValue={transactionFilter.dateTo}
                 setDateValue={(data) =>
                   setTransactionFilter({
@@ -124,6 +134,9 @@ export default function HistoryScreen() {
               <TextInputField
                 size="medium"
                 placeHolder={"Note"}
+                isFocused={
+                  transactionFilter.note !== transactioFilternDefault.note
+                }
                 keyboardType={"numeric"}
                 style={{ marginTop: 2 }}
                 value={transactionFilter.note}
@@ -161,6 +174,7 @@ export default function HistoryScreen() {
             label={"Reset"}
             size="medium"
             onPress={() => {
+              setSearchClick(true);
               setDisplayFilter(false);
               setTransactionFilter(transactioFilternDefault);
             }}

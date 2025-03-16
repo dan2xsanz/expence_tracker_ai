@@ -1,20 +1,28 @@
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { Platform, TouchableOpacity, View } from "react-native";
+import {
+  Platform,
+  StyleProp,
+  TextStyle,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import TextInputField from "../text-input/text-input";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import moment, { Moment } from "moment";
 
 interface DatePickerInterface {
   dateValue: Moment;
   setDateValue: (data: Moment) => void;
+  isFocused?: boolean;
   label?: string;
 }
 
 const DatePicker = ({
+  label,
+  isFocused,
   dateValue,
   setDateValue,
-  label,
 }: DatePickerInterface) => {
   const [openCalendar, setOpenCalendar] = useState(false);
 
@@ -31,6 +39,13 @@ const DatePicker = ({
     return `${label ? label : "Date: "}${placeHolder}`;
   };
 
+  let isFocusedStyle: StyleProp<TextStyle> = {
+    borderStyle: "solid",
+    borderBottomWidth: 3.5,
+    borderColor: "#338f79ff",
+    borderBottomColor: "#338f79ff",
+  };
+
   return (
     <View
       style={{
@@ -45,7 +60,12 @@ const DatePicker = ({
       >
         <TextInputField
           readOnly
-          style={{ marginTop: 2, fontSize: 18, color: "#333" }}
+          style={{
+            marginTop: 2,
+            fontSize: 18,
+            color: "#333",
+            ...(isFocused && isFocusedStyle),
+          }}
           placeHolder={placeHolderDisplay()}
         />
       </TouchableOpacity>

@@ -19,6 +19,7 @@ import {
   PAYMENT_CATEGORY,
   INCOME_CATEGORY,
   TransactionType,
+  EXPENCE_CATEGORY,
 } from "../config";
 import { createTransaction } from "../operations";
 import { Moment } from "moment";
@@ -40,9 +41,10 @@ export default function TransactionScreen() {
   };
 
   const onClickAddTransaction = (data: TransactionInterface) => {
+    console.log(data);
     if (
-      !data.amountValue ||
-      !data.paymentType ||
+      data.amountValue === undefined ||
+      data.paymentType === undefined ||
       data.categoryType === undefined
     ) {
       return Alert.alert("Error", "Please input value for required fields!");
@@ -123,8 +125,12 @@ export default function TransactionScreen() {
                   style={{ fontSize: 18 }}
                   value={
                     transactionDetails.categoryType !== undefined
-                      ? INCOME_CATEGORY[transactionDetails.categoryType]
-                          .categoryName
+                      ? transactionDetails.transactionType ===
+                        TransactionType.MONEY_IN
+                        ? INCOME_CATEGORY[transactionDetails.categoryType]
+                            .categoryName
+                        : EXPENCE_CATEGORY[transactionDetails.categoryType]
+                            .expenceName
                       : ""
                   }
                   placeHolder={`${
@@ -224,7 +230,11 @@ export default function TransactionScreen() {
                 transactionDetails={transactionDetails}
               />
             ) : (
-              <ExpenceCategories />
+              <ExpenceCategories
+                Categories={Categories}
+                onChangeFields={onChangeFields}
+                transactionDetails={transactionDetails}
+              />
             )
           }
         />
