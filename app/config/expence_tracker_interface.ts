@@ -27,6 +27,15 @@ export interface ExpenceCategoryInterface {
   expenceId: number;
 }
 
+// ACCOUNT MASTER INTERFACE
+export interface CreateAccountInterface {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
 // TRANSACTION LIST FILTER INTERFACE
 export interface TransactionListFilter {
   transactionType: TransactionType | undefined;

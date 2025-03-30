@@ -3,38 +3,24 @@ import Label from "../components/label/label";
 import TextInputField from "../components/text-input/text-input";
 import ButtonField from "../components/button/button";
 import React, { useState } from "react";
-
-interface CreateAccountInterface {
-  name: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
+import { accountDefault, CreateAccountInterface } from "../config";
+import { createAccountOperation } from "../operations";
+import { validateRequiredFields } from "../functions";
 
 export default function CreateAccountScreen() {
-  const [createAccount, setCreateAccount] = useState<CreateAccountInterface>({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
+  // CREATE ACCOUNT INTERFACE
+  const [createAccount, setCreateAccount] =
+    useState<CreateAccountInterface>(accountDefault);
 
+  // ON CHANGE INPUT FIELDS
   const inputChange = (data: CreateAccountInterface) => {
     setCreateAccount({ ...createAccount, ...data });
   };
 
   const checkSubmit = () => {
-    const { name, email, password, confirmPassword } = createAccount;
-
-    if (!name || !email || !password || !confirmPassword) {
-      return Alert.alert("Error", "Please input value for required fields!");
-    }
-
-    if (password !== confirmPassword) {
-      return Alert.alert("Error", "Passwords do not match!");
-    }
-
-    Alert.alert("Success", "Account Created Successfully!");
+    // VALIDATE REQUIRED FIELDS
+    validateRequiredFields(createAccount);
+    createAccountOperation({ data: createAccount });
   };
 
   return (
@@ -47,7 +33,6 @@ export default function CreateAccountScreen() {
             style={{ fontSize: 20 }}
           />
         </View>
-
         <View style={create_account_styles.fields_container}>
           <View style={create_account_styles.greetings_bmo_container}>
             <View style={create_account_styles.greetings_container}>
@@ -70,15 +55,27 @@ export default function CreateAccountScreen() {
           <TextInputField
             required
             size={"medium"}
-            placeHolder={"Full Name"}
-            value={createAccount.name}
-            onChange={(text) => inputChange({ ...createAccount, name: text })}
+            placeHolder={"First Name"}
+            value={createAccount.firstName}
+            onChange={(text) =>
+              inputChange({ ...createAccount, firstName: text })
+            }
+          />
+          <TextInputField
+            required
+            size={"medium"}
+            placeHolder={"Last Name"}
+            value={createAccount.lastName}
+            onChange={(text) =>
+              inputChange({ ...createAccount, lastName: text })
+            }
           />
           <TextInputField
             required
             size={"medium"}
             placeHolder={"Email"}
             value={createAccount.email}
+            keyboardType={"email-address"}
             onChange={(text) => inputChange({ ...createAccount, email: text })}
           />
           <TextInputField

@@ -1,11 +1,20 @@
 import moment from "moment";
 import {
+  CreateAccountInterface,
   ExpenceCategoryInterface,
   IncomeCategoryInterface,
   PaymentMethodInterface,
   TransactionInterface,
   TransactionListFilter,
 } from "./expence_tracker_interface";
+
+export const accountDefault: CreateAccountInterface = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
 
 export const transactionDefault: TransactionInterface = {
   id: undefined,

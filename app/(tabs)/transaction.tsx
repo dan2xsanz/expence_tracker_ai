@@ -41,7 +41,6 @@ export default function TransactionScreen() {
   };
 
   const onClickAddTransaction = (data: TransactionInterface) => {
-    console.log(data);
     if (
       data.amountValue === undefined ||
       data.paymentType === undefined ||

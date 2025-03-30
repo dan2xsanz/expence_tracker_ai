@@ -82,7 +82,7 @@ export default function HistoryScreen() {
             size={"small"}
             style={{ fontSize: 12 }}
             label={
-              displayFilter ? "Please specify filter." : "Transaction List"
+              displayFilter ? "Search by Transaction Type." : "Transaction List"
             }
           />
           <View style={history_style.intruction_line} />
@@ -100,6 +100,14 @@ export default function HistoryScreen() {
                 })
               }
             />
+            <View style={history_style.instruction_divider}>
+              <Label
+                size={"small"}
+                style={{ fontSize: 12 }}
+                label={"Searh by Date"}
+              />
+              <View style={history_style.intruction_line} />
+            </View>
             <View style={{ marginTop: 10, gap: 5 }}>
               <DatePicker
                 label="From: "
@@ -131,9 +139,17 @@ export default function HistoryScreen() {
                   })
                 }
               />
+              <View style={history_style.instruction_divider}>
+                <Label
+                  size={"small"}
+                  style={{ fontSize: 12 }}
+                  label={"Searh by Note"}
+                />
+                <View style={history_style.intruction_line} />
+              </View>
               <TextInputField
                 size="medium"
-                placeHolder={"Note"}
+                placeHolder={"Note:"}
                 isFocused={
                   transactionFilter.note !== transactioFilternDefault.note
                 }
@@ -163,7 +179,7 @@ export default function HistoryScreen() {
       {displayFilter && (
         <View style={history_style.buttonsContainer}>
           <ButtonField
-            label={"Search"}
+            label={"Apply Filter"}
             size="medium"
             onPress={() => {
               setDisplayFilter(false);
@@ -171,7 +187,7 @@ export default function HistoryScreen() {
             }}
           />
           <ButtonField
-            label={"Reset"}
+            label={"Reset Filter"}
             size="medium"
             onPress={() => {
               setSearchClick(true);

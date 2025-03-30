@@ -77,6 +77,7 @@ const TextInputField = ({
       autoCorrect={false}
       editable={!readOnly}
       multiline={multiline}
+      autoCapitalize={"none"}
       onChangeText={onChange}
       secureTextEntry={isSecureInput}
       placeholder={`${placeHolder} ${required ? "*" : ""}`}

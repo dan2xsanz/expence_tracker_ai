@@ -1,4 +1,8 @@
-import { ResponseInterface, TransactionInterface, TransactionListFilter } from "@/app/config";
+import {
+  ResponseInterface,
+  TransactionInterface,
+  TransactionListFilter,
+} from "@/app/config";
 import { REQUEST_URL } from "@/app/config/properties";
 import axios, { AxiosError, AxiosResponse } from "axios";
 
@@ -19,7 +23,6 @@ export const CreateTransaction = (
       });
   });
 };
-
 
 export const GetAllTransaction = (
   data: TransactionListFilter
