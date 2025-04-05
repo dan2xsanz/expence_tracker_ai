@@ -7,6 +7,8 @@ import {
 } from "../config";
 import {
   CreateTransaction,
+  GetAllDailyExpense,
+  GetAllMonthlyExpense,
   GetAllTransaction,
 } from "../service/transactions/transactions";
 
@@ -50,5 +52,31 @@ export const getAllTransaction = async ({
     Alert.alert("Error", "Oops, something went wrong.");
   } finally {
     setSearchClick(false);
+  }
+};
+
+export const getAllDailyExpense = async () => {
+  try {
+    const response: ResponseInterface = await GetAllDailyExpense();
+    // RETURN SUCCESS MESSAGE
+    if (response.isSuccess && response.resultData) {
+      return response.resultData;
+    }
+  } catch (error: any) {
+    Alert.alert("Error", "Oops, something went wrong.");
+  } finally {
+  }
+};
+
+export const getAllMonthExpense = async () => {
+  try {
+    const response: ResponseInterface = await GetAllMonthlyExpense();
+    // RETURN SUCCESS MESSAGE
+    if (response.isSuccess && response.resultData) {
+      return response.resultData;
+    }
+  } catch (error: any) {
+    Alert.alert("Error", "Oops, something went wrong.");
+  } finally {
   }
 };

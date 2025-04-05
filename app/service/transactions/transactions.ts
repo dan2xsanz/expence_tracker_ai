@@ -41,3 +41,29 @@ export const GetAllTransaction = (
       });
   });
 };
+
+export const GetAllDailyExpense = (): Promise<ResponseInterface> => {
+  return new Promise((resolve, reject) => {
+    axios
+      .get<ResponseInterface>(`${REQUEST_URL}/transaction/daily-expense`)
+      .then(function (response: AxiosResponse<ResponseInterface>) {
+        resolve(response.data);
+      })
+      .catch(function (error: AxiosError) {
+        reject(error);
+      });
+  });
+};
+
+export const GetAllMonthlyExpense = (): Promise<ResponseInterface> => {
+  return new Promise((resolve, reject) => {
+    axios
+      .get<ResponseInterface>(`${REQUEST_URL}/transaction/monthly-expense`)
+      .then(function (response: AxiosResponse<ResponseInterface>) {
+        resolve(response.data);
+      })
+      .catch(function (error: AxiosError) {
+        reject(error);
+      });
+  });
+};

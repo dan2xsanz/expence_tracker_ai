@@ -16,7 +16,7 @@ const TransactionHeader = ({
 }: TransactionHeaderProps) => {
   return (
     <Fragment>
-      <View style={{ marginTop: 20 }}>
+      <View style={{ marginTop: 10 }}>
         {titleDisplay && (
           <View
             style={{

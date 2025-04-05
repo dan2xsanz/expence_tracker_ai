@@ -58,3 +58,16 @@ export interface TransactionInterface {
   time: Moment | undefined;
   paymentType: number | undefined;
 }
+
+// DAILY EXPENSE
+export interface DailyExpenseInterface {
+  categoryId: number | undefined;
+  amountValue: number | undefined;
+}
+
+// MONTLY EXPENSE
+export interface MonthlyExpenseInterface {
+  expenseId: number | undefined;
+  expenseName: string | undefined;
+  totalExpense: number | undefined;
+}
