@@ -3,7 +3,7 @@ import React from "react";
 
 interface TextProps {
   label: string;
-  size: "header1" | "large" | "medium" | "small" | "note";
+  size?: "header1" | "large" | "medium" | "small" | "note";
   style?: StyleProp<TextStyle>;
   onPress?: () => void;
 }

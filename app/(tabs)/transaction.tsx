@@ -23,8 +23,13 @@ import {
 } from "../config";
 import { createTransaction } from "../operations";
 import { Moment } from "moment";
+import { Loading } from "../components/loading/loading";
+import { useLoadingScreen } from "../hooks/loading-screen-hooks";
 
 export default function TransactionScreen() {
+  // SCREEN LOADING HOOK
+  const { loading, setLoading } = useLoadingScreen();
+
   // Transaction Details State Container
   const [transactionDetails, setTransactionDetails] =
     useState<TransactionInterface>(transactionDefault);
@@ -48,7 +53,7 @@ export default function TransactionScreen() {
     ) {
       return Alert.alert("Error", "Please input value for required fields!");
     } else {
-      createTransaction({ data, setTransactionDetails });
+      createTransaction({ data, setLoading, setTransactionDetails });
     }
   };
 
@@ -61,6 +66,7 @@ export default function TransactionScreen() {
 
   return (
     <View style={transaction_style.main_container}>
+      <Loading loading={loading} />
       <View style={transaction_style.container}>
         <View style={transaction_style.header_container}>
           <Label
@@ -87,9 +93,8 @@ export default function TransactionScreen() {
               <Label
                 size={"small"}
                 style={{ fontSize: 12 }}
-                label={"Transaction Details"}
+                label={"Additional transaction details"}
               />
-              <View style={transaction_style.intruction_line} />
             </View>
             {/* AMOUNT FIELD*/}
             <View style={transaction_style.amount_container}>

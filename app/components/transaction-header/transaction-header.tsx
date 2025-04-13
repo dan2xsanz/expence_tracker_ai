@@ -27,12 +27,9 @@ const TransactionHeader = ({
             }}
           >
             <Label
-              label={"Please select transaction type"}
+              label={"Add transaction"}
               size={"small"}
               style={{ fontSize: 12 }}
-            />
-            <View
-              style={{ height: 1, width: "50%", backgroundColor: "black" }}
             />
           </View>
         )}

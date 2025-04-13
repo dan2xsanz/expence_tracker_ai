@@ -67,3 +67,16 @@ export const GetAllMonthlyExpense = (): Promise<ResponseInterface> => {
       });
   });
 };
+
+export const GetAllYearlyExpense = (): Promise<ResponseInterface> => {
+  return new Promise((resolve, reject) => {
+    axios
+      .get<ResponseInterface>(`${REQUEST_URL}/transaction/yearly-expense`)
+      .then(function (response: AxiosResponse<ResponseInterface>) {
+        resolve(response.data);
+      })
+      .catch(function (error: AxiosError) {
+        reject(error);
+      });
+  });
+};

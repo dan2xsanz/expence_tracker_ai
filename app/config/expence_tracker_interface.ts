@@ -71,3 +71,10 @@ export interface MonthlyExpenseInterface {
   expenseName: string | undefined;
   totalExpense: number | undefined;
 }
+
+// YEARLY EXPENSE
+export interface YearlyExpenseInterface {
+  transactionMonth: string | undefined;
+  transactionIn: number | undefined;
+  transactionOut: number | undefined;
+}
