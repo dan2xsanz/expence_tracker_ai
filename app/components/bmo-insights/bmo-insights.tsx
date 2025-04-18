@@ -1,9 +1,34 @@
 import { View, Image, Dimensions, StyleSheet } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import Label from "../label/label";
-import React from "react";
+import React, { useState } from "react";
+import moment from "moment";
 
 export const BmoInsights = () => {
+  // CURRENT WEEK
+  const startOfWeek = moment().startOf("week");
+  const endOfWeek = moment().endOf("week");
+
+  const [dispayedFilter, setDisplayedFlter] = useState<string>(
+    `${startOfWeek.format("DD MMM")} - ${endOfWeek.format("DD MMM YYYY")}`
+  );
+
+  const onChangeFilter = (selectedFilter: string) => {
+    switch (selectedFilter) {
+      case "1":
+        setDisplayedFlter(
+          `${startOfWeek.format("DD MMM")} - ${endOfWeek.format("DD MMM YYYY")}`
+        );
+        break;
+      case "2":
+        setDisplayedFlter(moment().format("MMM YYYY"));
+        break;
+      case "3":
+        setDisplayedFlter(moment().format("YYYY"));
+        break;
+    }
+  };
+
   return (
     <View>
       <Label
@@ -14,12 +39,15 @@ export const BmoInsights = () => {
         }}
       />
       <View style={insight_style.insight_container}>
-        <Label label={"April 2025"} style={{ fontWeight: 500, fontSize: 18 }} />
+        <Label
+          label={dispayedFilter}
+          style={{ fontWeight: 500, fontSize: 18 }}
+        />
         <View style={insight_style.insight_filter}>
           <Picker
             style={{ fontWeight: "500", padding: -1 }}
             selectedValue={undefined}
-            onValueChange={(itemValue) => console.log(itemValue)}
+            onValueChange={(itemValue) => onChangeFilter(itemValue!)}
           >
             <Picker.Item label="Weekly" value="1" />
             <Picker.Item label="Monthly" value="2" />
