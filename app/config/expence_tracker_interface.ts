@@ -27,13 +27,22 @@ export interface ExpenceCategoryInterface {
   expenceId: number;
 }
 
+// ACCOUNT MASTER INTERFACE
+export interface CreateAccountInterface {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
 // TRANSACTION LIST FILTER INTERFACE
 export interface TransactionListFilter {
   transactionType: TransactionType | undefined;
   categoryType: number | undefined;
   note: string;
-  date: Moment;
-  time: Moment;
+  dateFrom: Moment;
+  dateTo: Moment;
   paymentType: number | undefined;
   accountId: number | undefined;
 }
@@ -48,4 +57,43 @@ export interface TransactionInterface {
   date: Moment | undefined;
   time: Moment | undefined;
   paymentType: number | undefined;
+}
+
+// DAILY EXPENSE
+export interface DailyExpenseInterface {
+  categoryId: number | undefined;
+  amountValue: number | undefined;
+}
+
+// MONTLY EXPENSE
+export interface MonthlyExpenseInterface {
+  expenseId: number | undefined;
+  expenseName: string | undefined;
+  totalExpense: number | undefined;
+}
+
+// YEARLY EXPENSE
+export interface YearlyExpenseInterface {
+  transactionMonth: string | undefined;
+  transactionIn: number | undefined;
+  transactionOut: number | undefined;
+}
+
+export interface TotalTransactionDisplayInterface {
+  displayName: string;
+  totalExpense?: number;
+  totalIncome?: number;
+  filterSelected: string;
+}
+
+// TOTAL TRANSACTIONS
+export interface TotalTransactionInterface {
+  accountMasterId: number | undefined;
+  filterType: string;
+}
+
+// TOTAL TRANSACTIONS RESPONSE
+export interface TotalTransactionrResponseInterface {
+  totalIncome: number;
+  totalExpense: number;
 }

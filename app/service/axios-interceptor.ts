@@ -6,6 +6,7 @@ axios.interceptors.request.use(
     return request;
   },
   function (error) {
+    console.log(error)
     return Promise.reject(error);
   }
 );

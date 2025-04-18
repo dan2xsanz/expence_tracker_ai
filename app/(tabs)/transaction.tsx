@@ -19,11 +19,18 @@ import {
   PAYMENT_CATEGORY,
   INCOME_CATEGORY,
   TransactionType,
+  EXPENCE_CATEGORY,
 } from "../config";
 import { createTransaction } from "../operations";
 import { Moment } from "moment";
+import { Loading } from "../components/loading/loading";
+import { useLoadingScreen } from "../hooks/loading-screen-hooks";
 
 export default function TransactionScreen() {
+  // SCREEN LOADING HOOK
+  const { loading, setLoading } = useLoadingScreen();
+
+  // Transaction Details State Container
   const [transactionDetails, setTransactionDetails] =
     useState<TransactionInterface>(transactionDefault);
 
@@ -35,19 +42,18 @@ export default function TransactionScreen() {
 
   // On Change Fields
   const onChangeFields = (data: TransactionInterface) => {
-    console.log(data.categoryType);
     setTransactionDetails({ ...transactionDetails, ...data });
   };
 
   const onClickAddTransaction = (data: TransactionInterface) => {
     if (
-      !data.amountValue ||
-      !data.paymentType ||
+      data.amountValue === undefined ||
+      data.paymentType === undefined ||
       data.categoryType === undefined
     ) {
       return Alert.alert("Error", "Please input value for required fields!");
     } else {
-      createTransaction({ data, setTransactionDetails });
+      createTransaction({ data, setLoading, setTransactionDetails });
     }
   };
 
@@ -60,6 +66,7 @@ export default function TransactionScreen() {
 
   return (
     <View style={transaction_style.main_container}>
+      <Loading loading={loading} />
       <View style={transaction_style.container}>
         <View style={transaction_style.header_container}>
           <Label
@@ -70,6 +77,7 @@ export default function TransactionScreen() {
         </View>
         {/* TRANSACTION HEADER SELECTION */}
         <TransactionHeader
+          titleDisplay
           transactionDetails={transactionDetails.transactionType}
           setTransactionDetails={(data) =>
             setTransactionDetails({
@@ -85,9 +93,8 @@ export default function TransactionScreen() {
               <Label
                 size={"small"}
                 style={{ fontSize: 12 }}
-                label={"Transaction Details"}
+                label={"Additional transaction details"}
               />
-              <View style={transaction_style.intruction_line} />
             </View>
             {/* AMOUNT FIELD*/}
             <View style={transaction_style.amount_container}>
@@ -122,15 +129,19 @@ export default function TransactionScreen() {
                   style={{ fontSize: 18 }}
                   value={
                     transactionDetails.categoryType !== undefined
-                      ? INCOME_CATEGORY[transactionDetails.categoryType]
-                          .categoryName
+                      ? transactionDetails.transactionType ===
+                        TransactionType.MONEY_IN
+                        ? INCOME_CATEGORY[transactionDetails.categoryType]
+                            .categoryName
+                        : EXPENCE_CATEGORY[transactionDetails.categoryType]
+                            .expenceName
                       : ""
                   }
                   placeHolder={`${
                     transactionDetails.transactionType ===
                     TransactionType.MONEY_IN
                       ? `Income Category`
-                      : `Expence Category`
+                      : `Expense Category`
                   }`}
                 />
               </TouchableOpacity>
@@ -205,15 +216,6 @@ export default function TransactionScreen() {
                 </TouchableOpacity>
               )}
             </View>
-            <ButtonField
-              label={
-                transactionDetails.transactionType === TransactionType.MONEY_IN
-                  ? `Add Income`
-                  : `Add Expence`
-              }
-              size="medium"
-              onPress={() => onClickAddTransaction(transactionDetails)}
-            />
           </View>
         )}
         <BottomSheetDrawer
@@ -232,7 +234,11 @@ export default function TransactionScreen() {
                 transactionDetails={transactionDetails}
               />
             ) : (
-              <ExpenceCategories />
+              <ExpenceCategories
+                Categories={Categories}
+                onChangeFields={onChangeFields}
+                transactionDetails={transactionDetails}
+              />
             )
           }
         />
@@ -249,6 +255,24 @@ export default function TransactionScreen() {
           }
         />
       </View>
+      {transactionDetails.transactionType !== undefined && (
+        <View style={transaction_style.buttonsContainer}>
+          <ButtonField
+            label={
+              transactionDetails.transactionType === TransactionType.MONEY_IN
+                ? `Add Income`
+                : `Add Expense`
+            }
+            size="medium"
+            onPress={() => onClickAddTransaction(transactionDetails)}
+          />
+          <ButtonField
+            label={"Reset Fields"}
+            size="medium"
+            onPress={() => setTransactionDetails(transactionDefault)}
+          />
+        </View>
+      )}
     </View>
   );
 }
@@ -312,4 +336,5 @@ const transaction_style = StyleSheet.create({
     justifyContent: "space-between",
     padding: 2,
   },
+  buttonsContainer: { gap: 5, marginBottom: 5, padding: 20 },
 });

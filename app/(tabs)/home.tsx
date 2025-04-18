@@ -1,42 +1,59 @@
-import { NotificationIcon } from "../components/icons/icons";
-import { View, StyleSheet, Image } from "react-native";
+import { View, Image, Dimensions, StyleSheet, ScrollView } from "react-native";
+import { BmoInsights } from "../components/bmo-insights/bmo-insights";
+import { BmoAdvices } from "../components/bmo-advice/bmo-advice";
+import { BmoTools } from "../components/bmo-tools/bmo-tools";
+import { BmoTap } from "../components/bmo-tap/bmo-tap";
 import Label from "../components/label/label";
-import { useRouter } from "expo-router";
 import React from "react";
 
 export default function HomeScreen() {
-  const router = useRouter();
   return (
     <View style={home_style.main_container}>
       <View style={home_style.container}>
         <View style={home_style.header_container}>
           <Label label={"Home"} size={"medium"} style={{ fontSize: 20 }} />
-          <NotificationIcon />
         </View>
-        <View style={{ marginTop: 40 }}>
+        <View style={{ marginTop: 10 }}>
           <Label
             label={"Hi Dan Lester!"}
             size={"large"}
             style={{ fontWeight: 500, fontSize: 40 }}
           />
-          <Label label={"Good Morning..."} size={"small"} />
-          <View style={home_style.rectangle_container}>
-            <View>
-              <Label label={"Welcome!"} size={"medium"} />
-              <Label
-                size={"small"}
-                style={{ fontSize: 13 }}
-                label={"Let's track your Expences with me BMO."}
-              />
-            </View>
-            <View>
-              <Image
-                source={require("../../assets/bmoskate.png")}
-                style={{ width: 150, height: 150, marginLeft: -5 }}
-              />
-            </View>
-          </View>
         </View>
+
+        <View style={home_style.bmo_clickable_container}>
+          <View>
+            <Label
+              size="large"
+              style={{ fontSize: 17, flexWrap: "wrap", marginBottom: 5 }}
+              label="Welcome! I'm your BMO. "
+            />
+            <Label
+              size="medium"
+              style={{ fontSize: 13, flexWrap: "wrap" }}
+              label="Your new expense tracker buddy."
+            />
+            <Label
+              size="medium"
+              style={{ fontSize: 13, flexWrap: "wrap" }}
+              label="Let's track your daily expense with me."
+            />
+          </View>
+          <Image
+            source={require("../../assets/bmoskate.png")}
+            style={{ width: 150, height: 150 }}
+          />
+        </View>
+
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={{ height: Dimensions.get("window").height - 250 }}
+        >
+          <BmoInsights />
+          <BmoAdvices />
+          <BmoTools />
+          <BmoTap />
+        </ScrollView>
       </View>
     </View>
   );
@@ -44,7 +61,8 @@ export default function HomeScreen() {
 
 export const home_style = StyleSheet.create({
   main_container: {
-    height: "100%",
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height,
     paddingTop: 5,
     backgroundColor: "white",
     justifyContent: "space-between",
@@ -59,20 +77,21 @@ export const home_style = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
   },
-  rectangle_container: {
-    height: 100,
-    padding: 5,
+  bmo_clickable_container: {
+    padding: 10,
     marginTop: 10,
-    borderWidth: 2,
-    borderColor: "black",
-    borderRadius: 10,
+    height: 100,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingRight: 20,
-    elevation: 100,
-    backgroundColor: "#36c4a550",
-    shadowColor: "black",
-    shadowOpacity: 0.5,
+    width: "100%",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: "black",
+    backgroundColor: "#36c4a571",
   },
 });

@@ -2,6 +2,7 @@ import { View, StyleSheet, TouchableOpacity } from "react-native";
 import Label from "../label/label";
 import React from "react";
 import {
+  EXPENCE_CATEGORY,
   INCOME_CATEGORY,
   TransactionInterface,
   TransactionType,
@@ -24,13 +25,22 @@ export const ListItem = ({ data, onPressItem }: ListItemParam) => {
     return `PHP ${Number(itemAmmount).toLocaleString()}`;
   };
 
+  const transacationCategory = (
+    transactionType: TransactionType | undefined
+  ): string => {
+    if (transactionType === TransactionType.MONEY_IN) {
+      return INCOME_CATEGORY[data.categoryType!].categoryName;
+    }
+    return EXPENCE_CATEGORY[data.categoryType!].expenceName;
+  };
+
   return (
     <TouchableOpacity onPress={onPressItem}>
       <View style={list_item_style.main_container}>
         <View>
           <Label
             style={{ fontWeight: 500, fontSize: 18 }}
-            label={INCOME_CATEGORY[data.categoryType!].categoryName}
+            label={transacationCategory(data.transactionType)}
             size={"small"}
           />
           <Label label={data.note} size={"note"} />
@@ -61,5 +71,8 @@ const list_item_style = StyleSheet.create({
     flexDirection: "row",
     backgroundColor: "#36c4a50c",
     justifyContent: "space-between",
+    borderStyle: "solid",
+    borderBottomWidth: 0.3,
+    borderBottomColor: "#0b2b24fd",
   },
 });

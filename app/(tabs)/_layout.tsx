@@ -1,6 +1,6 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Tabs } from "expo-router";
-
+import { Image } from "react-native";
 export default function TabLayout() {
   return (
     <Tabs
@@ -8,10 +8,12 @@ export default function TabLayout() {
         headerShown: false,
         tabBarActiveTintColor: "black",
         tabBarStyle: {
+          // display: "none",
           paddingTop: 10,
           height: 60,
           justifyContent: "center", // Centers content vertically
           alignItems: "center", // Centers content horizontally
+          backgroundColor: "#41a892ff",
         },
         tabBarItemStyle: {
           justifyContent: "center", // Ensures icon is centered vertically
@@ -23,7 +25,14 @@ export default function TabLayout() {
         name="home"
         options={{
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="home" color={color} />
+            // <FontAwesome size={28} name="home" color={color} />
+            <Image
+              source={require("../../assets/triangle.png")}
+              style={{
+                width: 40,
+                height: 40,
+              }}
+            />
           ),
           tabBarLabel: () => null,
         }}
@@ -32,7 +41,14 @@ export default function TabLayout() {
         name="history"
         options={{
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="exchange" color={color} />
+            // <FontAwesome size={28} name="exchange" color={color} />
+            <Image
+              source={require("../../assets/circ1.png")}
+              style={{
+                width: 40,
+                height: 40,
+              }}
+            />
           ),
           tabBarLabel: () => null,
         }}
@@ -41,7 +57,14 @@ export default function TabLayout() {
         name="transaction"
         options={{
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="plus" color={color} />
+            // <FontAwesome size={28} name="plus" color={color} />
+            <Image
+              source={require("../../assets/plus.png")}
+              style={{
+                width: 40,
+                height: 40,
+              }}
+            />
           ),
           tabBarLabel: () => null,
         }}
@@ -50,7 +73,14 @@ export default function TabLayout() {
         name="report"
         options={{
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="bar-chart" color={color} />
+            // <FontAwesome size={28} name="bar-chart" color={color} />
+            <Image
+              source={require("../../assets/circ2.png")}
+              style={{
+                width: 40,
+                height: 40,
+              }}
+            />
           ),
           tabBarLabel: () => null,
         }}
@@ -59,7 +89,14 @@ export default function TabLayout() {
         name="settings"
         options={{
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="cog" color={color} />
+            // <FontAwesome size={28} name="cog" color={color} />
+            <Image
+              source={require("../../assets/square.png")}
+              style={{
+                width: 40,
+                height: 40,
+              }}
+            />
           ),
           tabBarLabel: () => null,
         }}
