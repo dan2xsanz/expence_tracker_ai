@@ -4,6 +4,7 @@ import {
   ExpenceCategoryInterface,
   IncomeCategoryInterface,
   PaymentMethodInterface,
+  TotalTransactionDisplayInterface,
   TransactionInterface,
   TransactionListFilter,
 } from "./expence_tracker_interface";
@@ -14,6 +15,15 @@ export const accountDefault: CreateAccountInterface = {
   email: "",
   password: "",
   confirmPassword: "",
+};
+
+export const transactionSummaryDefault: TotalTransactionDisplayInterface = {
+  displayName: `${moment().startOf("week").format("DD MMM")} - ${moment()
+    .endOf("week")
+    .format("DD MMM YYYY")}`,
+  totalExpense: 0,
+  totalIncome: 0,
+  filterSelected: "1",
 };
 
 export const transactionDefault: TransactionInterface = {

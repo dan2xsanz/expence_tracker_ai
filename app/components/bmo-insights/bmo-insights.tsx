@@ -1,52 +1,92 @@
 import { View, Image, Dimensions, StyleSheet } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import Label from "../label/label";
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import moment from "moment";
+import { getAllTransaction, getTotalTransactions } from "@/app/operations";
+import { useLoadingScreen } from "@/app/hooks/loading-screen-hooks";
+import {
+  TotalTransactionrResponseInterface,
+  transactionSummaryDefault,
+} from "@/app/config";
+import { useFocusEffect } from "expo-router";
 
 export const BmoInsights = () => {
+  // SCREEN LOADING HOOK
+  const { loading, setLoading } = useLoadingScreen();
+
   // CURRENT WEEK
   const startOfWeek = moment().startOf("week");
   const endOfWeek = moment().endOf("week");
 
-  const [dispayedFilter, setDisplayedFlter] = useState<string>(
-    `${startOfWeek.format("DD MMM")} - ${endOfWeek.format("DD MMM YYYY")}`
-  );
+  const [dispayedFilter, setDisplayedFlter] = useState<{
+    displayName: string;
+    totalExpense?: number;
+    totalIncome?: number;
+    filterSelected: string;
+  }>(transactionSummaryDefault);
 
   const onChangeFilter = (selectedFilter: string) => {
     switch (selectedFilter) {
       case "1":
-        setDisplayedFlter(
-          `${startOfWeek.format("DD MMM")} - ${endOfWeek.format("DD MMM YYYY")}`
-        );
+        setDisplayedFlter({
+          displayName: `${startOfWeek.format("DD MMM")} - ${endOfWeek.format(
+            "DD MMM YYYY"
+          )}`,
+          filterSelected: "1",
+        });
         break;
       case "2":
-        setDisplayedFlter(moment().format("MMM YYYY"));
+        setDisplayedFlter({
+          displayName: moment().format("MMM YYYY"),
+          filterSelected: "2",
+        });
         break;
       case "3":
-        setDisplayedFlter(moment().format("YYYY"));
+        setDisplayedFlter({
+          displayName: moment().format("YYYY"),
+          filterSelected: "3",
+        });
         break;
     }
   };
 
+  const getAllTransactionSummary = useCallback(async () => {
+    const totalTransactions: TotalTransactionrResponseInterface =
+      await getTotalTransactions(
+        { accountMasterId: 0, filterType: dispayedFilter.filterSelected },
+        setLoading
+      );
+    setDisplayedFlter({
+      ...dispayedFilter,
+      totalExpense: totalTransactions.totalExpense,
+      totalIncome: totalTransactions.totalIncome,
+    });
+  }, [dispayedFilter.filterSelected]);
+
+  // Reste Trasaction type everytime the screen is focused
+  useFocusEffect(
+    useCallback(() => {
+      getAllTransactionSummary();
+    }, [])
+  );
+
+  useEffect(() => {
+    getAllTransactionSummary();
+  }, [dispayedFilter.filterSelected]);
+
   return (
     <View>
-      <Label
-        label={"Insight Summary"}
-        style={{
-          fontSize: 15,
-          marginTop: 18,
-        }}
-      />
+      <Label label={"Insight Summary"} style={insight_style.insight_label} />
       <View style={insight_style.insight_container}>
         <Label
-          label={dispayedFilter}
+          label={dispayedFilter.displayName}
           style={{ fontWeight: 500, fontSize: 18 }}
         />
         <View style={insight_style.insight_filter}>
           <Picker
             style={{ fontWeight: "500", padding: -1 }}
-            selectedValue={undefined}
+            selectedValue={dispayedFilter.filterSelected}
             onValueChange={(itemValue) => onChangeFilter(itemValue!)}
           >
             <Picker.Item label="Weekly" value="1" />
@@ -67,7 +107,11 @@ export const BmoInsights = () => {
               style={{ fontWeight: 400, fontSize: 12 }}
             />
             <Label
-              label={"₱20,000.00"}
+              label={`₱ ${
+                dispayedFilter.totalIncome
+                  ? dispayedFilter.totalIncome.toLocaleString()
+                  : 0
+              }`}
               style={{ fontWeight: 600, fontSize: 18, color: "#037a03d2" }}
             />
           </View>
@@ -83,7 +127,11 @@ export const BmoInsights = () => {
               style={{ fontWeight: 400, fontSize: 12 }}
             />
             <Label
-              label={"₱20,000.00"}
+              label={`₱ ${
+                dispayedFilter.totalExpense
+                  ? dispayedFilter.totalExpense.toLocaleString()
+                  : 0
+              }`}
               style={{ fontWeight: 600, fontSize: 18, color: "#ff0000a9" }}
             />
           </View>
@@ -94,6 +142,10 @@ export const BmoInsights = () => {
 };
 
 export const insight_style = StyleSheet.create({
+  insight_label: {
+    fontSize: 15,
+    marginTop: 18,
+  },
   insight_container: {
     display: "flex",
     flexDirection: "row",

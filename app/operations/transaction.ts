@@ -1,6 +1,7 @@
 import { Alert } from "react-native";
 import {
   ResponseInterface,
+  TotalTransactionInterface,
   transactionDefault,
   TransactionInterface,
   TransactionListFilter,
@@ -11,6 +12,7 @@ import {
   GetAllMonthlyExpense,
   GetAllTransaction,
   GetAllYearlyExpense,
+  GetTotalTransactions,
 } from "../service/transactions/transactions";
 
 interface CreateTransactionParam {
@@ -104,6 +106,24 @@ export const getAllYearlyExpense = async (
   try {
     setLoading(true);
     const response: ResponseInterface = await GetAllYearlyExpense();
+    // RETURN SUCCESS MESSAGE
+    if (response.isSuccess && response.resultData) {
+      return response.resultData;
+    }
+  } catch (error: any) {
+    Alert.alert("Error", "Oops, something went wrong.");
+  } finally {
+    setLoading(false);
+  }
+};
+
+export const getTotalTransactions = async (
+  data: TotalTransactionInterface,
+  setLoading: (data: boolean) => void
+) => {
+  try {
+    setLoading(true);
+    const response: ResponseInterface = await GetTotalTransactions(data);
     // RETURN SUCCESS MESSAGE
     if (response.isSuccess && response.resultData) {
       return response.resultData;

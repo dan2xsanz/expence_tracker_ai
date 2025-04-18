@@ -78,3 +78,22 @@ export interface YearlyExpenseInterface {
   transactionIn: number | undefined;
   transactionOut: number | undefined;
 }
+
+export interface TotalTransactionDisplayInterface {
+  displayName: string;
+  totalExpense?: number;
+  totalIncome?: number;
+  filterSelected: string;
+}
+
+// TOTAL TRANSACTIONS
+export interface TotalTransactionInterface {
+  accountMasterId: number | undefined;
+  filterType: string;
+}
+
+// TOTAL TRANSACTIONS RESPONSE
+export interface TotalTransactionrResponseInterface {
+  totalIncome: number;
+  totalExpense: number;
+}
