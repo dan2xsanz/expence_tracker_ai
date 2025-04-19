@@ -1,15 +1,16 @@
-import { View, Image, Dimensions, StyleSheet } from "react-native";
-import { Picker } from "@react-native-picker/picker";
-import Label from "../label/label";
-import React, { useCallback, useEffect, useState } from "react";
-import moment from "moment";
-import { getAllTransaction, getTotalTransactions } from "@/app/operations";
 import { useLoadingScreen } from "@/app/hooks/loading-screen-hooks";
+import React, { useCallback, useEffect, useState } from "react";
+import { getTotalTransactions } from "@/app/operations";
+import { View, Image, StyleSheet } from "react-native";
+import { Picker } from "@react-native-picker/picker";
+import { useFocusEffect } from "expo-router";
+import { Loading } from "../loading/loading";
+import Label from "../label/label";
+import moment from "moment";
 import {
   TotalTransactionrResponseInterface,
   transactionSummaryDefault,
 } from "@/app/config";
-import { useFocusEffect } from "expo-router";
 
 export const BmoInsights = () => {
   // SCREEN LOADING HOOK
@@ -19,6 +20,7 @@ export const BmoInsights = () => {
   const startOfWeek = moment().startOf("week");
   const endOfWeek = moment().endOf("week");
 
+  //  DISPLAYED FILTER
   const [dispayedFilter, setDisplayedFlter] = useState<{
     displayName: string;
     totalExpense?: number;
@@ -26,6 +28,7 @@ export const BmoInsights = () => {
     filterSelected: string;
   }>(transactionSummaryDefault);
 
+  // ON CHANGE SUMMARY FILTER
   const onChangeFilter = (selectedFilter: string) => {
     switch (selectedFilter) {
       case "1":
@@ -51,6 +54,7 @@ export const BmoInsights = () => {
     }
   };
 
+  // GET ALL TRANSACTOION SUMMARY
   const getAllTransactionSummary = useCallback(async () => {
     const totalTransactions: TotalTransactionrResponseInterface =
       await getTotalTransactions(
@@ -77,6 +81,7 @@ export const BmoInsights = () => {
 
   return (
     <View>
+      <Loading loading={loading} />
       <Label label={"Insight Summary"} style={insight_style.insight_label} />
       <View style={insight_style.insight_container}>
         <Label

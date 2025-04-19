@@ -7,7 +7,7 @@ import { ListItem } from "../components/list-item/list-item";
 import ButtonField from "../components/button/button";
 import { getAllTransaction } from "../operations";
 import Label from "../components/label/label";
-import { useFocusEffect } from "expo-router";
+import { useFocusEffect, useRouter } from "expo-router";
 import {
   transactioFilternDefault,
   TransactionListFilter,
@@ -21,6 +21,9 @@ import { Loading } from "../components/loading/loading";
 import { useLoadingScreen } from "../hooks/loading-screen-hooks";
 
 export default function HistoryScreen() {
+  // SCREEN ROUTING
+  const router = useRouter();
+
   // SCREEN LOADING HOOK
   const { loading, setLoading } = useLoadingScreen();
 
@@ -109,9 +112,8 @@ export default function HistoryScreen() {
                 <Label
                   size={"small"}
                   style={{ fontSize: 12 }}
-                  label={"Searh by Date"}
+                  label={"Search by Date"}
                 />
-                <View style={history_style.intruction_line} />
               </View>
               <View style={{ marginTop: 10, gap: 5 }}>
                 <DatePicker
@@ -148,9 +150,8 @@ export default function HistoryScreen() {
                   <Label
                     size={"small"}
                     style={{ fontSize: 12 }}
-                    label={"Searh by Note"}
+                    label={"Search by Note"}
                   />
-                  <View style={history_style.intruction_line} />
                 </View>
                 <TextInputField
                   size="medium"
@@ -177,7 +178,11 @@ export default function HistoryScreen() {
               >
                 {transactionList.map((data, index) => {
                   return (
-                    <ListItem key={index} onPressItem={() => {}} data={data} />
+                    <ListItem
+                      key={index}
+                      onPressItem={() => router.push("/(receipt)/receipt")}
+                      data={data}
+                    />
                   );
                 })}
               </ScrollView>
@@ -231,7 +236,6 @@ const history_style = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 10,
     marginTop: 10,
   },
   intruction_line: { height: 1, width: "60%", backgroundColor: "black" },
