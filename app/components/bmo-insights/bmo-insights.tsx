@@ -1,10 +1,8 @@
-import { useLoadingScreen } from "@/app/hooks/loading-screen-hooks";
 import React, { useCallback, useEffect, useState } from "react";
 import { getTotalTransactions } from "@/app/operations";
 import { View, Image, StyleSheet } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { useFocusEffect } from "expo-router";
-import { Loading } from "../loading/loading";
 import Label from "../label/label";
 import moment from "moment";
 import {
@@ -12,10 +10,11 @@ import {
   transactionSummaryDefault,
 } from "@/app/config";
 
-export const BmoInsights = () => {
-  // SCREEN LOADING HOOK
-  const { loading, setLoading } = useLoadingScreen();
+interface BmoInsightInterface {
+  setLoading: (data: boolean) => void;
+}
 
+export const BmoInsights = ({ setLoading }: BmoInsightInterface) => {
   // CURRENT WEEK
   const startOfWeek = moment().startOf("week");
   const endOfWeek = moment().endOf("week");
@@ -81,7 +80,6 @@ export const BmoInsights = () => {
 
   return (
     <View>
-      <Loading loading={loading} />
       <Label label={"Insight Summary"} style={insight_style.insight_label} />
       <View style={insight_style.insight_container}>
         <Label

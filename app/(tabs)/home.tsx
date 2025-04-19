@@ -5,10 +5,15 @@ import { BmoTools } from "../components/bmo-tools/bmo-tools";
 import { BmoTap } from "../components/bmo-tap/bmo-tap";
 import Label from "../components/label/label";
 import React from "react";
+import { Loading } from "../components/loading/loading";
+import { useLoadingScreen } from "../hooks/loading-screen-hooks";
 
 export default function HomeScreen() {
+  // SCREEN LOADING HOOK
+  const { loading, setLoading } = useLoadingScreen();
   return (
     <View style={home_style.main_container}>
+      <Loading loading={loading} />
       <View style={home_style.container}>
         <View style={home_style.header_container}>
           <Label label={"Home"} size={"medium"} style={{ fontSize: 20 }} />
@@ -49,7 +54,7 @@ export default function HomeScreen() {
           showsVerticalScrollIndicator={false}
           style={{ height: Dimensions.get("window").height - 250 }}
         >
-          <BmoInsights />
+          <BmoInsights setLoading={setLoading} />
           <BmoAdvices />
           <BmoTools />
           <BmoTap />

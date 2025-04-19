@@ -12,6 +12,7 @@ import {
   transactioFilternDefault,
   TransactionListFilter,
   TransactionInterface,
+  transactionDefault,
 } from "../config";
 import {
   FilterNotActiveIcon,
@@ -19,10 +20,14 @@ import {
 } from "../components/icons/icons";
 import { Loading } from "../components/loading/loading";
 import { useLoadingScreen } from "../hooks/loading-screen-hooks";
+import { useBmoStore } from "../store/bmo-store";
 
 export default function HistoryScreen() {
   // SCREEN ROUTING
   const router = useRouter();
+
+  // BMO STORE HANDLER
+  const { setTransactionDetail, transactionDetail } = useBmoStore();
 
   // SCREEN LOADING HOOK
   const { loading, setLoading } = useLoadingScreen();
@@ -180,7 +185,10 @@ export default function HistoryScreen() {
                   return (
                     <ListItem
                       key={index}
-                      onPressItem={() => router.push("/(receipt)/receipt")}
+                      onPressItem={() => {
+                        setTransactionDetail(data);
+                        router.push("/(receipt)/receipt");
+                      }}
                       data={data}
                     />
                   );
