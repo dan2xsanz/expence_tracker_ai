@@ -27,10 +27,10 @@ export default function HistoryScreen() {
   const router = useRouter();
 
   // BMO STORE HANDLER
-  const { setTransactionDetail, transactionDetail } = useBmoStore();
+  const { setTransactionDetail } = useBmoStore();
 
   // SCREEN LOADING HOOK
-  const { loading, setLoading } = useLoadingScreen();
+  const [loading, setLoading] = useState<boolean>(false);
 
   // Transaction Filter State
   const [transactionFilter, setTransactionFilter] =

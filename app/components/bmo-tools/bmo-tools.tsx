@@ -26,14 +26,14 @@ export const BmoTools = () => {
           onPress={onClickButtonTools}
           style={tools_style.tools_button_style}
         >
-          <SavingIcon />
+          <SavingIcon onPress={onClickButtonTools} />
           <Label label={"Savings"} />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={onClickButtonTools}
           style={tools_style.tools_button_style}
         >
-          <ChartIcon />
+          <ChartIcon onPress={onClickButtonTools} />
           <Label label={"Budget"} />
         </TouchableOpacity>
 
@@ -41,21 +41,21 @@ export const BmoTools = () => {
           onPress={onClickButtonTools}
           style={tools_style.tools_button_style}
         >
-          <CalculatorIcon />
+          <CalculatorIcon onPress={onClickButtonTools} />
           <Label label={"Calculator"} />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={onClickButtonTools}
           style={tools_style.tools_button_style}
         >
-          <FamilyExpense />
+          <FamilyExpense onPress={onClickButtonTools} />
           <Label label={"Family"} />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={onClickButtonTools}
           style={tools_style.tools_button_style}
         >
-          <CreditScore />
+          <CreditScore onPress={onClickButtonTools} />
           <Label label={"Score"} />
         </TouchableOpacity>
       </View>

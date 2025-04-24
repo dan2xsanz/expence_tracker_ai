@@ -52,7 +52,7 @@ export default function HomeScreen() {
 
         <ScrollView
           showsVerticalScrollIndicator={false}
-          style={{ height: Dimensions.get("window").height - 250 }}
+          style={{ height: Dimensions.get("window").height - 260 }}
         >
           <BmoInsights setLoading={setLoading} />
           <BmoAdvices />

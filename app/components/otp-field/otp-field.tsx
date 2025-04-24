@@ -64,6 +64,7 @@ export const OtpField = ({
           ref={otp1Ref}
           size={"medium"}
           value={otp.otp1}
+          keyboardType="numeric"
           style={otp_field_styles.otp_field_style}
           onChange={(data) => {
             if (data) {
@@ -77,6 +78,7 @@ export const OtpField = ({
           maxLength={1}
           size={"medium"}
           value={otp.otp2}
+          keyboardType="numeric"
           style={otp_field_styles.otp_field_style}
           onChange={(data) => {
             if (data) {
@@ -92,6 +94,7 @@ export const OtpField = ({
           maxLength={1}
           size={"medium"}
           value={otp.otp3}
+          keyboardType="numeric"
           style={otp_field_styles.otp_field_style}
           onChange={(data) => {
             if (data) {
@@ -107,6 +110,7 @@ export const OtpField = ({
           maxLength={1}
           size={"medium"}
           value={otp.otp4}
+          keyboardType="numeric"
           style={otp_field_styles.otp_field_style}
           onChange={(data) => {
             if (data) {
@@ -122,6 +126,7 @@ export const OtpField = ({
           maxLength={1}
           size={"medium"}
           value={otp.otp5}
+          keyboardType="numeric"
           style={otp_field_styles.otp_field_style}
           onChange={(data) => {
             if (data) {
@@ -137,6 +142,7 @@ export const OtpField = ({
           maxLength={1}
           size={"medium"}
           value={otp.otp6}
+          keyboardType="numeric"
           style={otp_field_styles.otp_field_style}
           onChange={(data) => {
             if (!data) {
