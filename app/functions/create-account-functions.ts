@@ -8,10 +8,32 @@ export const validateRequiredFields = (
     createAccount;
 
   if (!firstName || !lastName || !email || !password || !confirmPassword) {
-    return Alert.alert("Error", "Please input value for required fields!");
+    Alert.alert("Error", "Please input value for required fields!");
+    return false;
   }
 
   if (password !== confirmPassword) {
-    return Alert.alert("Error", "Passwords do not match!");
+    Alert.alert("Error", "Passwords do not match!");
+    return false;
   }
+
+  return true;
+};
+
+export const validateRequiredPassFields = (
+  createAccount: CreateAccountInterface
+) => {
+  const { password, confirmPassword } = createAccount;
+
+  if (!password || !confirmPassword) {
+    Alert.alert("Error", "Please input value for required fields!");
+    return false;
+  }
+
+  if (password !== confirmPassword) {
+    Alert.alert("Error", "Passwords do not match!");
+    return false;
+  }
+
+  return true;
 };

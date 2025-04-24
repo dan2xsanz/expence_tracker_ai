@@ -97,3 +97,7 @@ export interface TotalTransactionrResponseInterface {
   totalIncome: number;
   totalExpense: number;
 }
+
+export interface SendOtpInterface {
+  email: string;
+}

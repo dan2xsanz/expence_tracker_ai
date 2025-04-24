@@ -4,13 +4,13 @@ import { BmoAdvices } from "../components/bmo-advice/bmo-advice";
 import { BmoTools } from "../components/bmo-tools/bmo-tools";
 import { BmoTap } from "../components/bmo-tap/bmo-tap";
 import Label from "../components/label/label";
-import React from "react";
+import React, { useState } from "react";
 import { Loading } from "../components/loading/loading";
-import { useLoadingScreen } from "../hooks/loading-screen-hooks";
 
 export default function HomeScreen() {
   // SCREEN LOADING HOOK
-  const { loading, setLoading } = useLoadingScreen();
+  const [loading, setLoading] = useState<boolean>(false);
+
   return (
     <View style={home_style.main_container}>
       <Loading loading={loading} />

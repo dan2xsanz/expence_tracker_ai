@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import { accountDefault, CreateAccountInterface } from "../config";
 import { createAccountOperation } from "../operations";
 import { validateRequiredFields } from "../functions";
+import { hashPassword } from "../utils";
 
 export default function CreateAccountScreen() {
   // CREATE ACCOUNT INTERFACE
@@ -17,10 +18,15 @@ export default function CreateAccountScreen() {
     setCreateAccount({ ...createAccount, ...data });
   };
 
-  const checkSubmit = () => {
+  const onClickCreateNewAccount = () => {
     // VALIDATE REQUIRED FIELDS
-    validateRequiredFields(createAccount);
-    createAccountOperation({ data: createAccount });
+    if (validateRequiredFields(createAccount)) {
+      createAccountOperation({
+        ...createAccount,
+        password: hashPassword(createAccount.password),
+        confirmPassword: hashPassword(createAccount.password),
+      });
+    }
   };
 
   return (
@@ -98,7 +104,11 @@ export default function CreateAccountScreen() {
               inputChange({ ...createAccount, confirmPassword: text })
             }
           />
-          <ButtonField label="Sign Up" size={"medium"} onPress={checkSubmit} />
+          <ButtonField
+            label="Sign Up"
+            size={"medium"}
+            onPress={onClickCreateNewAccount}
+          />
         </View>
       </View>
     </View>

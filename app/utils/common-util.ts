@@ -6,6 +6,9 @@ import {
   TransactionType,
 } from "../config";
 
+import CryptoJS from "crypto-js";
+import { SECRET_KEY } from "../config/properties";
+
 export const getRandomDarkColor = () => {
   const h = Math.floor(Math.random() * 360); // Hue: 0-359
   const s = Math.floor(Math.random() * 30) + 60; // Saturation: 60–89%
@@ -64,4 +67,8 @@ export const getTransactionDetailsDisplay = (
   }
 
   return { name, categoryName, paymentMethodName, amount };
+};
+
+export const hashPassword = (data: string) => {
+  return CryptoJS.HmacSHA256(data, SECRET_KEY).toString();
 };

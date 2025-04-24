@@ -20,7 +20,7 @@ import { Loading } from "../components/loading/loading";
 
 export default function ReportScreen() {
   // SCREEN LOADING HOOK
-  const { loading, setLoading } = useLoadingScreen();
+  const [loading, setLoading] = useState<boolean>(false);
 
   // REPORT STATE
   const [dailyExpense, setDailyExpense] = useState<DailyExpenseInterface[]>([]);
