@@ -1,3 +1,14 @@
+import {
+  EXPENCE_CATEGORY,
+  INCOME_CATEGORY,
+  PAYMENT_CATEGORY,
+  TransactionInterface,
+  TransactionType,
+} from "../config";
+
+import CryptoJS from "crypto-js";
+import { SECRET_KEY } from "../config/properties";
+
 export const getRandomDarkColor = () => {
   const h = Math.floor(Math.random() * 360); // Hue: 0-359
   const s = Math.floor(Math.random() * 30) + 60; // Saturation: 60–89%
@@ -26,3 +37,38 @@ export const getRandomColor = () =>
   Math.floor(Math.random() * 16777215)
     .toString(16)
     .padStart(6, "0");
+
+export const getTransactionDetailsDisplay = (
+  transactionDetail: TransactionInterface
+) => {
+  let name;
+  let categoryName;
+  let paymentMethodName;
+  let amount;
+
+  if (transactionDetail.transactionType === TransactionType.MONEY_IN) {
+    name = "Money In";
+    categoryName =
+      INCOME_CATEGORY[Number(transactionDetail.categoryType)].categoryName;
+    paymentMethodName = `Received via ${
+      PAYMENT_CATEGORY[Number(transactionDetail.paymentType)].paymentName
+    }`;
+    amount = `PHP ${Number(transactionDetail.amountValue).toLocaleString()}`;
+  }
+
+  if (transactionDetail.transactionType === TransactionType.MONEY_OUT) {
+    name = "Money Out";
+    categoryName =
+      EXPENCE_CATEGORY[Number(transactionDetail.categoryType)].expenceName;
+    paymentMethodName = `Sent via ${
+      PAYMENT_CATEGORY[Number(transactionDetail.paymentType)].paymentName
+    }`;
+    amount = `PHP ${Number(transactionDetail.amountValue).toLocaleString()}`;
+  }
+
+  return { name, categoryName, paymentMethodName, amount };
+};
+
+export const hashPassword = (data: string) => {
+  return CryptoJS.HmacSHA256(data, SECRET_KEY).toString();
+};

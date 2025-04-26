@@ -1,19 +1,39 @@
 import { Alert } from "react-native";
 import { CreateAccountInterface, ResponseInterface } from "../config";
-import { CreateAccount } from "../service/account/account";
+import { CreateAccount, UpdatePassword } from "../service/account/account";
 
-interface CreateAccountParam {
-  data: CreateAccountInterface;
-}
-export const createAccountOperation = async ({ data }: CreateAccountParam) => {
+export const createAccountOperation = async (
+  data: CreateAccountInterface,
+  setLoading: (data: boolean) => void,
+  onSuccess: () => void
+) => {
   try {
+    setLoading(true);
     const response: ResponseInterface = await CreateAccount(data);
     // RETURN SUCCESS MESSAGE
     if (response.isSuccess && response.resultData) {
+      Alert.alert("Success", "Account Created Successfully.");
+      onSuccess();
     }
-  } catch (error: any) {
-    Alert.alert("Error", "Oops, something went wrong.");
   } finally {
-    Alert.alert("Success", "Account Created Successfully.");
+    setLoading(false);
+  }
+};
+
+export const updatePasswordOperation = async (
+  data: CreateAccountInterface,
+  setLoading: (data: boolean) => void,
+  onSuccess: () => void
+) => {
+  try {
+    setLoading(true);
+    const response: ResponseInterface = await UpdatePassword(data);
+    // RETURN SUCCESS MESSAGE
+    if (response.isSuccess && response.resultData) {
+      Alert.alert("Success", "Password Updated Successfully.");
+      onSuccess();
+    }
+  } finally {
+    setLoading(false);
   }
 };

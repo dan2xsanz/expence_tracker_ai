@@ -2,12 +2,14 @@ import TransactionHeader from "../components/transaction-header/transaction-head
 import { Fragment, useCallback, useEffect, useState } from "react";
 import TextInputField from "../components/text-input/text-input";
 import DatePicker from "../components/date-picker/date-picker";
-import { View, StyleSheet, ScrollView } from "react-native";
 import { ListItem } from "../components/list-item/list-item";
+import { View, StyleSheet, ScrollView } from "react-native";
+import { useFocusEffect, useRouter } from "expo-router";
+import { Loading } from "../components/loading/loading";
 import ButtonField from "../components/button/button";
 import { getAllTransaction } from "../operations";
+import { useBmoStore } from "../store/bmo-store";
 import Label from "../components/label/label";
-import { useFocusEffect } from "expo-router";
 import {
   transactioFilternDefault,
   TransactionListFilter,
@@ -17,12 +19,16 @@ import {
   FilterNotActiveIcon,
   FilterActiveIcon,
 } from "../components/icons/icons";
-import { Loading } from "../components/loading/loading";
-import { useLoadingScreen } from "../hooks/loading-screen-hooks";
 
 export default function HistoryScreen() {
+  // SCREEN ROUTING
+  const router = useRouter();
+
+  // BMO STORE HANDLER
+  const { setTransactionDetail, accountDetail } = useBmoStore();
+
   // SCREEN LOADING HOOK
-  const { loading, setLoading } = useLoadingScreen();
+  const [loading, setLoading] = useState<boolean>(false);
 
   // Transaction Filter State
   const [transactionFilter, setTransactionFilter] =
@@ -53,7 +59,7 @@ export default function HistoryScreen() {
   const transactionLisFetch = useCallback(async () => {
     return setTransactionList(
       await getAllTransaction({
-        data: transactionFilter,
+        data: { ...transactionFilter, accountMasterId: accountDetail.id },
         setLoading,
         setSearchClick,
       })
@@ -109,9 +115,8 @@ export default function HistoryScreen() {
                 <Label
                   size={"small"}
                   style={{ fontSize: 12 }}
-                  label={"Searh by Date"}
+                  label={"Search by Date"}
                 />
-                <View style={history_style.intruction_line} />
               </View>
               <View style={{ marginTop: 10, gap: 5 }}>
                 <DatePicker
@@ -148,9 +153,8 @@ export default function HistoryScreen() {
                   <Label
                     size={"small"}
                     style={{ fontSize: 12 }}
-                    label={"Searh by Note"}
+                    label={"Search by Note"}
                   />
-                  <View style={history_style.intruction_line} />
                 </View>
                 <TextInputField
                   size="medium"
@@ -177,7 +181,14 @@ export default function HistoryScreen() {
               >
                 {transactionList.map((data, index) => {
                   return (
-                    <ListItem key={index} onPressItem={() => {}} data={data} />
+                    <ListItem
+                      key={index}
+                      onPressItem={() => {
+                        setTransactionDetail(data);
+                        router.push("/(receipt)/receipt");
+                      }}
+                      data={data}
+                    />
                   );
                 })}
               </ScrollView>
@@ -231,7 +242,6 @@ const history_style = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 10,
     marginTop: 10,
   },
   intruction_line: { height: 1, width: "60%", backgroundColor: "black" },

@@ -43,10 +43,14 @@ export const GetAllTransaction = (
   });
 };
 
-export const GetAllDailyExpense = (): Promise<ResponseInterface> => {
+export const GetAllDailyExpense = (
+  accountMasterId: number | undefined
+): Promise<ResponseInterface> => {
   return new Promise((resolve, reject) => {
     axios
-      .get<ResponseInterface>(`${REQUEST_URL}/transaction/daily-expense`)
+      .get<ResponseInterface>(
+        `${REQUEST_URL}/transaction/daily-expense/${accountMasterId}`
+      )
       .then(function (response: AxiosResponse<ResponseInterface>) {
         resolve(response.data);
       })
@@ -56,10 +60,14 @@ export const GetAllDailyExpense = (): Promise<ResponseInterface> => {
   });
 };
 
-export const GetAllMonthlyExpense = (): Promise<ResponseInterface> => {
+export const GetAllMonthlyExpense = (
+  accountMasterId: number | undefined
+): Promise<ResponseInterface> => {
   return new Promise((resolve, reject) => {
     axios
-      .get<ResponseInterface>(`${REQUEST_URL}/transaction/monthly-expense`)
+      .get<ResponseInterface>(
+        `${REQUEST_URL}/transaction/monthly-expense/${accountMasterId}`
+      )
       .then(function (response: AxiosResponse<ResponseInterface>) {
         resolve(response.data);
       })
@@ -69,10 +77,14 @@ export const GetAllMonthlyExpense = (): Promise<ResponseInterface> => {
   });
 };
 
-export const GetAllYearlyExpense = (): Promise<ResponseInterface> => {
+export const GetAllYearlyExpense = (
+  accountMasterId: number | undefined
+): Promise<ResponseInterface> => {
   return new Promise((resolve, reject) => {
     axios
-      .get<ResponseInterface>(`${REQUEST_URL}/transaction/yearly-expense`)
+      .get<ResponseInterface>(
+        `${REQUEST_URL}/transaction/yearly-expense/${accountMasterId}`
+      )
       .then(function (response: AxiosResponse<ResponseInterface>) {
         resolve(response.data);
       })

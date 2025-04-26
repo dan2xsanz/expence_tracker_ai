@@ -1,22 +1,58 @@
 import TextInputField from "./components/text-input/text-input";
-import { View, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Image, TouchableOpacity, Alert } from "react-native";
 import ButtonField from "./components/button/button";
 import Label from "./components/label/label";
-import { useRouter } from "expo-router";
-import React from "react";
+import { useFocusEffect, useRouter } from "expo-router";
+import React, { useCallback, useState } from "react";
+import { loginOperation } from "./operations/auth";
+import { useLoadingScreen } from "./hooks/loading-screen-hooks";
+import { loginDefault, LoginInterface } from "./config";
+import { hashPassword } from "./utils";
+import { useBmoStore } from "./store/bmo-store";
+import { Loading } from "./components/loading/loading";
 
 export default function LoginScreen() {
+  // ROUTING
   const router = useRouter();
+
+  // BMO STORE HANDLER
+  const { setAccountDetail, resetBmoStore } = useBmoStore();
+
+  // SCREEN LOADING HOOK
+  const { loading, setLoading } = useLoadingScreen();
+
+  // LOGGIN DETAILS INTERFACE
+  const [loginDetails, setLoginDetails] =
+    useState<LoginInterface>(loginDefault);
+
+  const onClickLoginButton = () => {
+    // VALIDATE REQUIRED FIELDS
+    if (loginDetails.email === "" || loginDetails.password === "") {
+      return Alert.alert("Error", "Please input value for required fields!");
+    }
+
+    loginOperation(
+      { ...loginDetails, password: hashPassword(loginDetails.password) },
+      setLoading,
+      (data) => {
+        router.push("/(tabs)/home");
+        setAccountDetail(data);
+      }
+    );
+  };
+
+  // Auto Call Back the function once the tab has been rendered (RESER BIMO STORE)
+  useFocusEffect(
+    useCallback(() => {
+      setLoginDetails(loginDefault);
+      resetBmoStore();
+    }, [])
+  );
+
   return (
     <View style={styles.container}>
-      <View
-        style={{
-          flexDirection: "column",
-          alignItems: "center",
-          width: "80%",
-          gap: 10,
-        }}
-      >
+      <Loading loading={loading} />
+      <View style={styles.login_fields_container}>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Label label={"B"} size={"header1"} style={{ fontWeight: "bold" }} />
           <Image
@@ -28,18 +64,24 @@ export default function LoginScreen() {
         <TextInputField
           size={"medium"}
           placeHolder={"Username"}
+          value={loginDetails?.email}
+          onChange={(data) => setLoginDetails({ ...loginDetails, email: data })}
           style={{ fontSize: 20 }}
         />
         <TextInputField
           isSecureInput
           size={"medium"}
           placeHolder={"Password"}
+          value={loginDetails?.password}
+          onChange={(data) =>
+            setLoginDetails({ ...loginDetails, password: data })
+          }
           style={{ fontSize: 20 }}
         />
         <ButtonField
           label="Login"
           size="medium"
-          onPress={() => router.push("/(tabs)/home")}
+          onPress={() => onClickLoginButton()}
         />
 
         <View
@@ -93,5 +135,11 @@ const styles = StyleSheet.create({
     width: "100%",
     gap: 150,
     flex: 1,
+  },
+  login_fields_container: {
+    flexDirection: "column",
+    alignItems: "center",
+    width: "80%",
+    gap: 10,
   },
 });

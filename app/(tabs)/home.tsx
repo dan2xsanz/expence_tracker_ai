@@ -4,18 +4,27 @@ import { BmoAdvices } from "../components/bmo-advice/bmo-advice";
 import { BmoTools } from "../components/bmo-tools/bmo-tools";
 import { BmoTap } from "../components/bmo-tap/bmo-tap";
 import Label from "../components/label/label";
-import React from "react";
+import React, { useState } from "react";
+import { Loading } from "../components/loading/loading";
+import { useBmoStore } from "../store/bmo-store";
 
 export default function HomeScreen() {
+  // SCREEN LOADING HOOK
+  const [loading, setLoading] = useState<boolean>(false);
+
+  // BMO STORE HANDLER
+  const { accountDetail } = useBmoStore();
+
   return (
     <View style={home_style.main_container}>
+      <Loading loading={loading} />
       <View style={home_style.container}>
         <View style={home_style.header_container}>
           <Label label={"Home"} size={"medium"} style={{ fontSize: 20 }} />
         </View>
         <View style={{ marginTop: 10 }}>
           <Label
-            label={"Hi Dan Lester!"}
+            label={`Hi ${accountDetail.firstName}!`}
             size={"large"}
             style={{ fontWeight: 500, fontSize: 40 }}
           />
@@ -26,7 +35,7 @@ export default function HomeScreen() {
             <Label
               size="large"
               style={{ fontSize: 17, flexWrap: "wrap", marginBottom: 5 }}
-              label="Welcome! I'm your BMO. "
+              label="Welcome! I'm BMO. "
             />
             <Label
               size="medium"
@@ -47,9 +56,9 @@ export default function HomeScreen() {
 
         <ScrollView
           showsVerticalScrollIndicator={false}
-          style={{ height: Dimensions.get("window").height - 250 }}
+          style={{ height: Dimensions.get("window").height - 260 }}
         >
-          <BmoInsights />
+          <BmoInsights setLoading={setLoading} />
           <BmoAdvices />
           <BmoTools />
           <BmoTap />

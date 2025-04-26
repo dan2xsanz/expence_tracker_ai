@@ -1,13 +1,23 @@
-import { View, Image, StyleSheet, Alert } from "react-native";
-import Label from "../components/label/label";
-import TextInputField from "../components/text-input/text-input";
-import ButtonField from "../components/button/button";
-import React, { useState } from "react";
 import { accountDefault, CreateAccountInterface } from "../config";
+import { useLoadingScreen } from "../hooks/loading-screen-hooks";
+import TextInputField from "../components/text-input/text-input";
+import { Loading } from "../components/loading/loading";
 import { createAccountOperation } from "../operations";
 import { validateRequiredFields } from "../functions";
+import ButtonField from "../components/button/button";
+import { View, Image, StyleSheet } from "react-native";
+import Label from "../components/label/label";
+import React, { useState } from "react";
+import { hashPassword } from "../utils";
+import { useRouter } from "expo-router";
 
 export default function CreateAccountScreen() {
+  // ROUTING
+  const router = useRouter();
+
+  // SCREEN LOADING HOOK
+  const { loading, setLoading } = useLoadingScreen();
+
   // CREATE ACCOUNT INTERFACE
   const [createAccount, setCreateAccount] =
     useState<CreateAccountInterface>(accountDefault);
@@ -17,14 +27,27 @@ export default function CreateAccountScreen() {
     setCreateAccount({ ...createAccount, ...data });
   };
 
-  const checkSubmit = () => {
+  const onClickCreateNewAccount = () => {
     // VALIDATE REQUIRED FIELDS
-    validateRequiredFields(createAccount);
-    createAccountOperation({ data: createAccount });
+    if (validateRequiredFields(createAccount)) {
+      createAccountOperation(
+        {
+          ...createAccount,
+          password: hashPassword(createAccount.password),
+          confirmPassword: hashPassword(createAccount.password),
+        },
+        setLoading,
+        () => {
+          router.push("/");
+          setCreateAccount(accountDefault);
+        }
+      );
+    }
   };
 
   return (
     <View style={create_account_styles.main_container}>
+      <Loading loading={loading} />
       <View style={create_account_styles.container}>
         <View style={create_account_styles.header_container}>
           <Label
@@ -98,7 +121,11 @@ export default function CreateAccountScreen() {
               inputChange({ ...createAccount, confirmPassword: text })
             }
           />
-          <ButtonField label="Sign Up" size={"medium"} onPress={checkSubmit} />
+          <ButtonField
+            label="Sign Up"
+            size={"medium"}
+            onPress={onClickCreateNewAccount}
+          />
         </View>
       </View>
     </View>

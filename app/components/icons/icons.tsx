@@ -304,6 +304,25 @@ const FamilyExpense = ({ onPress }: IconStyleInterface) => {
   );
 };
 
+const ReceiptScratch = ({ onPress }: IconStyleInterface) => {
+  return (
+    <Svg
+      height={30}
+      width="100%"
+      viewBox="0 0 100 30"
+      preserveAspectRatio="none"
+      style={{
+        transform: [{ rotate: "180deg" }],
+      }}
+    >
+      <Path
+        d="M0 0 L5 10 L10 0 L15 10 L20 0 L25 10 L30 0 L35 10 L40 0 L45 10 L50 0 L55 10 L60 0 L65 10 L70 0 L75 10 L80 0 L85 10 L90 0 L95 10 L100 0 V30 H0 Z"
+        fill="#ffffff"
+      />
+    </Svg>
+  );
+};
+
 export {
   SendIcon,
   MenuIcon,
@@ -330,6 +349,7 @@ export {
   MoneyCheckIcon,
   CreditCardIcon,
   CalculatorIcon,
+  ReceiptScratch,
   NotificationIcon,
   BabyCarriageIcon,
   FilterActiveIcon,

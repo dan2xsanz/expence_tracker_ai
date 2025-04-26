@@ -15,8 +15,6 @@ export const chatBmo = async (
     if (response.isSuccess && response.resultData) {
       setConversation([...conversation, response.resultData]);
     }
-  } catch (error: any) {
-    Alert.alert("Error", "Oops, something went wrong.");
   } finally {
     setLoading(false);
   }

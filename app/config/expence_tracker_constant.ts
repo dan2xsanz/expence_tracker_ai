@@ -3,11 +3,18 @@ import {
   CreateAccountInterface,
   ExpenceCategoryInterface,
   IncomeCategoryInterface,
+  LoginInterface,
+  LoginResponseInterface,
   PaymentMethodInterface,
   TotalTransactionDisplayInterface,
   TransactionInterface,
   TransactionListFilter,
 } from "./expence_tracker_interface";
+
+export const loginDefault: LoginInterface = {
+  email: "",
+  password: "",
+};
 
 export const accountDefault: CreateAccountInterface = {
   firstName: "",
@@ -15,6 +22,13 @@ export const accountDefault: CreateAccountInterface = {
   email: "",
   password: "",
   confirmPassword: "",
+};
+
+export const accountDetailDefault: LoginResponseInterface = {
+  id: 0,
+  firstName: "",
+  lastName: "",
+  email: "",
 };
 
 export const transactionSummaryDefault: TotalTransactionDisplayInterface = {
@@ -35,6 +49,7 @@ export const transactionDefault: TransactionInterface = {
   date: moment(),
   time: moment().startOf("second"),
   paymentType: undefined,
+  accountMasterId: undefined,
 };
 
 export const transactioFilternDefault: TransactionListFilter = {
@@ -44,7 +59,7 @@ export const transactioFilternDefault: TransactionListFilter = {
   dateFrom: moment().subtract(1, "month"),
   dateTo: moment(),
   paymentType: undefined,
-  accountId: undefined,
+  accountMasterId: undefined,
 };
 
 export const INCOME_CATEGORY: IncomeCategoryInterface[] = [

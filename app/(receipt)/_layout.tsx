@@ -2,7 +2,7 @@ import { Stack } from "expo-router";
 import React from "react";
 import { Dimensions } from "react-native";
 
-export default function AskBmo() {
+export default function Receipt() {
   return (
     <Stack
       screenOptions={{
@@ -12,7 +12,7 @@ export default function AskBmo() {
         },
       }}
     >
-      <Stack.Screen name="askbmo" options={{ title: "Ask BMO" }} />
+      <Stack.Screen name="receipt" options={{ title: "" }} />
     </Stack>
   );
 }

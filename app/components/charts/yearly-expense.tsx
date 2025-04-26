@@ -11,7 +11,7 @@ export const YearlyExpense = ({ yearlyExpense }: YearlyExpenseProps) => {
   return (
     <Fragment>
       <Label
-        label={"Yearly Month Expense by Category"}
+        label={"Current Year Income vs Expense"}
         style={{ marginTop: 10, marginBottom: 10 }}
         size={"small"}
       />
