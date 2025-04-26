@@ -3,7 +3,6 @@ import { ReceiptScratch } from "../components/icons/icons";
 import Label from "../components/label/label";
 import { useBmoStore } from "../store/bmo-store";
 import { TransactionType } from "../config";
-import { useState } from "react";
 import { getTransactionDetailsDisplay } from "../utils";
 import moment from "moment";
 

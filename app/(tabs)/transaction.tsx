@@ -25,10 +25,14 @@ import { createTransaction } from "../operations";
 import { Moment } from "moment";
 import { Loading } from "../components/loading/loading";
 import { useLoadingScreen } from "../hooks/loading-screen-hooks";
+import { useBmoStore } from "../store/bmo-store";
 
 export default function TransactionScreen() {
   // SCREEN LOADING HOOK
   const { loading, setLoading } = useLoadingScreen();
+
+  // BMO STORE HANDLER
+  const { accountDetail } = useBmoStore();
 
   // Transaction Details State Container
   const [transactionDetails, setTransactionDetails] =
@@ -53,7 +57,11 @@ export default function TransactionScreen() {
     ) {
       return Alert.alert("Error", "Please input value for required fields!");
     } else {
-      createTransaction({ data, setLoading, setTransactionDetails });
+      createTransaction({
+        data: { ...data, accountMasterId: accountDetail.id },
+        setLoading,
+        setTransactionDetails,
+      });
     }
   };
 

@@ -2,32 +2,30 @@ import TransactionHeader from "../components/transaction-header/transaction-head
 import { Fragment, useCallback, useEffect, useState } from "react";
 import TextInputField from "../components/text-input/text-input";
 import DatePicker from "../components/date-picker/date-picker";
-import { View, StyleSheet, ScrollView } from "react-native";
 import { ListItem } from "../components/list-item/list-item";
+import { View, StyleSheet, ScrollView } from "react-native";
+import { useFocusEffect, useRouter } from "expo-router";
+import { Loading } from "../components/loading/loading";
 import ButtonField from "../components/button/button";
 import { getAllTransaction } from "../operations";
+import { useBmoStore } from "../store/bmo-store";
 import Label from "../components/label/label";
-import { useFocusEffect, useRouter } from "expo-router";
 import {
   transactioFilternDefault,
   TransactionListFilter,
   TransactionInterface,
-  transactionDefault,
 } from "../config";
 import {
   FilterNotActiveIcon,
   FilterActiveIcon,
 } from "../components/icons/icons";
-import { Loading } from "../components/loading/loading";
-import { useLoadingScreen } from "../hooks/loading-screen-hooks";
-import { useBmoStore } from "../store/bmo-store";
 
 export default function HistoryScreen() {
   // SCREEN ROUTING
   const router = useRouter();
 
   // BMO STORE HANDLER
-  const { setTransactionDetail } = useBmoStore();
+  const { setTransactionDetail, accountDetail } = useBmoStore();
 
   // SCREEN LOADING HOOK
   const [loading, setLoading] = useState<boolean>(false);
@@ -61,7 +59,7 @@ export default function HistoryScreen() {
   const transactionLisFetch = useCallback(async () => {
     return setTransactionList(
       await getAllTransaction({
-        data: transactionFilter,
+        data: { ...transactionFilter, accountMasterId: accountDetail.id },
         setLoading,
         setSearchClick,
       })

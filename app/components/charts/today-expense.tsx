@@ -11,7 +11,7 @@ export const DailyExpense = ({ dailyExpense }: DailyExpenseProps) => {
   return (
     <Fragment>
       <Label
-        label={"Today's Expense by Category"}
+        label={"Current Day Expense by Category"}
         size={"small"}
         style={{ marginBottom: 10 }}
       />

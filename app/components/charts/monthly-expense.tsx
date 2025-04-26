@@ -17,26 +17,37 @@ export const MonthlyExpense = ({ monthlyExpense }: MonthlyExpenseProps) => {
         size={"small"}
       />
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        <PieChart
-          data={monthlyExpense.map((item) => {
-            const color = getRandomColor(); // generate once
-            return {
-              name: item.expenseName,
-              population: Number(item.totalExpense), // keep this as a number for PieChart
-              color: color,
-              legendFontColor: "black",
-              legendFontSize: 12,
-            };
-          })}
-          width={Dimensions.get("window").width}
-          height={250}
-          chartConfig={{
-            color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-          }}
-          accessor={"population"} // Use "population" to represent expenses
-          backgroundColor={"#00000005"}
-          paddingLeft={"15"}
-        />
+        {monthlyExpense.length !== 0 ? (
+          <PieChart
+            data={monthlyExpense.map((item) => {
+              const color = getRandomColor(); // generate once
+              return {
+                name: item.expenseName,
+                population: Number(item.totalExpense), // keep this as a number for PieChart
+                color: color,
+                legendFontColor: "black",
+                legendFontSize: 12,
+              };
+            })}
+            width={Dimensions.get("window").width}
+            height={250}
+            chartConfig={{
+              color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+            }}
+            accessor={"population"} // Use "population" to represent expenses
+            backgroundColor={"#00000005"}
+            paddingLeft={"15"}
+          />
+        ) : (
+          <View
+            style={{
+              width: 200,
+              height: 200,
+              backgroundColor: "#00000033",
+              borderRadius: 100,
+            }}
+          />
+        )}
       </ScrollView>
     </Fragment>
   );

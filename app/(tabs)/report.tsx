@@ -2,7 +2,8 @@ import { View, StyleSheet, Dimensions, ScrollView } from "react-native";
 import { MonthlyExpense } from "../components/charts/monthly-expense";
 import { YearlyExpense } from "../components/charts/yearly-expense";
 import { DailyExpense } from "../components/charts/today-expense";
-import React, { useCallback, useState } from "react";
+import { Loading } from "../components/loading/loading";
+import React, { useCallback, useEffect, useState } from "react";
 import Label from "../components/label/label";
 import { useFocusEffect } from "expo-router";
 import {
@@ -15,10 +16,12 @@ import {
   YearlyExpenseInterface,
   DailyExpenseInterface,
 } from "../config";
-import { useLoadingScreen } from "../hooks/loading-screen-hooks";
-import { Loading } from "../components/loading/loading";
+import { useBmoStore } from "../store/bmo-store";
 
 export default function ReportScreen() {
+  // BMO STORE HANDLER
+  const { accountDetail } = useBmoStore();
+
   // SCREEN LOADING HOOK
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -33,19 +36,19 @@ export default function ReportScreen() {
 
   // Get Daily Expense Function
   const getDailyExpense = async () => {
-    const data = await getAllDailyExpense(setLoading);
+    const data = await getAllDailyExpense(setLoading, accountDetail.id);
     setDailyExpense(data);
   };
 
   // Get Monthly Expense Function
   const getMontlyExpense = async () => {
-    const data = await getAllMonthExpense(setLoading);
+    const data = await getAllMonthExpense(setLoading, accountDetail.id);
     setMonthlyExpense(data);
   };
 
   // Get Yearly Expense Function
   const getYearlyExpense = async () => {
-    const data = await getAllYearlyExpense(setLoading);
+    const data = await getAllYearlyExpense(setLoading, accountDetail.id);
     setYearlyExpense(data);
   };
 
@@ -68,7 +71,7 @@ export default function ReportScreen() {
           </View>
           <ScrollView
             showsVerticalScrollIndicator={false}
-            style={{ height: Dimensions.get("window").height - 100 }}
+            style={{ height: Dimensions.get("window").height - 170 }}
           >
             <View
               style={{
@@ -90,7 +93,7 @@ export default function ReportScreen() {
              - Purpose: Show how total expenses change month by month. 
              - Data Points: Months on the x-axis, Total Expenses on the y-axis.
              - Insight: Identify peak spending months and track overall expense growth or reduction. */}
-              {monthlyExpense.length > 0 && (
+              {monthlyExpense.length >= 0 && (
                 <MonthlyExpense monthlyExpense={monthlyExpense} />
               )}
 

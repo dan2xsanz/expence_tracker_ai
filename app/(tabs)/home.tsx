@@ -6,10 +6,14 @@ import { BmoTap } from "../components/bmo-tap/bmo-tap";
 import Label from "../components/label/label";
 import React, { useState } from "react";
 import { Loading } from "../components/loading/loading";
+import { useBmoStore } from "../store/bmo-store";
 
 export default function HomeScreen() {
   // SCREEN LOADING HOOK
   const [loading, setLoading] = useState<boolean>(false);
+
+  // BMO STORE HANDLER
+  const { accountDetail } = useBmoStore();
 
   return (
     <View style={home_style.main_container}>
@@ -20,7 +24,7 @@ export default function HomeScreen() {
         </View>
         <View style={{ marginTop: 10 }}>
           <Label
-            label={"Hi Dan Lester!"}
+            label={`Hi ${accountDetail.firstName}!`}
             size={"large"}
             style={{ fontWeight: 500, fontSize: 40 }}
           />
@@ -31,7 +35,7 @@ export default function HomeScreen() {
             <Label
               size="large"
               style={{ fontSize: 17, flexWrap: "wrap", marginBottom: 5 }}
-              label="Welcome! I'm your BMO. "
+              label="Welcome! I'm BMO. "
             />
             <Label
               size="medium"

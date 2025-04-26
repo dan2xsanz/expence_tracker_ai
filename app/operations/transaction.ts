@@ -20,6 +20,7 @@ interface CreateTransactionParam {
   setLoading: (data: boolean) => void;
   setTransactionDetails: (data: TransactionInterface) => void;
 }
+
 export const createTransaction = async ({
   data,
   setLoading,
@@ -63,11 +64,14 @@ export const getAllTransaction = async ({
 };
 
 export const getAllDailyExpense = async (
-  setLoading: (data: boolean) => void
+  setLoading: (data: boolean) => void,
+  accountMasterId: number | undefined
 ) => {
   try {
     setLoading(true);
-    const response: ResponseInterface = await GetAllDailyExpense();
+    const response: ResponseInterface = await GetAllDailyExpense(
+      accountMasterId
+    );
     // RETURN SUCCESS MESSAGE
     if (response.isSuccess && response.resultData) {
       return response.resultData;
@@ -78,11 +82,14 @@ export const getAllDailyExpense = async (
 };
 
 export const getAllMonthExpense = async (
-  setLoading: (data: boolean) => void
+  setLoading: (data: boolean) => void,
+  accountMasterId: number | undefined
 ) => {
   try {
     setLoading(true);
-    const response: ResponseInterface = await GetAllMonthlyExpense();
+    const response: ResponseInterface = await GetAllMonthlyExpense(
+      accountMasterId
+    );
     // RETURN SUCCESS MESSAGE
     if (response.isSuccess && response.resultData) {
       return response.resultData;
@@ -93,11 +100,14 @@ export const getAllMonthExpense = async (
 };
 
 export const getAllYearlyExpense = async (
-  setLoading: (data: boolean) => void
+  setLoading: (data: boolean) => void,
+  accountMasterId: number | undefined
 ) => {
   try {
     setLoading(true);
-    const response: ResponseInterface = await GetAllYearlyExpense();
+    const response: ResponseInterface = await GetAllYearlyExpense(
+      accountMasterId
+    );
     // RETURN SUCCESS MESSAGE
     if (response.isSuccess && response.resultData) {
       return response.resultData;

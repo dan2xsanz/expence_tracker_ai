@@ -9,12 +9,16 @@ import {
   TotalTransactionrResponseInterface,
   transactionSummaryDefault,
 } from "@/app/config";
+import { useBmoStore } from "@/app/store/bmo-store";
 
 interface BmoInsightInterface {
   setLoading: (data: boolean) => void;
 }
 
 export const BmoInsights = ({ setLoading }: BmoInsightInterface) => {
+  // BMO STORE HANDLER
+  const { accountDetail } = useBmoStore();
+
   // CURRENT WEEK
   const startOfWeek = moment().startOf("week");
   const endOfWeek = moment().endOf("week");
@@ -57,7 +61,10 @@ export const BmoInsights = ({ setLoading }: BmoInsightInterface) => {
   const getAllTransactionSummary = useCallback(async () => {
     const totalTransactions: TotalTransactionrResponseInterface =
       await getTotalTransactions(
-        { accountMasterId: 0, filterType: dispayedFilter.filterSelected },
+        {
+          accountMasterId: accountDetail.id,
+          filterType: dispayedFilter.filterSelected,
+        },
         setLoading
       );
     setDisplayedFlter({

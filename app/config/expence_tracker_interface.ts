@@ -44,7 +44,7 @@ export interface TransactionListFilter {
   dateFrom: Moment;
   dateTo: Moment;
   paymentType: number | undefined;
-  accountId: number | undefined;
+  accountMasterId: number | undefined;
 }
 
 // TRANSACTION DATA INTERFACE
@@ -57,6 +57,7 @@ export interface TransactionInterface {
   date: Moment | undefined;
   time: Moment | undefined;
   paymentType: number | undefined;
+  accountMasterId: number | undefined;
 }
 
 // DAILY EXPENSE
