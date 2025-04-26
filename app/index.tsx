@@ -1,12 +1,39 @@
 import TextInputField from "./components/text-input/text-input";
-import { View, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Image, TouchableOpacity, Alert } from "react-native";
 import ButtonField from "./components/button/button";
 import Label from "./components/label/label";
 import { useRouter } from "expo-router";
-import React from "react";
+import React, { useState } from "react";
+import { loginOperation } from "./operations/auth";
+import { useLoadingScreen } from "./hooks/loading-screen-hooks";
+import { LoginInterface } from "./config";
+import { hashPassword } from "./utils";
 
 export default function LoginScreen() {
+  // ROUTING
   const router = useRouter();
+
+  // SCREEN LOADING HOOK
+  const { loading, setLoading } = useLoadingScreen();
+
+  // LOGGIN DETAILS INTERFACE
+  const [loginDetails, setLoginDetails] = useState<LoginInterface>({
+    email: "",
+    password: "",
+  });
+
+  const onClickLoginButton = () => {
+    // VALIDATE REQUIRED FIELDS
+    if (loginDetails.email === "" || loginDetails.password === "") {
+      return Alert.alert("Error", "Please input value for required fields!");
+    }
+
+    loginOperation(
+      { ...loginDetails, password: hashPassword(loginDetails.password) },
+      setLoading,
+      () => router.push("/(tabs)/home")
+    );
+  };
   return (
     <View style={styles.container}>
       <View
@@ -28,18 +55,24 @@ export default function LoginScreen() {
         <TextInputField
           size={"medium"}
           placeHolder={"Username"}
+          value={loginDetails?.email}
+          onChange={(data) => setLoginDetails({ ...loginDetails, email: data })}
           style={{ fontSize: 20 }}
         />
         <TextInputField
           isSecureInput
           size={"medium"}
           placeHolder={"Password"}
+          value={loginDetails?.password}
+          onChange={(data) =>
+            setLoginDetails({ ...loginDetails, password: data })
+          }
           style={{ fontSize: 20 }}
         />
         <ButtonField
           label="Login"
           size="medium"
-          onPress={() => router.push("/(tabs)/home")}
+          onPress={() => onClickLoginButton()}
         />
 
         <View

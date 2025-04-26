@@ -101,3 +101,15 @@ export interface TotalTransactionrResponseInterface {
 export interface SendOtpInterface {
   email: string;
 }
+
+export interface LoginInterface {
+  email: string;
+  password: string;
+}
+
+export interface LoginResponseInterface {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+}
