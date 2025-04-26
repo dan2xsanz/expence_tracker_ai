@@ -17,7 +17,6 @@ export const sendOtpOperation = async (
     }
   } catch (error: any) {
     setOpenOtpField(false);
-    Alert.alert("Error", "Oops, something went wrong.");
   } finally {
     setLoading(false);
   }
@@ -39,8 +38,6 @@ export const verifyOtpOperation = async (
       setOpenOtpField(false);
       setOpenNewPassword(true);
     }
-  } catch (error: any) {
-    Alert.alert("Error", "Oops, something went wrong.");
   } finally {
     setLoading(false);
   }

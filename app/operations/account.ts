@@ -3,14 +3,10 @@ import { CreateAccountInterface, ResponseInterface } from "../config";
 import { CreateAccount, UpdatePassword } from "../service/account/account";
 
 export const createAccountOperation = async (data: CreateAccountInterface) => {
-  try {
-    const response: ResponseInterface = await CreateAccount(data);
-    // RETURN SUCCESS MESSAGE
-    if (response.isSuccess && response.resultData) {
-      Alert.alert("Success", "Account Created Successfully.");
-    }
-  } catch (error: any) {
-    Alert.alert("Error", "Oops, something went wrong.");
+  const response: ResponseInterface = await CreateAccount(data);
+  // RETURN SUCCESS MESSAGE
+  if (response.isSuccess && response.resultData) {
+    Alert.alert("Success", "Account Created Successfully.");
   }
 };
 
@@ -27,8 +23,6 @@ export const updatePasswordOperation = async (
       Alert.alert("Success", "Password Updated Successfully.");
       onSuccess();
     }
-  } catch (error: any) {
-    Alert.alert("Error", "Oops, something went wrong.");
   } finally {
     setLoading(false);
   }

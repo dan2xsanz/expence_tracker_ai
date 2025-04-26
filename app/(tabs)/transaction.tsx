@@ -112,7 +112,7 @@ export default function TransactionScreen() {
                 onChange={(data) =>
                   onChangeFields({
                     ...transactionDetails,
-                    amountValue: data,
+                    amountValue: Number(data),
                   })
                 }
               />

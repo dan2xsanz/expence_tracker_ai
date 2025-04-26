@@ -31,8 +31,6 @@ export const createTransaction = async ({
     // RETURN SUCCESS MESSAGE
     if (response.isSuccess && response.resultData) {
     }
-  } catch (error: any) {
-    Alert.alert("Error", "Oops, something went wrong.");
   } finally {
     setLoading(false);
     setTransactionDetails(transactionDefault);
@@ -58,8 +56,6 @@ export const getAllTransaction = async ({
     if (response.isSuccess && response.resultData) {
       return response.resultData;
     }
-  } catch (error: any) {
-    Alert.alert("Error", "Oops, something went wrong.");
   } finally {
     setLoading(false);
     setSearchClick(false);
@@ -76,8 +72,6 @@ export const getAllDailyExpense = async (
     if (response.isSuccess && response.resultData) {
       return response.resultData;
     }
-  } catch (error: any) {
-    Alert.alert("Error", "Oops, something went wrong.");
   } finally {
     setLoading(false);
   }
@@ -93,8 +87,6 @@ export const getAllMonthExpense = async (
     if (response.isSuccess && response.resultData) {
       return response.resultData;
     }
-  } catch (error: any) {
-    Alert.alert("Error", "Oops, something went wrong.");
   } finally {
     setLoading(false);
   }
@@ -110,8 +102,6 @@ export const getAllYearlyExpense = async (
     if (response.isSuccess && response.resultData) {
       return response.resultData;
     }
-  } catch (error: any) {
-    Alert.alert("Error", "Oops, something went wrong.");
   } finally {
     setLoading(false);
   }
@@ -128,8 +118,6 @@ export const getTotalTransactions = async (
     if (response.isSuccess && response.resultData) {
       return response.resultData;
     }
-  } catch (error: any) {
-    Alert.alert("Error", "Oops, something went wrong.");
   } finally {
     setLoading(false);
   }
