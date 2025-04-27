@@ -10,7 +10,7 @@ import TimePicker from "../components/time-picker/time-picker";
 import { useBottomSheet } from "../hooks/bottom-sheet-hooks";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import ButtonField from "../components/button/button";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Label from "../components/label/label";
 import { useFocusEffect } from "expo-router";
 import {
@@ -26,6 +26,7 @@ import { Moment } from "moment";
 import { Loading } from "../components/loading/loading";
 import { useLoadingScreen } from "../hooks/loading-screen-hooks";
 import { useBmoStore } from "../store/bmo-store";
+import moment from "moment";
 
 export default function TransactionScreen() {
   // SCREEN LOADING HOOK
@@ -36,7 +37,11 @@ export default function TransactionScreen() {
 
   // Transaction Details State Container
   const [transactionDetails, setTransactionDetails] =
-    useState<TransactionInterface>(transactionDefault);
+    useState<TransactionInterface>({
+      ...transactionDefault,
+      time: moment().startOf("second"), // <-- fresh moment object now
+      date: moment(),
+    });
 
   // Category List
   const Categories = useBottomSheet();
@@ -72,6 +77,17 @@ export default function TransactionScreen() {
     }, [])
   );
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTransactionDetails((prev) => ({
+        ...prev,
+        time: moment().startOf("second"),
+        date: moment(),
+      }));
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
   return (
     <View style={transaction_style.main_container}>
       <Loading loading={loading} />

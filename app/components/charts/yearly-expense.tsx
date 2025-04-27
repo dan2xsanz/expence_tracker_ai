@@ -35,7 +35,6 @@ export const YearlyExpense = ({ yearlyExpense }: YearlyExpenseProps) => {
           width={yearlyExpense.length * 80}
           height={220}
           yAxisLabel="₱"
-          yAxisSuffix="k"
           yAxisInterval={1}
           chartConfig={{
             backgroundGradientFrom: "#ffffff", // Changed background gradient from BarChart

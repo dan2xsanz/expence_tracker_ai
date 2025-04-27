@@ -71,7 +71,7 @@ export default function ReportScreen() {
           </View>
           <ScrollView
             showsVerticalScrollIndicator={false}
-            style={{ height: Dimensions.get("window").height - 170 }}
+            style={{ height: Dimensions.get("window").height - 100 }}
           >
             <View
               style={{
