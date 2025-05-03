@@ -17,6 +17,21 @@ export const CreateAccount = (
   });
 };
 
+export const UpdateAccount = (
+  data: CreateAccountInterface
+): Promise<ResponseInterface> => {
+  return new Promise((resolve, reject) => {
+    axios
+      .put<ResponseInterface>(`${REQUEST_URL}/account/update-account`, data)
+      .then(function (response: AxiosResponse<ResponseInterface>) {
+        resolve(response.data);
+      })
+      .catch(function (error: AxiosError) {
+        reject(error);
+      });
+  });
+};
+
 export const UpdatePassword = (
   data: CreateAccountInterface
 ): Promise<ResponseInterface> => {

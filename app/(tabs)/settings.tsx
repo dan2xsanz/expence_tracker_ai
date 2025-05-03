@@ -1,22 +1,31 @@
+import CurrencyCategories from "../components/currency-categories/currency-categories";
+import BottomSheetDrawer from "../components/botton-sheet/bottom-sheet";
+import { useLoadingScreen } from "../hooks/loading-screen-hooks";
+import { useBottomSheet } from "../hooks/bottom-sheet-hooks";
+import { Loading } from "../components/loading/loading";
+import { useBmoStore } from "../store/bmo-store";
+import Label from "../components/label/label";
+import { useRouter } from "expo-router";
 import {
-  View,
-  Text,
+  TouchableOpacity,
   StyleSheet,
   Dimensions,
+  View,
   Image,
-  TouchableOpacity,
 } from "react-native";
-import { Loading } from "../components/loading/loading";
-import { useLoadingScreen } from "../hooks/loading-screen-hooks";
-import Label from "../components/label/label";
-import { useBmoStore } from "../store/bmo-store";
 
 export default function SettingScreen() {
   // SCREEN LOADING HOOK
   const { loading, setLoading } = useLoadingScreen();
 
   // BMO STORE HANDLER
-  const { accountDetail } = useBmoStore();
+  const { accountDetail, setAccountDetail } = useBmoStore();
+
+  // Currency Type List
+  const CurrencyType = useBottomSheet();
+
+  // SCREEN ROUTING
+  const router = useRouter();
 
   return (
     <View style={setting_style.main_container}>
@@ -30,7 +39,6 @@ export default function SettingScreen() {
           style={{ fontSize: 12, marginTop: 5, marginBottom: 10 }}
           label={"Personal Details (Click profile to edit details)"}
         />
-
         <TouchableOpacity
           style={{
             flexDirection: "row",
@@ -44,10 +52,10 @@ export default function SettingScreen() {
             style={{
               width: 90,
               height: 90,
+              borderWidth: 3.5,
               borderRadius: 100,
               backgroundColor: "#fafafa",
               borderColor: "#1db11da9",
-              borderWidth: 3.5,
             }}
           />
           <View>
@@ -72,7 +80,10 @@ export default function SettingScreen() {
           style={{ fontSize: 12, marginTop: 20, marginBottom: 10 }}
           label={"Settings"}
         />
-        <TouchableOpacity style={setting_style.button_style}>
+        <TouchableOpacity
+          style={setting_style.button_style}
+          onPress={() => CurrencyType.setOpenBottomSheet(true)}
+        >
           <Label style={{ fontSize: 16 }} label={"Currency Type"} />
         </TouchableOpacity>
         <TouchableOpacity style={setting_style.button_style}>
@@ -109,10 +120,30 @@ export default function SettingScreen() {
         <TouchableOpacity style={setting_style.button_style}>
           <Label style={{ fontSize: 16 }} label={"Switch Account"} />
         </TouchableOpacity>
-        <TouchableOpacity style={setting_style.button_style}>
-          <Label style={{ fontSize: 16 }} label={"Logout"} />
+        <TouchableOpacity
+          style={setting_style.button_style}
+          onPress={() => router.push("/")}
+        >
+          <Label
+            style={{ fontSize: 16, fontWeight: 500, color: "red" }}
+            label={"Logout"}
+          />
         </TouchableOpacity>
       </View>
+      {/* CURRENCY TYPES */}
+      <BottomSheetDrawer
+        sheetTitle={"Select Currency Type"}
+        openSheet={CurrencyType.openBottomSheet}
+        setOpenDrawer={CurrencyType.setOpenBottomSheet}
+        children={
+          <CurrencyCategories
+            setLoading={setLoading}
+            CurrencyType={CurrencyType}
+            accountDetail={accountDetail}
+            setAccountDetail={setAccountDetail}
+          />
+        }
+      />
     </View>
   );
 }
@@ -138,8 +169,9 @@ const setting_style = StyleSheet.create({
   button_style: {
     width: "100%",
     height: 45,
+    padding: 5,
     justifyContent: "center",
-    borderBottomWidth: 2,
-    borderColor: "#024738ff",
+    borderBottomWidth: 1.5,
+    borderColor: "#012929ff",
   },
 });

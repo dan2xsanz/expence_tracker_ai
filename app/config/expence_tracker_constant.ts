@@ -22,6 +22,7 @@ export const accountDefault: CreateAccountInterface = {
   email: "",
   password: "",
   confirmPassword: "",
+  currency: "PHP",
 };
 
 export const accountDetailDefault: LoginResponseInterface = {
@@ -29,6 +30,7 @@ export const accountDetailDefault: LoginResponseInterface = {
   firstName: "",
   lastName: "",
   email: "",
+  currency: "PHP",
 };
 
 export const transactionSummaryDefault: TotalTransactionDisplayInterface = {

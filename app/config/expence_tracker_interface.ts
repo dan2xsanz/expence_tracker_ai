@@ -32,8 +32,9 @@ export interface CreateAccountInterface {
   firstName: string;
   lastName: string;
   email: string;
-  password: string;
-  confirmPassword: string;
+  currency?: string;
+  password?: string;
+  confirmPassword?: string;
 }
 
 // TRANSACTION LIST FILTER INTERFACE
@@ -113,4 +114,5 @@ export interface LoginResponseInterface {
   firstName: string;
   lastName: string;
   email: string;
+  currency:string
 }

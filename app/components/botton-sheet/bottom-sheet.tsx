@@ -2,18 +2,7 @@ import React from "react";
 
 import { View, StyleSheet } from "react-native";
 import { BottomSheet } from "@rneui/themed";
-import {
-  CloseIcon,
-  ElypsisIcon,
-  GovernmentIcon,
-  InsuranceIcon,
-  PensionIcon,
-  RemittanceIcon,
-  SackMoneyIcon,
-  SavingIcon,
-  StocksIcon,
-} from "../icons/icons";
-import TagButton from "../tag-button/tag-button";
+import { CloseIcon } from "../icons/icons";
 import Label from "../label/label";
 
 interface BottomSheetDrawerProps {

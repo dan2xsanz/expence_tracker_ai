@@ -123,8 +123,8 @@ export default function TransactionScreen() {
             {/* AMOUNT FIELD*/}
             <View style={transaction_style.amount_container}>
               <Label
-                label={"PHP"} // TODO: DYNAMIC
                 size={"medium"}
+                label={accountDetail.currency}
                 style={{ fontSize: 24, fontWeight: "bold" }}
               />
               <TextInputField

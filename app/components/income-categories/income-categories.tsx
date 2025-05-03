@@ -15,7 +15,7 @@ import {
 } from "../icons/icons";
 
 interface IncomeCategoriesInterface {
-  transactionDetails: TransactionInterface;
+  transactionDetails?: TransactionInterface;
   onChangeFields: (data: TransactionInterface) => void;
   Categories: any;
 }
@@ -27,7 +27,9 @@ const IncomeCategories = ({
 }: IncomeCategoriesInterface) => {
   // On Select Income Catgeory:: Set the value selcted and displayed name
   const onSelectIncomeCategory = (data: IncomeCategoryInterface) => {
-    onChangeFields({ ...transactionDetails, categoryType: data.categoryId });
+    // ON CHANGE TRANSACTION DETAILS
+    transactionDetails &&
+      onChangeFields({ ...transactionDetails, categoryType: data.categoryId });
     Categories.setOpenBottomSheet(false);
   };
 
